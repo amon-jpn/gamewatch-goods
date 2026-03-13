@@ -13,12 +13,7 @@
       <link>https://github.com/amon-jpn/pokemon_aggregator</link>
     </image>
     <language>ja</language>
-    <lastBuildDate>Fri, 13 Mar 2026 15:42:15 +0000</lastBuildDate>
-    <item>
-      <title>「ポケポケ」，新拡張パック「夢幻パレード」を1月29日にリリース。「メガサーナイトex」など，人気のメガシンカポケモンが収録される</title>
-      <link>https://www.4gamer.net/games/779/G077901/20260122066/</link>
-      <description>ポケモンは本日（2026年1月22日），スマートフォン向けカードゲーム「Pok&amp;#233;monTradingCardGamePocket」の新拡張パック「夢幻パレード」を1月29日にリリースすると発表し，紹介映像を公開した。今回は「メガサーナイト」ほか，複数のフェアリータイプポケモンが収録される。</description>
-    </item>
+    <lastBuildDate>Fri, 13 Mar 2026 21:33:26 +0000</lastBuildDate>
     <item>
       <title>「ポケモン feat. 初音ミク Project VOLTAGE」ポケモンセンター初の公式グッズ「18 Harmony Stage」を発売。記念楽曲やMVも順次公開</title>
       <link>https://www.4gamer.net/games/779/G077900/20260123037/</link>
@@ -245,6 +240,11 @@
       <description>ポケモンは3月12日，イベント「PokémonSleep就寝前のリラックス『ほげーたいそう』体験会」を東京都内で開催した。「PokémonSleep」が世界睡眠デーに合わせて，「ほげーたいそう」を発表したことを記念して企画されたもので，会場では，ゲストが実際に同体操を体験し，トークを披露した。</description>
     </item>
     <item>
+      <title>「Pok&amp;#233;mon Sleep」，Garminのスマートウォッチとの連携をスタート。計測した睡眠データを用いた睡眠リサーチが可能に</title>
+      <link>https://www.4gamer.net/games/462/G046207/20260313092/</link>
+      <description>ポケモンは本日（2026年3月13日），睡眠補助ゲームアプリ「Pok&amp;#233;monSleep」で，Garminのスマートウォッチへの対応を開始したことを発表した。「Pok&amp;#233;monSleep」との連携では，Garminのスマートウォッチで計測した睡眠データを用いた睡眠リサーチが可能になる。</description>
+    </item>
+    <item>
       <title>横浜駅のジョイナスに「ポケモンセンターヨコハマ サテライト」が4月9日オープン！</title>
       <link>https://game.watch.impress.co.jp/docs/news/2093283.html</link>
       <description>ポケモンセンターは、オフィシャルショップ「ポケモンセンターヨコハマ サテライト」を4月9日にオープンする。場所は神奈川県横浜市のジョイナス2F。</description>
@@ -270,6 +270,12 @@
       <link>https://www.ndw.jp/pokemon-news-260313/</link>
       <description>2026年4月9日（木）、横浜駅西口にあるジョイナス2Fにて「ポケモンセンターヨコハマ サテライト」が新たにオープンすることが発表されました。 ポケモ...</description>
       <pubDate>Fri, 13 Mar 2026 06:59:45 +0000</pubDate>
+    </item>
+    <item>
+      <title>『Pokémon Sleep』が「Garmin」のスマートウォッチに対応！ コラボ記念で専用ウォッチフェイスも登場</title>
+      <link>https://www.ndw.jp/pokemon-news-260314/</link>
+      <description>株式会社ポケモンは、睡眠ゲームアプリ『Pokémon Sleep』と「Garmin」とのコラボレーションを発表しました。 スマートウォッチで睡眠リサー...</description>
+      <pubDate>Fri, 13 Mar 2026 17:19:44 +0000</pubDate>
     </item>
   </channel>
 </rss>
