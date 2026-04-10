@@ -13,7 +13,7 @@
       <link>https://github.com/amon-jpn/pokemon_aggregator</link>
     </image>
     <language>ja</language>
-    <lastBuildDate>Thu, 09 Apr 2026 21:44:27 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 10 Apr 2026 05:24:43 +0000</lastBuildDate>
     <item>
       <title>「Pokémon Presents」，2月27日23：00に公式YouTubeで配信。同日のポケモンデーを記念したもので，配信時間は約25分</title>
       <link>https://www.4gamer.net/games/897/G089789/20260220046/</link>
@@ -250,11 +250,6 @@
       <description>ポケモンは本日（2026年4月8日），「PokémonChampions」NintendoSwitch版の配信を開始した。本作は，これまでの「ポケットモンスター」シリーズでもおなじみのポケモンバトルにフォーカスしたタイトルだ。</description>
     </item>
     <item>
-      <title>【ぽこポケ】「ぽこ あ ポケモン」更新データ（Ver.1.0.3）を配信。ポケモンが見つからなくなる不具合などを修正</title>
-      <link>https://game.watch.impress.co.jp/docs/news/2100378.html</link>
-      <description>ポケモンは、Nintendo Switch 2用スローライフ・サンドボックス「ぽこ あ ポケモン」の更新データ（Ver.1.0.3）を4月9日に配信開始した。</description>
-    </item>
-    <item>
       <title>「ポケモンチャンピオンズ」、発生中の不具合についてお知らせを公開4月10日8時からメンテナンスの実施も</title>
       <link>https://game.watch.impress.co.jp/docs/news/2100442.html</link>
       <description>ポケモンは4月9日、Nintendo Switch用ポケモンバトル「Pokémon Champions」（ポケモンチャンピオンズ）について、現在までに確認している不具合のお知らせを公開した。</description>
@@ -265,10 +260,31 @@
       <description>西武ライオンズが5月4日～6日に開催する「ポケモンベースボールフェスタ2026」にて販売予定のグッズ情報が4月9日に公開された。</description>
     </item>
     <item>
+      <title>【ポケチャン初心者攻略】「ポケモンチャンピオンズ」オススメの持ち物。「きあいのタスキ」や「こだわりスカーフ」で目指せマスターランク！</title>
+      <link>https://game.watch.impress.co.jp/docs/kikaku/2100627.html</link>
+      <description>ポケモンが4月8日に配信したNintendo Switch用ポケモンバトルゲーム「ポケモンチャンピオンズ」。本作はこれまでの「ポケットモンスター」シリーズでお馴染みのバトルに特化したタイトルということもあり、すでに多くの読者がポケモンバトルを楽しんでいることだろう。</description>
+    </item>
+    <item>
+      <title>「ポケモンチャンピオンズ」、メガシンカ順や一部特性が正しく発動しない問題などを修正</title>
+      <link>https://game.watch.impress.co.jp/docs/news/2100712.html</link>
+      <description>ポケモンは、Nintendo Switch用ポケモンバトル「Pokémon Champions」（ポケモンチャンピオンズ）について、4月10日8時より実施していたメンテナンスを、同日10時に終了した。</description>
+    </item>
+    <item>
+      <title>「ポケモン短編まつり ～劇場版ポケットモンスター短編傑作選」、5月2日より開催GWに神保町でポケモン30周年をお祝い</title>
+      <link>https://game.watch.impress.co.jp/docs/news/2100740.html</link>
+      <description>小学館は、神保町シアターにて「ポケモン短編まつり ～劇場版ポケットモンスター短編傑作選」を5月2日から5月8日まで開催する。</description>
+    </item>
+    <item>
       <title>『ぽこ あ ポケモン』の更新データ Ver.1.0.3が配信</title>
       <link>https://www.ndw.jp/pokopoke-game-260409-2/</link>
       <description>2026年4月9日、株式会社ポケモンは、Nintendo Switch 2 ソフト『ぽこ あ ポケモン』の更新データ Ver.1.0.3を配信しました...</description>
       <pubDate>Thu, 09 Apr 2026 11:10:29 +0000</pubDate>
+    </item>
+    <item>
+      <title>バトル中のポーズを再現！「びっくらたまご ポケットモンスター ポケモンフィギュアコレクション ～バトルスタイル～」4月発売</title>
+      <link>https://www.ndw.jp/pokemon-goods-260410/</link>
+      <description>バンダイ（ライフスタイル事業部）より、「びっくらたまご ポケットモンスター ポケモンフィギュアコレクション ～バトルスタイル～」が4月に発売されます。...</description>
+      <pubDate>Fri, 10 Apr 2026 05:22:18 +0000</pubDate>
     </item>
   </channel>
 </rss>
