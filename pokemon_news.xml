@@ -13,7 +13,7 @@
       <link>https://github.com/amon-jpn/pokemon_aggregator</link>
     </image>
     <language>ja</language>
-    <lastBuildDate>Tue, 28 Apr 2026 06:07:08 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 28 Apr 2026 11:05:02 +0000</lastBuildDate>
     <item>
       <title>ポケモン30周年を記念した一番くじが2弾に渡って登場。vol.1は5月30日，vol.2は7月18日に発売</title>
       <link>https://www.4gamer.net/games/897/G089789/20260226063/</link>
@@ -250,11 +250,6 @@
       <description>Nianticは本日（2026年4月27日），ポケモンと共同運営するスマートフォンアプリ「ポケモンGO」において，日本AED財団とのパートナーシップ契約締結を発表した。本契約により，現実世界にあるAED設置箇所が5月1日より「ポケストップ」としてゲーム内に登場する。</description>
     </item>
     <item>
-      <title>「ポケモン GO」AED設置場所にポケストップ全国約13,000カ所追加！ 7月中旬までに認知向上に貢献</title>
-      <link>https://game.watch.impress.co.jp/docs/news/2104853.html</link>
-      <description>Nianticとポケモンは、Android/iOS用位置情報ゲーム「Pokemon GO（ポケモンGO）」において、5月1日より現実世界のAED(自動体外式除細動器)設置箇所をゲーム内のキースポット「ポケストップ」として順次登場させる。</description>
-    </item>
-    <item>
       <title>【ポケモン】色違い「ボルケニオン」もらえる！ 「Pokemon HOME」ソフト図鑑完成でふしぎなおくりもの対象は「ポケモンZA」</title>
       <link>https://game.watch.impress.co.jp/docs/news/2105007.html</link>
       <description>ポケモンは、iOS/Android用アプリ「Pokemon HOME」において、「ソフト図鑑」を完成させた人に特別なポケモンの色違い「ボルケニオン」をプレゼントしている。</description>
@@ -275,16 +270,27 @@
       <description>ポケモンは、Android/iOS用カードゲーム「Pokémon Trading Card Game Pocket（以下：ポケポケ）」において、新拡張パック「波動ビート」を4月28日に実装した。</description>
     </item>
     <item>
-      <title>イーブイの進化系がラインナップに！「ポケットモンスター ALL STAR COLLECTION マスコット」第9弾が26年7月下旬に登場</title>
-      <link>https://www.ndw.jp/pokemon-goods-260427-01/</link>
-      <description>三英貿易が展開する、ポケモンの姿を忠実に再現したコレクション性の高いぬいぐるみ「ALL STAR COLLECTION ぬいぐるみ」のミニサイズシリー...</description>
-      <pubDate>Mon, 27 Apr 2026 09:10:33 +0000</pubDate>
+      <title>【ポケモン】ヌオーが可愛いミニテーブルに！ 5月14日より「ポケモンセンターオンライン」にて受注開始</title>
+      <link>https://game.watch.impress.co.jp/docs/news/2105368.html</link>
+      <description>ポケモンは、通販サイト「ポケモンセンターオンライン」にて「ミニテーブル ヌオー」の受注販売を5月14日10時より実施する。期間は6月3日16時59分までで、価格は35,200円。</description>
     </item>
     <item>
       <title>ほのおタイプのポケモンが集合！「ポケットモンスター スイングコレクション Type:Fire」5月第4週発売</title>
       <link>https://www.ndw.jp/pokemon-goods-260428-02/</link>
       <description>バンダイが展開するガシャポンに、「ポケットモンスター スイングコレクション Type:Fire」が2026年5月4週に発売されます。 ほのおタイプポケ...</description>
       <pubDate>Tue, 28 Apr 2026 03:10:54 +0000</pubDate>
+    </item>
+    <item>
+      <title>「BOSS×ポケモン30周年」フシギダネ・ヒトカゲ・ゼニガメをイメージした“ボスジャン”が登場！ 歴代の旅立ちの3匹をデザインした「ポケモン図鑑缶」も発売</title>
+      <link>https://www.ndw.jp/pokemon-news-260428/</link>
+      <description>サントリーコーヒー「BOSS」と「ポケモン30周年」のタイアップを記念し、特別なボスジャンが当たるキャンペーンを2026年6月1日（月）より実施するこ...</description>
+      <pubDate>Tue, 28 Apr 2026 08:33:57 +0000</pubDate>
+    </item>
+    <item>
+      <title>水の中にいる様子をイメージした、ヌオーのミニテーブルが5月14日よりポケモンセンターオンラインで受注販売開始！価格は35,200円！</title>
+      <link>https://www.ndw.jp/pokemon-goods-260428-2/</link>
+      <description>ポケモンセンターオンラインは、水面みたいな天板に物を置くと水中のヌオーがあたまをぶつけているような「ミニテーブル ヌオー」を発表、5月14日10時より...</description>
+      <pubDate>Tue, 28 Apr 2026 10:26:57 +0000</pubDate>
     </item>
   </channel>
 </rss>
