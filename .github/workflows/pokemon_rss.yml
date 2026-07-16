@@ -25,6 +25,8 @@ jobs:
         run: pip install -r requirements.txt
 
       - name: Run Aggregator
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
         run: python pokemon_aggregator.py
 
       - name: Commit and Push

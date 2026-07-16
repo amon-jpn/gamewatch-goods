@@ -22,6 +22,8 @@ from datetime import datetime, timedelta, timezone
 import feedparser
 from feedgen.feed import FeedGenerator
 
+import llm_utils
+
 REPO_URL = "https://github.com/amon-jpn/pokemon_aggregator"
 ICON_URL = "https://raw.githubusercontent.com/amon-jpn/pokemon_aggregator/main/pikabou.jpg"
 OUTPUT_FILE = "pokemon_news.xml"
@@ -31,6 +33,7 @@ ARCHIVE_DAYS = 45          # 記事履歴の保持日数（重複判定と掲載
 FEED_MAX_ITEMS = 60        # RSSに載せる最大件数
 SIMILARITY_THRESHOLD = 0.85  # タイトル類似度がこれを超えたら重複とみなす
 SCORE_THRESHOLD = 3        # 合計スコアがこの値以上の記事だけ採用
+SUMMARIZE_MAX_PER_RUN = 50  # 1回の実行でLLM要約を付ける最大記事数
 
 
 def google_news_url(query: str) -> str:
@@ -82,6 +85,7 @@ POSITIVE_KEYWORDS = {
 
 # 減点キーワード（コレクター無関係の話題を弾く）
 NEGATIVE_KEYWORDS = {
+    "ポケポケ": -5,  # スマホアプリ版（物理カードではない）
     "ポケモンGO": -5,
     "ポケモンスリープ": -5,
     "ポケモンユナイト": -5,
@@ -225,7 +229,11 @@ def build_feed(entries):
         fe = fg.add_entry()
         fe.title(f"【{item['category']}】{item['title']}")
         fe.link(href=item["link"])
-        description = f"出典: {item['source']}" if item["source"] else item["title"]
+        source_note = f"出典: {item['source']}" if item["source"] else ""
+        if item.get("summary"):
+            description = f"{item['summary']}（{source_note}）" if source_note else item["summary"]
+        else:
+            description = source_note or item["title"]
         fe.description(description)
         fe.pubDate(datetime.fromisoformat(item["published"]))
 
@@ -239,10 +247,26 @@ def build_feed(entries):
         f.write(rss_content)
 
 
+def add_summaries(archive):
+    """要約がまだ付いていない記事にLLMで一言解説を付ける（キー未設定ならスキップ）"""
+    targets = [e for e in archive if "summary" not in e][:SUMMARIZE_MAX_PER_RUN]
+    if not targets:
+        return
+    summaries = llm_utils.summarize_entries(targets)
+    if not summaries:
+        # キー未設定や失敗時は何も記録せず、次回（キー設定後）に再挑戦できるようにする
+        return
+    for i, entry in enumerate(targets):
+        # 呼び出し成功時は空でも記録し、同じ記事を毎回投げ直さないようにする
+        entry["summary"] = summaries.get(i, "")
+    print(f"📝 LLM要約を{len(summaries)}件付与しました")
+
+
 def main():
     archive = load_archive()
     candidates = collect()
     archive, added = merge_into_archive(archive, candidates)
+    add_summaries(archive)
     save_archive(archive)
     build_feed(archive)
     print(f"✅ 完了: 新着{added}件 / アーカイブ{len(archive)}件 / フィード掲載{min(len(archive), FEED_MAX_ITEMS)}件")
