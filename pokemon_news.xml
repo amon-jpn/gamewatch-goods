@@ -2,258 +2,377 @@
 <?xml-stylesheet type="text/xsl" href="style.xsl"?>
 <rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/" version="2.0">
   <channel>
-    <title>ポケモン最新情報まとめ</title>
+    <title>ポケカ コレクターニュース</title>
     <link>https://github.com/amon-jpn/pokemon_aggregator</link>
-    <description>複数のゲームニュースサイトから「ポケモン」に関する最新情報だけを自動で収集し、重複を除去して配信するRSSフィードです</description>
+    <description>PSA鑑定・相場・新弾情報など、ポケモンカードのコレクターに関係するニュースだけを自動収集・重複排除して配信するRSSフィードです</description>
     <docs>http://www.rssboard.org/rss-specification</docs>
     <generator>python-feedgen</generator>
     <image>
       <url>https://raw.githubusercontent.com/amon-jpn/pokemon_aggregator/main/pikabou.jpg</url>
-      <title>ポケモン最新情報まとめ</title>
+      <title>ポケカ コレクターニュース</title>
       <link>https://github.com/amon-jpn/pokemon_aggregator</link>
     </image>
     <language>ja</language>
-    <lastBuildDate>Thu, 16 Jul 2026 10:59:09 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 16 Jul 2026 15:58:59 +0000</lastBuildDate>
     <item>
-      <title>「Pokémon Champions」Nintendo Switch版，配信開始。初のオンライン大会「ウォームアップチャレンジ」を開催予定</title>
-      <link>https://www.4gamer.net/games/886/G088682/20260408032/</link>
-      <description>ポケモンは本日（2026年4月8日），「PokémonChampions」NintendoSwitch版の配信を開始した。本作は，これまでの「ポケットモンスター」シリーズでもおなじみのポケモンバトルにフォーカスしたタイトルだ。</description>
+      <title>【新弾・予約】ポケカが楽天で抽選販売中『スタートデッキ100 バトルコレクション』『アビスアイ』『MEGAドリームex』など。応募期間は6月18日まで</title>
+      <link>https://news.google.com/rss/articles/CBMiV0FVX3lxTE52eHp4a0Y0ZTdhSzhaak56djR4U25zUnQwQmxjRjZCVU44MDBtcnRnZ0NhbFRoTTIyYS1heGZtelZDQkdWTGd4SXpnY0xucUpYQkxpdDJnaw?oc=5</link>
+      <description>出典: ファミ通</description>
+      <pubDate>Tue, 16 Jun 2026 22:00:00 +0000</pubDate>
     </item>
     <item>
-      <title>「ぽこ あ ポケモン」，イベント「おおなわとび大会」を4月19日から開催。誰かの街やクラウド島で複数人で参加することもできる</title>
-      <link>https://www.4gamer.net/games/945/G094534/20260415050/</link>
-      <description>ポケモンは本日（2026年4月15日），サンドボックスゲーム「ぽこあポケモン」で，イベント「おおなわとび大会」を開催すると発表した。本イベントは，ゲーム内のミニゲーム「おおなわとび」を遊んで，最高記録の回数に応じて「トロフィー」などの特別なアイテムがもらえるイベントだ。</description>
+      <title>【鑑定・PSA】【MNSTR創業者Andy8052氏】ポケモンカード鑑定は「完全なぼったくり」、ガチャ系プラットフォームが月間数億ドルを投じる構造的歪み</title>
+      <link>https://news.google.com/rss/articles/CBMiWkFVX3lxTFBZcE9kM3ZBWGcwd2ZQQlJPV0NGX1g5c1BsQjZOM19fckh3Q2ltUVFic0tGbW00eXZ0dW9YMVhNcWJPRUlEMEFTbFczTkhkMC1uMEh1WGZNMXlzZw?oc=5</link>
+      <description>出典: BigGo ファイナンス</description>
+      <pubDate>Tue, 16 Jun 2026 22:00:00 +0000</pubDate>
     </item>
     <item>
-      <title>「ぽこ あ ポケモン」の新CMが4月24日より放映開始。SixTONES松村北斗さんや狩野英孝さんらが出演</title>
-      <link>https://www.4gamer.net/games/945/G094534/20260420001/</link>
-      <description>ポケモンは本日（2026年4月20日），NintendoSwitch2「ぽこあポケモン」の新TVCMを，4月24日より全国で放映開始すると発表した。CMには，松村北斗さん，指原莉乃さん，MAHINAさん（HANA），狩野英孝さんが出演する。</description>
+      <title>【新弾・予約】「ポケカ」＆「ポケポケ」，双方でメガレックウザ収録の新拡張パックを7月末にリリース。特別なキャンペーン開催に向けた特設サイトがオープン</title>
+      <link>https://news.google.com/rss/articles/CBMiY0FVX3lxTE1zRmNLWW5KejdSZW5BRm1FMGZpdVhFV1h5WUxJSHNpZmNYbFJLSVE4NVZpcHlQY1dvR0tqd1FWVGhBRDdWY2xQaUR3cmxvN0lJSnNWQnBIWEFMbk9sbkg4dXBfcw?oc=5</link>
+      <description>出典: 4Gamer.net</description>
+      <pubDate>Wed, 17 Jun 2026 22:00:00 +0000</pubDate>
     </item>
     <item>
-      <title>楽曲「ポケモンオールスターズ1025（213/1025）」とMVが公開に。シリーズ30周年を記念して制作された，ポケモンたちが登場する楽曲</title>
-      <link>https://www.4gamer.net/games/945/G094534/20260423004/</link>
-      <description>ポケモンは2026年4月22日，オーイシマサヨシさんが歌唱を担当する楽曲「ポケモンオールスターズ1025（213/1025）」とMVを公開した。本楽曲は，ポケモン30周年記念のピックアップテーマ「うたう」にちなんだ楽曲制作プロジェクトの開始を記念して先行公開されたものだ。</description>
+      <title>【新弾・予約】【ポケカ】メガレックウザ登場、MEGA拡張パック“ストームエメラルダ”7月31日発売。『ポケポケ』新拡張パック“天空の支配者”が7月30日に発売</title>
+      <link>https://news.google.com/rss/articles/CBMiV0FVX3lxTE5oUGdPcmtVd1lHMlNXNFlwOFZ2Y3JVZG85R1lOTENfek1mQUtISlhGdnpZblJxZnZweWJwYjJXWGM0cklraVNlYUhOWGU3UjBrd2hMYjZtNA?oc=5</link>
+      <description>出典: ファミ通</description>
+      <pubDate>Wed, 17 Jun 2026 22:00:00 +0000</pubDate>
     </item>
     <item>
-      <title>「ポケポケ」，新拡張パック「波動ビート」を4月28日にリリース。メガルカリオやメガジュカインに加え，格闘タイプの強化カードなどが登場</title>
-      <link>https://www.4gamer.net/games/779/G077901/20260423056/</link>
-      <description>ポケモンは本日（2026年4月23日），スマートフォン向けカードゲーム「Pok&amp;#233;monTradingCardGamePocket」の新拡張パック「波動ビート」を4月28日にリリースすると発表し，紹介動画を公開した。新たな拡張パックには，メガルカリオやメガジュカインをはじめとする新カードが収録される。</description>
+      <title>【相場・高騰】【ポケカ】アビスアイ/買取価格ランキング＆相場推移【M5】</title>
+      <link>https://news.google.com/rss/articles/CBMiakFVX3lxTFBjX2hwV3ZHY3dGQndVLTN4ZXFpMEY3bzUxZnlsUXBRMXp6enNyV2x5QlM5X2x5V3hhVVBNWWMzZXpLeWxEMUZUYVRHamQxSzd0bkRsWGJpRXctY29mNTR0S0JNREhSZXZJSnc?oc=5</link>
+      <description>出典: ポケカポケット開封日記</description>
+      <pubDate>Wed, 17 Jun 2026 22:00:00 +0000</pubDate>
     </item>
     <item>
-      <title>「ポケモンGO」と日本AED財団がパートナーシップ契約を締結。全国のAED設置箇所がポケストップになり，5月1日より順次登場</title>
-      <link>https://www.4gamer.net/games/316/G031663/20260427011/</link>
-      <description>Nianticは本日（2026年4月27日），ポケモンと共同運営するスマートフォンアプリ「ポケモンGO」において，日本AED財団とのパートナーシップ契約締結を発表した。本契約により，現実世界にあるAED設置箇所が5月1日より「ポケストップ」としてゲーム内に登場する。</description>
+      <title>【新弾・予約】【ポケカ】ストームエメラルダの予約・抽選情報まとめ【7/16更新】</title>
+      <link>https://news.google.com/rss/articles/CBMiTEFVX3lxTE5rYTVkODVGUUtEZXhCQkRRUjMwc2dkRmFVX3NyWU03OWFhczF6QnNEQnJ4UXJyOWRRb1c4RnVyWXpOWWF6dnV0YW9TUTY?oc=5</link>
+      <description>出典: SNKRDUNK</description>
+      <pubDate>Thu, 18 Jun 2026 04:24:21 +0000</pubDate>
     </item>
     <item>
-      <title>「ポケットモンスター音楽祭」，テレ東系6局で5月15日18：55に放送決定。ポケモンの楽曲を楽しめる番組</title>
-      <link>https://www.4gamer.net/games/897/G089789/20260501068/</link>
-      <description>テレビ東京グループは本日（2026年5月1日），テレビ番組「ポケットモンスター音楽祭」を，5月15日18：55よりテレ東系6局で放送すると発表した。これは，「ポケットモンスター赤・緑」の発売から30周年を迎えたことを記念して放送される番組だ。MCは，俳優の本郷奏多さんとお笑いコンビ「チョコレートプラネット」が務める。</description>
+      <title>【新弾・予約】『ポケカ』新拡張パック「ストームエメラルダ」がAmazonで抽選販売！1BOX（30パック入り）が対象</title>
+      <link>https://news.google.com/rss/articles/CBMiakFVX3lxTE81aGFIdWdVekVhcGI5T1B3ZWdicm9aVkRmZlV2SW13WTRSWF9LRlotMV9acW1OdWl6S3dSSG9jWVo0ZHBQaHM1c3BTbTNGRUItWlNwNHctNm5EZi1CUDhhbUtwMUpfQ0FHMGc?oc=5</link>
+      <description>出典: インサイド</description>
+      <pubDate>Thu, 18 Jun 2026 22:00:00 +0000</pubDate>
     </item>
     <item>
-      <title>「ぽこ あ ポケモン」と極楽湯・RAKU SPAグループ39店舗がコラボ。スペシャルイベント「ぽこ あ ポケモン 湯ったりらいふ」を開催</title>
-      <link>https://www.4gamer.net/games/945/G094534/20260508011/</link>
-      <description>極楽湯ホールディングスは，2026年5月28日（木）より極楽湯・RAKUSPAグループ39店舗で，スペシャルイベント「ぽこあポケモン湯ったりらいふ」を開催すると発表した。5種の「ぽこあポケモンの湯」が登場するほか，オリジナルイベントグッズやスペシャルメニューの販売などが行われる。</description>
+      <title>【相場・高騰】ポケモンカード高騰の光と影、巨大な成長市場に群がる犯罪者たち</title>
+      <link>https://news.google.com/rss/articles/CBMidEFVX3lxTE1COUVqNm4wenppaUFiUDVIWkNEb3VtVmF4VXBFZTFWd1M4V0NqdlFKQ25iWnE1aHAyU2g4aHRDcnlBMHhkMzVraFNfeTNkbzdIY1pHMkZnVm13Q3lmZHpjMTVOdWc2cE1zbE51aV9UOXVYeTRW?oc=5</link>
+      <description>出典: Bloomberg.com</description>
+      <pubDate>Thu, 18 Jun 2026 22:00:00 +0000</pubDate>
     </item>
     <item>
-      <title>「ポケモン」30周年を記念したUT第2弾が7月下旬に発売。ジムリーダーのポケモンたちがドット絵で描かれる</title>
-      <link>https://www.4gamer.net/games/986/G098665/20260511026/</link>
-      <description>ユニクロは本日（2026年5月11日），「ポケットモンスター」シリーズ30周年を記念したUTコレクション第2弾を7月下旬に発売すると発表した。本コレクションは，シリーズの原点ともいえるモノクロのドットで表現されたポケモンや主人公たちのデザインをあしらったものだ。</description>
+      <title>【鑑定・PSA】ポケモンカードの転売と投機が止まらない理由 カード鑑定が加速させたマネーゲーム #エキスパートトピ</title>
+      <link>https://news.google.com/rss/articles/CBMiiAFBVV95cUxPNlNabmlLX3BVWGRaUV93WW9ySW5xWWVmQmpoVXhNZHJPby1vTlZ1YWk2Y0Y5U0JBOXA1V0RlbmE1QkdHc0w5THJTSE5QYW5sYjBvcWtWejc2aXVFM1hnbV9URDRPQkh2cTMzMEJ5SFVQdjhGTVRaZURXOU5zYWVpdmZZc0V3RGxP?oc=5</link>
+      <description>出典: Yahoo!ニュース</description>
+      <pubDate>Fri, 19 Jun 2026 22:00:00 +0000</pubDate>
     </item>
     <item>
-      <title>「ポケモン公式ぜんこく図鑑 1996-2026」，8月7日に発売。1996年のシリーズ誕生から30年間で登場した1025匹のポケモンを完全収録</title>
-      <link>https://www.4gamer.net/games/897/G089789/20260515024/</link>
-      <description>オーバーラップは2026年5月15日，「ポケモン公式ぜんこく図鑑1996-2026」を8月7日に発売すると発表した。価格は2750円（税込）。これは，1996年のシリーズ誕生から2026年までの30年間に登場した1025匹のポケモンを掲載した書籍だ。</description>
+      <title>【新弾・予約】【ポケカ】ストームエメラルダ招待販売リクエストがAmazon受付中【ポケモンカードゲーム】</title>
+      <link>https://news.google.com/rss/articles/CBMiWkFVX3lxTFBlTGNLemgxV3UtdVE3TTFhVmM1ZnN3WlBJU2Ixd1dhLWdjOWM4VHYzRGdvMjRvSzZPeGxldFNHWjZWZmRvdnJDejg1WVl6YW1zaUhqMDZMMVQ0Zw?oc=5</link>
+      <description>出典: 電撃オンライン</description>
+      <pubDate>Sun, 21 Jun 2026 22:00:00 +0000</pubDate>
     </item>
     <item>
-      <title>男色ディーノのゲイムヒヒョー ゼロ：第890回「ポケモン言えません」</title>
-      <link>https://www.4gamer.net/games/040/G004083/20260519020/</link>
-      <description>およそ3か月の冒険を経て，ついに「ドラゴンクエストVIIReimagined」のストーリーをクリアしたディーノ選手。レベルを99まで上げ，全職業をマスター，しかし，ゲイムの道に終わりはないのです。さっそく，以前から気にはなっていた「ぽこあポケモン」をプレイし始めたそうです。</description>
+      <title>【相場・高騰】【ポケカ】ムク SARの買取・相場価格と値段推移｜アビスアイ</title>
+      <link>https://news.google.com/rss/articles/CBMiTEFVX3lxTE01c0liUWhxRGpSR0JfWXhOOUExZ2lpY2JNM3dvRW5QMnljZVNjRXdSeXR1YlJZdjBRWHd2OFMwZ3Q4QVdOOW9Tb0xlQkQ?oc=5</link>
+      <description>出典: SNKRDUNK</description>
+      <pubDate>Sun, 21 Jun 2026 22:00:00 +0000</pubDate>
     </item>
     <item>
-      <title>「ポケモンカードゲーム」商品販売・イベントでのマイナンバーカードを使用した本人確認システムの導入を検討。2026年8月ごろの開始を視野に</title>
-      <link>https://www.4gamer.net/games/256/G025620/20260521028/</link>
-      <description>ポケモンは本日（2026年5月21日），「ポケモンカードゲーム」の商品販売・イベントにおいて，マイナンバーカードを使用した本人確認システムの導入を検討していることを発表した。</description>
+      <title>【新弾・予約】ローソンでポケカ「プレミアムデッキセット エーフィ・ブラッキー」予約受付開始。Loppiのみ店頭予約も</title>
+      <link>https://news.google.com/rss/articles/CBMiZ0FVX3lxTE42d3dEbHNtNjMyQnFfZ3M3NHZRRlZ2MFZlM1M2bGc1UzNXZmd2R2FnbXlOSnp6Y3NyWFZZcUNEZENYNk5HaHZudVk0TV9ZX21hVW96UC0xT2hNSXhDLWdCWWI1THR6WHM?oc=5</link>
+      <description>出典: hobby Watch</description>
+      <pubDate>Mon, 22 Jun 2026 22:00:00 +0000</pubDate>
     </item>
     <item>
-      <title>「ポケポケ」，新テーマ拡張パック「進撃パラドックス」を5月28日10：00に配信・サブカテゴリー「古代」「未来」のポケモンたちが登場</title>
-      <link>https://www.4gamer.net/games/779/G077901/20260522007/</link>
-      <description>ディー・エヌ・エーは2026年5月21日，「PokémonTradingCardGamePocket（ポケポケ）」で，新テーマ拡張パック「進撃パラドックス」を5月28日10：00に配信すると発表した。コライドン，ミライドンをはじめとするパラドックスポケモンたちが登場し，新要素として「古代」「未来」のサブカテゴリーが追加される。</description>
+      <title>【新弾・予約】Loppi・ローソンオンラインにて、「ポケモンカードゲーム MEGA 30th CELEBRATION プレミアムデッキセット エーフィ・ブラッキー」の予約販売を6月23日(火)～開始します。｜ローソン公式サイト</title>
+      <link>https://news.google.com/rss/articles/CBMifEFVX3lxTE9WUXhDckpXRXNMSDRUMXR1cXRqcktMSmtJUHlsYmJta2JrQ0taaEtIdTkzNlBPU2VHLWhOM0IzZHkwa3QzZzd1WlBNZnJXQWN5dUdCcDllM0NuYjlveUFxeTRsaHFhQmMySlA5V216QnJBXzhuQ2Q0RFBubDg?oc=5</link>
+      <description>出典: LAWSON</description>
+      <pubDate>Mon, 22 Jun 2026 22:00:00 +0000</pubDate>
     </item>
     <item>
-      <title>ポケモンたちのもぐもぐ姿にフォーカスしたグッズシリーズ「もぐもぐウォッチング！」，5月28日10：00に発売</title>
-      <link>https://www.4gamer.net/games/991/G999106/20260522022/</link>
-      <description>ポケモンは本日（2026年5月22日），ポケモンたちのもぐもぐ姿にフォーカスしたグッズシリーズ「もぐもぐウォッチング！」を，ポケモンセンターオンラインで5月28日10：00に，ポケモンセンターで5月30日に発売すると発表した。</description>
+      <title>【新弾・予約】【2026.06.23】※応募は終了しました抽選販売「ポケモンカードゲームMEGA 拡張パック アビスアイ（再販）」</title>
+      <link>https://news.google.com/rss/articles/CBMiREFVX3lxTE9vR1hjcElqb1pIQ05mS2FJNkVsSlJVdUg2SzdrVWtEeHpyVy05SG1ZN19IazRmcGR2VDQ0SC1MWHF1eHhl?oc=5</link>
+      <description>出典: ホビーステーション</description>
+      <pubDate>Mon, 22 Jun 2026 22:00:00 +0000</pubDate>
     </item>
     <item>
-      <title>「Pokémon Sleep」，ラティアス / ラティオスピックアップイベントが6月8日から開催。ドラゴンタイプが活躍できそう</title>
-      <link>https://www.4gamer.net/games/462/G046207/20260522057/</link>
-      <description>ポケモンは本日（2026年5月22日），睡眠アプリ「PokémonSleep」にて「ラティオスとこころのしずく」イベントを6月8日から開催すると発表した。本イベントでは，ラティアス/ラティオスがピックアップされる。</description>
+      <title>【新弾・予約】『ポケカ』新拡張パック「ストームエメラルダ」があみあみ通販で抽選販売！あわせて「メガブレイブ」「メガシンフォニア」も極少数用意</title>
+      <link>https://news.google.com/rss/articles/CBMiakFVX3lxTE8ySVlfWWo1VldENEd6cWVNbEt2YzdZN3dZb2IyTlpGM3RTOXdreUJ4TkUxaXNHaDRpajZid2xKcXlTMmN4dExVc3l6U0FzVFBLTHZjS0xHLXozN1hjUlNvaGRsdGV4RzU4SXc?oc=5</link>
+      <description>出典: インサイド</description>
+      <pubDate>Mon, 22 Jun 2026 22:00:00 +0000</pubDate>
     </item>
     <item>
-      <title>「ポケモンGO」の新シーズン「新たな歩み」が6月2日10：00にスタート。マックスバトルにはダイマックスエレブーなどが初登場</title>
-      <link>https://www.4gamer.net/games/316/G031663/20260527006/</link>
-      <description>Nianticは本日（2026年5月27日），スマホ向け位置情報ゲーム「ポケモンGO」で，新シーズン「新たな歩み」を6月2日10：00から9月8日10：00まで開催すると発表した。新シーズンでは「ダイマックスエレブー」「ダイマックスコイキング」「ダイマックスヒンバス」などが初登場する。</description>
+      <title>【相場・高騰】【ポケカ】ブラッキーex SAR仕様の買取相場予想や発売後の高騰考察｜30th CELEBRATION プレミアムデッキセット エーフィ・ブラッキー</title>
+      <link>https://news.google.com/rss/articles/CBMiTEFVX3lxTFBhTmEtZ2dVYkg5RTF5SmdTTG1FUERHMWMxdXdXeFh6Ynlnc04yVDVJOF9qV2w0cjhHTWtSU29vbXltY2MtXzVGcG5NRDg?oc=5</link>
+      <description>出典: SNKRDUNK</description>
+      <pubDate>Mon, 22 Jun 2026 22:00:00 +0000</pubDate>
     </item>
     <item>
-      <title>「Pok&amp;#00233;mon GO」10年の集大成。新旧トレーナーたちが集結した「Pok&amp;#00233;mon GO Fest 2026：東京」台場・青海地区会場の初日をレポート</title>
-      <link>https://www.4gamer.net/games/316/G031663/20260530005/</link>
-      <description>「Pok&amp;#00233;monGO」初の東京を会場とするリアルイベント「Pok&amp;#00233;monGOFest2026：東京」が5月29日にスタートした。そのメイン会場に据えられたのは東京台場・青海の臨海副都心地区だ。現実世界とリンクしたポケモンの世界を，お台場で体験しよう。</description>
+      <title>【相場・高騰】【ポケカ】ムニキスゼロの当たりランキング/買取相場/封入率/予約抽選/値段まとめ</title>
+      <link>https://news.google.com/rss/articles/CBMiTEFVX3lxTFB1dGZjZ25pRURud1lLZERYaDh0Zy00WWVrVWJ2YXBaMTdWMjB2S1QxWWtkcEY3b25CSHpBZm5sQlZsYW43SkVKSTBRZF8?oc=5</link>
+      <description>出典: SNKRDUNK</description>
+      <pubDate>Mon, 22 Jun 2026 22:00:00 +0000</pubDate>
     </item>
     <item>
-      <title>「ポケモンカードゲーム」30周年記念商品の最新情報を紹介する動画を本日22：00に公開。ミュウとミュウツーの画像も公開</title>
-      <link>https://www.4gamer.net/games/256/G025620/20260601019/</link>
-      <description>ポケモンは本日（2026年6月1日），「ポケモンカードゲーム」30周年記念商品の最新情報を紹介する動画を22：00にポケモン公式YouTubeチャンネルで公開すると発表した。発表にあわせて，幻のポケモン「ミュウ」と伝説のポケモン「ミュウツー」の画像が公開された。</description>
+      <title>【新弾・予約】ポケカ拡張パックが招待販売！強力な戦略を楽しむカードを多数収録した「ポケモンカードゲーム MEGA 拡張パック ストームエメラルダ」がAmazonで招待販売リクエストを受付中！</title>
+      <link>https://news.google.com/rss/articles/CBMiUEFVX3lxTE1mN3UxVTYzRXBtUU9LUW9IQjNGTnBHUmlBWUdMbDkyaVd2d25LRlVKZml4M200ZV92Mml5VmVLaXJpZUhUSGZUSDlsSTc5ZGc5?oc=5</link>
+      <description>出典: 電撃ホビーウェブ</description>
+      <pubDate>Tue, 23 Jun 2026 22:00:00 +0000</pubDate>
     </item>
     <item>
-      <title>「ポケカ」30周年を記念した拡張パック「30th CELEBRATION」が9月16日に発売。すべてのカードがキラカードに</title>
-      <link>https://www.4gamer.net/games/256/G025620/20260602009/</link>
-      <description>ポケモンは2026年6月1日，「ポケモンカードゲームMEGA」シリーズから拡張パック「30thCELEBRATION」（サーティースセレブレーション）を，9月16日に世界同時発売すると発表した。本商品は，すべてのカードがキラカードとなっている，ポケモンカードゲーム30周年を記念した商品だ。</description>
+      <title>【相場・高騰】ポケモンカード写真を送るだけで最高額の買取業者がわかる。「トレカプロ買取一括査定」を提供開始</title>
+      <link>https://news.google.com/rss/articles/CBMiakFVX3lxTFAwbkY4WFQtc1AzaklEY1JTazM5QWU1SmJuUkRFNjB1azNDSGdiaE54ZzlGQXVhY2h0bUVFb3dfYm1DbTVpT09iajdGQUtYYkl3UnRKaTJPeW04Wjl5dlJ0TkNWN1JiNmVGVFE?oc=5</link>
+      <description>出典: PR TIMES</description>
+      <pubDate>Tue, 23 Jun 2026 22:00:00 +0000</pubDate>
     </item>
     <item>
-      <title>「ポケモン」の30周年を記念したラブクロム特別モデルが6月17日に発売。デザインはピカチュウとイーブイの2種</title>
-      <link>https://www.4gamer.net/games/897/G089789/20260603038/</link>
-      <description>YC・Primarilyは本日，ヘアケアブランド「ラブクロム」から「ポケモン」30周年を記念した特別モデルを2026年6月17日に発売すると発表した。今回のモデルは，「K24GPツキゴールド」と「K24GPバングスコームゴールド」に，それぞれピカチュウとイーブイのデザインをあしらったものだ。</description>
+      <title>【相場・高騰】【ポケカ】高騰必須!?ジムイベント配布プロモカード『ピカチュウ』入手方法完全解説【2026年】</title>
+      <link>https://news.google.com/rss/articles/CBMiZ0FVX3lxTE15Z2ZSQmo2NTNiQWp0M0U2Tm9IUGh2d2I1RE1Kay1TbmhJYjVUVTBZM2o1UW1vYllUN2RBTlREbHdLQmNQdXIyX0NEYWtZazJNNHpRYVRIQ2FCNDI0QkRiY1Z1eG5wbG8?oc=5</link>
+      <description>出典: ポケカポケット開封日記</description>
+      <pubDate>Tue, 23 Jun 2026 22:00:00 +0000</pubDate>
     </item>
     <item>
-      <title>スマホ版「Pok&amp;#233;mon Champions」，配信日を6月17日に決定。ライチュウと，メガシンカ用のアイテムが手に入るキャンペーンが実施決定</title>
-      <link>https://www.4gamer.net/games/886/G088683/20260604001/</link>
-      <description>ポケモンは2026年6月4日，新作タイトル「Pok&amp;#233;monChampions」について，スマートフォン版の配信日を6月17日に決定したと発表した。スマートフォン版の配信を記念して，ポケモン「ライチュウ」と，メガシンカ用のアイテム「ライチュウナイトＸ」「ライチュウナイトＹ」のプレゼントキャンペーンが実施予定だ。</description>
+      <title>【新弾・予約】『ポケカ』構築済みデッキ「スターターセットex」が7月31日発売！「イーブイ」「ゾロア＆ゾロアーク」「ニャオハ＆マスカーニャ」の3種類</title>
+      <link>https://news.google.com/rss/articles/CBMiakFVX3lxTE5TS04xOUhjTDBWd2tpVi1iT0F5QUZQRzUyM0YxQXR0eDNFZHVDcXFETjhrSGlTV3Uxd1FwV0R3QVZfMlpfSjRTa1BzRTRSeExNYl9ia0FRbThTQlM4TmpGdUZaZkwwME1fN1E?oc=5</link>
+      <description>出典: インサイド</description>
+      <pubDate>Thu, 25 Jun 2026 22:00:00 +0000</pubDate>
     </item>
     <item>
-      <title>「ぽこ あ ポケモン」に無料アップデートと有料DLC「エキスパンションパス」が登場。第1弾「ブクブクうみぞこの街」は2026年8月配信</title>
-      <link>https://www.4gamer.net/games/945/G094534/20260609074/</link>
-      <description>ポケモンは本日（2026年6月9日），NintendoDirect2026.6.9にて，発売中のNintendoSwitch2用ソフト「ぽこあポケモン」の無料アップデートおよび有料追加コンテンツ「エキスパンションパス」を発表した。</description>
+      <title>【新弾・予約】『ポケカ』拡張パック「ストームエメラルダ」収録カード初公開！目玉の「メガレックウザex」や、2枚1組で使う強力なスタジアムも登場</title>
+      <link>https://news.google.com/rss/articles/CBMiakFVX3lxTFBjWVBqa1dPcXU2dW0tTTF4dy01OXdBSjA0UGd3eldrTTFwTjJ1TlBzNDIzY1FhN0pjTXpKSmFxVlYtM1YyYlYxSVlsNVNQUTFXZ1o0TlZrUU9fQ3BkODVVRG43YTZKbXJBMmc?oc=5</link>
+      <description>出典: インサイド</description>
+      <pubDate>Thu, 25 Jun 2026 22:00:00 +0000</pubDate>
     </item>
     <item>
-      <title>「ポケットモンスター」シリーズの歴代ゲームソフトのパッケージがデザインされたグッズが登場。Tシャツやピンズなどを6月18日にリリース</title>
-      <link>https://www.4gamer.net/games/897/G089789/20260612038/</link>
-      <description>ポケモンは2026年6月12日，「ポケットモンスター」シリーズの歴代ゲームソフトパッケージがデザインされたアパレルやグッズを，6月18日にポケモンセンターオンラインで発売すると発表した。商品ラインナップを一挙掲載しよう。</description>
+      <title>【新弾・予約】ポケモンカード新パック「ストームエメラルダ」収録カード発表 メガレックウザex・ファイアローex・ぼうけんのランタンなど詳細説明</title>
+      <link>https://news.google.com/rss/articles/CBMiWkFVX3lxTFAzcDBndjkzLWFFcVEwVEhNMFNXUUY0NWpQOGUwQlZraXM4TG5heGVaY1BUYlIyNWtnamw4dlBlSE83TkhKcDk3UTF0MWk0dkRDaHI4cFNyXzh3Zw?oc=5</link>
+      <description>出典: オリコンニュース</description>
+      <pubDate>Thu, 25 Jun 2026 22:00:00 +0000</pubDate>
     </item>
     <item>
-      <title>世界中のトレーナーとポケモンバトルできる「Pok&amp;#00233;mon Champions」，スマホ版が配信</title>
-      <link>https://www.4gamer.net/games/886/G088683/20260617029/</link>
-      <description>ポケモンは本日（2026年6月17日），スマホ版「Pok&amp;#00233;monChampions」の配信を開始した。本作は，世界中のトレーナーとポケモンバトルできるゲームだ。スマホ版のリリースに合わせて，「ランクバトルシーズンM-3」「バトルパスシーズンM-3」もスタートした。</description>
+      <title>【新弾・予約】【ポケカ】拡張パック『ストームエメラルダ』カードリスト＆商品紹介【メガレックウザex】</title>
+      <link>https://news.google.com/rss/articles/CBMidEFVX3lxTFBwWDV1YjZXM1pIRkFsQ0pURjdEbUctWWR6XzNFQnFZZFNaYjJmNkxDcnJ0d3diVGFBOE9LZDQ5UGU1N3pINGhGWU5KRE4zMFp2YkhLWHBuYUswZUVxVkV1NFNiTkwzdXRuMDk1anBHZmhyd3I2?oc=5</link>
+      <description>出典: ポケカポケット開封日記</description>
+      <pubDate>Fri, 26 Jun 2026 22:00:00 +0000</pubDate>
     </item>
     <item>
-      <title>「ぽこ あ ポケモン」幻のポケモン「ジラーチ」が登場する期間限定イベントを6月23日に開始。七夕モチーフの家具も登場</title>
-      <link>https://www.4gamer.net/games/945/G094534/20260618045/</link>
-      <description>ポケモンは本日，NintendoSwitch2用ソフト「ぽこあポケモン」で，幻のポケモン「ジラーチ」が登場する期間限定イベント「ジラーチのキラキラたんざくあつめ」を6月23日5：00に開始すると発表した。イベントではジラーチと友達になれる。</description>
+      <title>【新弾・予約】しまむらの『ポケカ』抽選販売が締切間近！拡張パック「アビスアイ」「インフェルノX」各1BOXをラインナップ</title>
+      <link>https://news.google.com/rss/articles/CBMiakFVX3lxTE93dk0zLVRqYnUyTW5YemQ1WnZBQ0x6Rk10ZHN3em5YX05VbUJJRVlUWVpDaUtTQzNWeXY5UEo4dVlERDZhalNxb3ZvXy1VYXVjb2dwMmtqM1pXVFZXYWZrMlo5LXg1ZU00emc?oc=5</link>
+      <description>出典: インサイド</description>
+      <pubDate>Sat, 27 Jun 2026 22:00:00 +0000</pubDate>
     </item>
     <item>
-      <title>「ポケモン」シリーズ歴代ゲームソフトのパッケージがデザインされたグッズ，一部商品が早期完売に。各種再販を予定</title>
-      <link>https://www.4gamer.net/games/991/G999106/20260618047/</link>
-      <description>ポケモンは本日（2026年6月18日），「ポケットモンスター」シリーズの歴代ゲームソフトのパッケージをデザインしたグッズについて，各種再販を予定していると発表した。</description>
+      <title>【相場・高騰】【ポケカ】インフェルノXの当たりランキング/買取相場/封入率/レア別相場/値段まとめ【7/1更新】</title>
+      <link>https://news.google.com/rss/articles/CBMiTEFVX3lxTFBQdUl3MkpBSV9tVjVLeU9SZUFYNmRGck1MUXFFRUFwUFBPaGhSV0pPLXJxLUhlQTc0cHBwd1NqNE5vOE1BcnBlWC1SSEs?oc=5</link>
+      <description>出典: SNKRDUNK</description>
+      <pubDate>Tue, 30 Jun 2026 22:00:00 +0000</pubDate>
     </item>
     <item>
-      <title>「ポケカ」＆「ポケポケ」，双方でメガレックウザ収録の新拡張パックを7月末にリリース。特別なキャンペーン開催に向けた特設サイトがオープン</title>
-      <link>https://www.4gamer.net/games/256/G025620/20260618078/</link>
-      <description>ポケモンは本日（2026年6月18日），リアルカードゲーム「ポケモンカードゲームMEGA」と，デジタルカードゲーム「Pok&amp;#233;monTradingCardGamePocket」の双方で，新拡張パックを7月末にリリースすると発表した。さまざまな場所でメガレックウザに出会える「宙駆けるメガレックウザキャンペーン」も開催される。</description>
+      <title>【相場・高騰】定価5800円の「ポケモンカード」12箱を買取に出した結果… 「とんでもない買取金額」に驚きの声（LIMO）</title>
+      <link>https://news.google.com/rss/articles/CBMiiAFBVV95cUxQUFN2eUVSZG1LajlDQW9lOGhwbEpuQy02ZWx4UGJLcFptNV9LdG9GcE54V0xhTUxYYW5UZDBzeUpUOVNodUsyV2d3bE9uU25sSEZtZmZsUnlIWlpfcWZkMXltck9QZFlHWjFCV2VpRkV5NW5jTlBHSTQyZ24yR2N2UkFKd1hSUmdK?oc=5</link>
+      <description>出典: Yahoo!ニュース</description>
+      <pubDate>Wed, 01 Jul 2026 22:00:00 +0000</pubDate>
     </item>
     <item>
-      <title>ポケモン，「ひつじのショーン」制作スタジオとタッグを組んだ新作ストップモーションアニメ「ネギガナイトとピチューの冒険」のオフィシャルアートを公開</title>
-      <link>https://www.4gamer.net/games/991/G999103/20260622012/</link>
-      <description>ポケモンは本日（2026年6月22日），アードマン・アニメーションズとタッグを組んだ新作ストップモーションアニメ，ポケモンテイルズ「ネギガナイトとピチューの冒険」のオフィシャルアートを公開した。</description>
+      <title>【新弾・予約】【2026.07.03】※応募は終了しました「ポケモンカードゲームMEGA スタートデッキ100 バトルコレクション（再販）」</title>
+      <link>https://news.google.com/rss/articles/CBMiREFVX3lxTFBUWV84MFlWTngyc0FJaG85RFBYS2gzRlp3YnN1VWtPOWF5NlQzT2dXSlA2aUI5QjBoZURXM3lXVDRhTk16?oc=5</link>
+      <description>出典: ホビーステーション</description>
+      <pubDate>Thu, 02 Jul 2026 22:00:00 +0000</pubDate>
     </item>
     <item>
-      <title>「Pok&amp;#00233;mon Sleep」のリアルイベント「横浜でみっけ！ポケモンねがおリサーチ」，7月17日より横浜みなとみらいで開催</title>
-      <link>https://www.4gamer.net/games/462/G046207/20260622018/</link>
-      <description>ポケモンは本日（2026年6月22日），スマホアプリ「Pok&amp;#00233;monSleep」が2026年7月20日にリリース3周年を迎えるのを記念し，リアルイベント「横浜でみっけ！ポケモンねがおリサーチ」を，7月17日から8月23日まで横浜みなとみらいにて，三菱地所と共催すると発表した。</description>
+      <title>【新弾・予約】【2026.07.03】※応募は終了しました「当選者代金前払い必要 ポケモンカードゲームMEGA 拡張パック ストームエメラルダ」</title>
+      <link>https://news.google.com/rss/articles/CBMiREFVX3lxTFBaQ1JDekVFVTZvWm9ZcHNuSVpiMGx1b2tIX0cyOWstcEFqbm9Pb0NHcWl4bXFvQ3ZkUFhrVnU3QnBWa0tK?oc=5</link>
+      <description>出典: ホビーステーション</description>
+      <pubDate>Thu, 02 Jul 2026 22:00:00 +0000</pubDate>
     </item>
     <item>
-      <title>今夜22時から放送の「RADIO 4Gamer Tap（仮）」では，スマホ版「Pok&amp;#00233;mon Champions」を紹介します</title>
-      <link>https://www.4gamer.net/games/886/G088683/20260619048/</link>
-      <description>本日（2026年6月23日）22：00より，文化放送のオリジナル配信プラットフォーム「QloveR」と，YouTubeチャンネル「4GamerSP」にて，「RADIO4GamerTap（仮）」第301回のライブ配信を行います。今回は，ポケモンが6月17日にリリースしたスマホ版「Pok&amp;#00233;monChampions」を紹介します。</description>
+      <title>【新弾・予約】まだ間に合う！『ポケカ』新弾「ストームエメラルダ」がAmazonで抽選販売 1枚目の写真・画像</title>
+      <link>https://news.google.com/rss/articles/CBMid0FVX3lxTE9lbUJmckFJcHprRkNscDFjRlJmeHI0U2VVV1NLVEstM1BVbGFxNmU5MUVXWV9lUERTdWZ6cWRCNm95LWRTYk96UlZ6RWtYcktLWldrN0gtNTBZNmZPN2ljck9ETWRUYlVpQngtVGx5MFlCZG5OTG84?oc=5</link>
+      <description>出典: インサイド</description>
+      <pubDate>Fri, 03 Jul 2026 00:30:03 +0000</pubDate>
     </item>
     <item>
-      <title>リカバリーウェア「BAKUNE」と「Pok&amp;#00233;mon Sleep」がコラボ。7月1日より順次発売</title>
-      <link>https://www.4gamer.net/games/462/G046207/20260623030/</link>
-      <description>TENTIALは本日（2026年6月23日），リカバリーウェア「BAKUNE」とスマホアプリ「Pok&amp;#00233;monSleep」のコラボ製品を，7月1日より同社公式オンラインストアと実店舗で順次発売する。今回は，眠っているポケモンたちを描いた「BAKUNEDry」「BAKUNEPajamasDry」「BAKUNEアイマスク」が展開される。</description>
+      <title>【新弾・予約】大注目の『ポケカ』30周年記念商品「30th CELEBRATION エーフィ・ブラッキーセット」がAmazonで抽選販売！2匹のデッキや特別カードを収録</title>
+      <link>https://news.google.com/rss/articles/CBMiakFVX3lxTE5HMkdwc3RvSUZDTzZzaDJRU2xPd201cGV0RHhRVXV3TTNMNHpRUUFmYm8tMWV2Q0JoNXUwek5XOTVfSlVUNHk1V1ZhalJETGxjYmt4RkV5WWV5dWdnMTNmNENFd3dNT19nbmc?oc=5</link>
+      <description>出典: インサイド</description>
+      <pubDate>Sat, 04 Jul 2026 22:00:00 +0000</pubDate>
     </item>
     <item>
-      <title>「Pok&amp;#233;mon Champions」が全世界累計で1000万ダウンロードを突破。ゲーム内では各種キャンペーンが開催中</title>
-      <link>https://www.4gamer.net/games/886/G088682/20260625060/</link>
-      <description>ポケモンは本日（2026年6月25日），NintendoSwitchとスマートフォン向けに配信中の「Pok&amp;#233;monChampions」が，全世界累計で1000万ダウンロードを突破したと発表した。本作は，ポケモンバトルをより深く，より手軽に楽しめるようにチューンナップされたタイトルだ。</description>
+      <title>【新弾・予約】激レアな『ポケカ』30周年記念商品「30th CELEBRATION カードセット」がAmazonで抽選販売中！御三家の特別カードを地方ごとに収録 5枚目の写真・画像</title>
+      <link>https://news.google.com/rss/articles/CBMid0FVX3lxTE9ldWlCcy12ZW1OaGZtV0tSdEFYYzFsaW1TT2stS3dTakpsTmg1M1RJMzZkSC1qYmhwUEdXLXNCYmVLRHFxZGlkVlVvdFFLXzRzZzBGMF81czFqZHE0WktZR0lRdlR6d29CamZDT1RBTHN4MDB3MHhZ?oc=5</link>
+      <description>出典: インサイド</description>
+      <pubDate>Sat, 04 Jul 2026 23:15:02 +0000</pubDate>
     </item>
     <item>
-      <title>「ポケポケ」の新たな拡張パック「ミラクルデイズ」が公開に。ポケモンたちのさまざまな「かわいい魅力」をテーマにしたカードを収録</title>
-      <link>https://www.4gamer.net/games/779/G077901/20260630003/</link>
-      <description>DeNAは本日（2026年6月30日），スマホアプリ「Pok&amp;#00233;monTradingCardGamePocket」で，新テーマ拡張パック「ミラクルデイズ」を公開した。本パックには，ポケモンたちのさまざまな「かわいい魅力」をテーマにしたカードが収録されている。</description>
+      <title>【新弾・予約】『ポケカ』30周年記念パック「30th CELEBRATION」がAmazonで抽選販売中！1BOX（20パック入り）</title>
+      <link>https://news.google.com/rss/articles/CBMigAFBVV95cUxPTm90aHpzWWptb3htVUhrMWU0emRFV2V4cTFqV0FIeXd5MXV6ZUhHU1VOeUZhRXpzeFRDTXByRmVIT1R3WERRNjc1U01sR2YwclRIVlVlRXhmQ1dFZ25OeUk1X1lQX3ZOOXVfM05fcFJxTGxSS3Jva1dWbWlhMDNTVg?oc=5</link>
+      <description>出典: インサイド</description>
+      <pubDate>Sun, 05 Jul 2026 22:00:00 +0000</pubDate>
     </item>
     <item>
-      <title>ポケモンデザインの「NEWクレラップ」「iremo（イレモ）」「Rakucho（ラクッチョ）」，7月1日より順次発売</title>
-      <link>https://www.4gamer.net/games/619/G061991/20260629029/</link>
-      <description>クレハは，ポケモンデザインの「NEWクレラップ」「iremo（イレモ）」「Rakucho（ラクッチョ）」を，本日（2026年7月1日）より順次発売する。今回は3ブランドから計8商品が展開される。</description>
+      <title>【新弾・予約】ポケカ 連 撃 ポケモン 最新情報 一撃マスター 連撃マスター発売 いちげき・れんげき のポケモンカードまとめ カードの強さについて解説 ポケカ解説 -</title>
+      <link>https://news.google.com/rss/articles/CBMiVEFVX3lxTE10Y3JvemY5RjE3aDVFczZlN043VVRsUTREb05OV0hmcmtLOFBMUXNrTFpEOU0taGRkdzhQNDM4Sk5OaWtPRHFIZnN1dUZLMGJha21pdw?oc=5</link>
+      <description>出典: richardajkeys.com</description>
+      <pubDate>Mon, 06 Jul 2026 12:49:30 +0000</pubDate>
     </item>
     <item>
-      <title>「Pokémon Sleep」，ナエトル，ヒコザル，ポッチャマが登場。イベント「横浜でみっけ！ポケモンねがおリサーチ」の詳細も公開</title>
-      <link>https://www.4gamer.net/games/462/G046207/20260701054/</link>
-      <description>ポケモンは本日（2026年7月1日），「PokémonSleep」3周年を記念したPVを公開し，イベント「横浜でみっけ！ポケモンねがおリサーチ」の詳細情報を公開した。イベントでは，スタンプラリーやオリジナルグッズ入りメガポケモンガチャ，グッズショップ，ゲーム内に登場するドリンクをイメージした販売するドリンクスタンドなどが展開される。</description>
+      <title>【鑑定・PSA】第三者鑑定で最高評価の初期ポケモンカード全102枚セットが121万米ドル（約1億9,955万円）で落札。公開販売における最高額を記録</title>
+      <link>https://news.google.com/rss/articles/CBMiiAFBVV95cUxNZ0d1T1RweGozYU9iRy01Qmc2MUlNU0ZFb0FoUVB5d0VSQVBNb0llN0wwbWNKbnFRQ1haOVFmMzZlVTdmNVRrcVRtZG9ybFFDNkp3U21YaXJhQjZEQUxER2F2RUZ6ckVDS2Vrd0RNdmhmUnRlbWxtVkxOeGVWb3VtRUpWaFNKU2do?oc=5</link>
+      <description>出典: Mantan Web</description>
+      <pubDate>Mon, 06 Jul 2026 17:58:34 +0000</pubDate>
     </item>
     <item>
-      <title>ポケモンのグッズ「へんしん！メタモン」シリーズに新作が登場。ミカルゲ，ゾロア，ニャオハなど7月9日に発売</title>
-      <link>https://www.4gamer.net/games/991/G999106/20260703033/</link>
-      <description>ポケモンは本日（2026年7月3日），グッズ「へんしん！メタモン」シリーズの新しいぬいぐるみとマスコットを，ポケモンセンターオンラインで7月9日10：00から，ポケモンセンターで7月11日に発売すると発表した。</description>
+      <title>【新弾・予約】【ポケポケ】ヨクバリス(ミラクルデイズ)の入手方法と収録パック【ポケモンカードアプリ】</title>
+      <link>https://news.google.com/rss/articles/CBMiWEFVX3lxTFBIRHljeTNaZURNNlZ5V1NsM0dfX1BhNENyQjZQR1F2aWVpVl91UldYMl9FajVJUjhqbVhMbWd5WWl6SzN5R25Vbjh5Z1lsaERlNWZLakZlNGc?oc=5</link>
+      <description>出典: GameWith</description>
+      <pubDate>Tue, 07 Jul 2026 16:25:33 +0000</pubDate>
     </item>
     <item>
-      <title>Ｊリーグ×ポケモンの記念すべき全60クラブコラボが始動！　節目と新たな始まりを彩る「ポケモンＪリーグフェス」の現時点の情報をまとめて紹介</title>
-      <link>https://www.4gamer.net/games/986/G098683/20260706044/</link>
-      <description>Ｊリーグとポケモンがコラボする「ポケモンＪリーグフェス」が始動！　Ｊ1からＪ3まで，全60クラブに“進化”をテーマにしたクラブパートナーポケモンが登場する。各クラブの組み合わせと，EVOBAG配布対象試合をまとめて紹介しよう。</description>
+      <title>【相場・高騰】【ポケカ】ニンジャスピナーの当たりランキングTOP20/買取相場/封入率/レア別相場/値段まとめ【7/9更新】</title>
+      <link>https://news.google.com/rss/articles/CBMiTEFVX3lxTE5ZUGViMXp4VUFKWkdvc1FKQjRvMVhKWnk1aTVzS2JENVJYa1FPLVVhYnd2cjhNNDJ4eTZkc3BqM29hdERwU25leEJ5bDA?oc=5</link>
+      <description>出典: SNKRDUNK</description>
+      <pubDate>Wed, 08 Jul 2026 22:00:00 +0000</pubDate>
     </item>
     <item>
-      <title>「ポケモンUT」第2弾，7月24日に発売決定。「ポケットモンスター赤・緑」の世界を再現したTシャツをラインナップ</title>
-      <link>https://www.4gamer.net/games/420/G042085/20260708009/</link>
-      <description>ユニクロは本日（2026年7月8日），「ポケットモンスター」の30周年を記念して「ポケモンUT」第2弾を7月24日に発売すると発表した。今回は，シリーズの原点である「ポケットモンスター赤・緑」より，オープニング画面やピカチュウなどを描いたTシャツがMENとKIDSで各4種，合計8種が展開される。</description>
+      <title>【新弾・予約】7月31日（金）発売 ポケモンカードゲーム関連商品の事前抽選について</title>
+      <link>https://news.google.com/rss/articles/CBMic0FVX3lxTFAyRXpMN1B6eVBGbG1lTXYwUkIyQzc0a2tXNGFWWlBwM2g4a19yalJsOTRxb0FGaDVCWFlIVkdLenRrR2ZEUi1TTUtHVXRvMDkzUk80blVlVWV1cHVXOG5PNmJvWktHVDN0U3RYNGhJZVBaRlE?oc=5</link>
+      <description>出典: ポケットモンスターオフィシャルサイト</description>
+      <pubDate>Thu, 09 Jul 2026 16:15:06 +0000</pubDate>
     </item>
     <item>
-      <title>「Pokémon Sleep」，イベント「3周年記念フェスティバル」の詳細情報を公開。定常的に使える新機能の登場を予定</title>
-      <link>https://www.4gamer.net/games/462/G046207/20260708018/</link>
-      <description>ポケモンは本日（2026年7月8日），「PokémonSleep」グローバルリリース3周年を記念したイベント「3周年記念フェスティバル」の詳細情報を公開した。新たにナエトル，ヒコザル，ポッチャマなどのポケモンが登場するだけでなく，さまざまなボーナスも用意されている。</description>
+      <title>【新弾・予約】『ポケカ』拡張パック「ストームエメラルダ」収録カード追加公開！「メガグソクムシャex」や、2枚1組で使うスタジアムがさらに登場</title>
+      <link>https://news.google.com/rss/articles/CBMigwFBVV95cUxOcW93MGoxckhQWkhEbzk1dUJESTVhNXdaS3M0VUVXZ1VVbFY5c3BtWnkyM1BsSWhqSTlkc0lYUjVNRnVGTDE1S3FqeWJuT0JSc1RqaXpQbG84ekxQZ3pHMHF4NjRWa0gxcjFDdV8wbEd6WmNXQWpOOThPWVZLUVA0NjRKWQ?oc=5</link>
+      <description>出典: インサイド</description>
+      <pubDate>Fri, 10 Jul 2026 00:15:02 +0000</pubDate>
     </item>
     <item>
-      <title>「ポケモン GO」，マクドナルドとパートナーシップを締結。「ポケモン夏マック」でさまざまな商品と企画を展開</title>
-      <link>https://www.4gamer.net/games/316/G031663/20260709010/</link>
-      <description>ポケモンは本日（2026年7月9日），「ポケモンGO」とマクドナルドのパートナーシップが締結したと発表した。2026年夏の特別企画として，「ポケモン夏マック」が実施される。</description>
+      <title>【新弾・予約】ポケモンカードの購入予約をしておらず、発売前には購入できないことも知りながらコンビニで嘘を言ってカード10箱分を騙し取ったとして逮捕された男性を不起訴処分 松江地検（日本海テレビ）</title>
+      <link>https://news.google.com/rss/articles/CBMif0FVX3lxTE1JWGlvWjFPM3RwMno4LWtSb2M1MF95TktKanJjNHkzdXBJZkZjejF0TEh4X0xJSTlGeERnNmxheFpMQzdDRjZGb3lZWnRfUUZ3YTYwa2JqS1RWQ2s3YzZqTV8yNGwxZ0gwMXJwLUxBRDIxN2JKN21CS2ZVazBpc00?oc=5</link>
+      <description>出典: Yahoo!ニュース</description>
+      <pubDate>Fri, 10 Jul 2026 12:10:00 +0000</pubDate>
     </item>
     <item>
-      <title>ポケモンセンターシブヤから「ミュウツー」がいなくなる。「ポケモンGO」のポケストップからも消える</title>
-      <link>https://www.4gamer.net/games/316/G031663/20260709048/</link>
-      <description>ポケモン公式アカウントは本日（2026年7月9日），ポケモンセンターシブヤから「ミュウツー」がいなくなったとポストした。</description>
+      <title>【新弾・予約】『ポケカ』30周年記念商品がセブンネットショッピングで抽選販売！拡張パック「30th CELEBRATION」と「エーフィ・ブラッキーセット」が対象</title>
+      <link>https://news.google.com/rss/articles/CBMiakFVX3lxTFA5TEhOMkhralhxRGtiM1RtZFFTaDgyeHRQTTdRR2ozSEM3YURxQlRzTmhCQ3RaYXczTTVRMU1kUE5Xd05fX25QQk1HbFRZRmNIVzQwZnRvRnlxbVFsb2lIYUhha0lUM3BKc1E?oc=5</link>
+      <description>出典: インサイド</description>
+      <pubDate>Fri, 10 Jul 2026 18:30:03 +0000</pubDate>
     </item>
     <item>
-      <title>「Pok&amp;#233;mon GO」と日本コカ・コーラがパートナーシップを締結。全国約3万台の対応自販機がアプリ内で「ポケストップ」として登場</title>
-      <link>https://www.4gamer.net/games/316/G031663/20260710050/</link>
-      <description>日本コカ・コーラは本日（2026年7月10日），ポケモンによるスマートフォン向け位置情報ゲーム「Pok&amp;#233;monGO」とのパートナーシップを締結したことを発表した。それに伴い，全国約3万台の対応自販機がアプリ内で「ポケストップ」として登場するようになった。</description>
+      <title>【新弾・予約】【ポケカ】30th CELEBRATION プレミアムデッキセット エーフィ・ブラッキーの収録カード・予約抽選情報まとめ</title>
+      <link>https://news.google.com/rss/articles/CBMiTEFVX3lxTE5hMW53cGE2X2J5UDNaLWRXTkIwaGV0UzZNaC1wYUVSZVNtTWZqenpFMWUyYUpuZDZsZFlkXzFNOXpnMnd3VXB2RElJQU0?oc=5</link>
+      <description>出典: SNKRDUNK</description>
+      <pubDate>Sat, 11 Jul 2026 22:00:00 +0000</pubDate>
     </item>
     <item>
-      <title>マクドナルド、ポケモン夏マック「ポケモン30周年バーガー」がオリジナルパッケージで登場！7月22日から期間限定販売開始</title>
-      <link>https://game.watch.impress.co.jp/docs/news/2125461.html</link>
-      <description>日本マクドナルドは、「ポケットモンスター（ポケモン）」とのコラボ商品「ポケモン30周年バーガー」を7月22日より期間限定販売する。価格は＜朝マック＞タルタルデミソーセージマフィン単品が420円など。</description>
+      <title>【新弾・予約】ポケカ 本人認証にデジタル庁アプリ導入 転売対策、8月抽選販売から開始予定（スポニチアネックス）</title>
+      <link>https://news.google.com/rss/articles/CBMif0FVX3lxTE1vS1BYVWNwZWdORWNhQW9RdUhaQkctakNQZXpTWVRiaFhTRkJadVNTSU9kcFhkTUFmLWl2MDBwY2gxOUJVVWNiZDNvakVySjZkTjBpM2NzMk9jSXNzdnB4MmtjMk1sMWpfbDRDcVl5cjlCVTZyZzJWaHBrcW9jcWM?oc=5</link>
+      <description>出典: Yahoo!ニュース</description>
+      <pubDate>Sun, 12 Jul 2026 21:12:52 +0000</pubDate>
     </item>
     <item>
-      <title>「ポケモンスリープ」、寝顔ピカチュウたちが横浜みなとみらいに登場！【横浜ランドマークタワー編】3周年リアルイベント「横浜でみっけ！ポケモンねがおリサーチ」</title>
-      <link>https://game.watch.impress.co.jp/docs/news/2125574.html</link>
-      <description>睡眠ゲームアプリ「Pokemon Sleep（ポケモンスリープ）」のリアルイベント「Pokémon Sleep 3rd Anniversary 横浜でみっけ！ポケモンねがおリサーチ presented by MITSUBISHI ESTATE GROUP」が7月17日より開催される。期間は8月23日まで。</description>
+      <title>【新弾・予約】【ポケモン】ポケセンオンラインにて本人認証機能を使ったポケカの抽選販売が8月に開始（GAME Watch）</title>
+      <link>https://news.google.com/rss/articles/CBMif0FVX3lxTFAtQ2tvdmlOSGQzdlJNY1AydENzazZWMC1MU0xYRW40OEdNVGNFNkd5UnBsMHdvQlZSeXZSbEItZ0xlLU1PQ1A2VVRGb3pkeWJKWTFHSEw5bVJ4bUhMM2RtTnoxbHo2N1h5MjNObTVnQWM5ZXFTMjN2SGlLZzZhVzQ?oc=5</link>
+      <description>出典: Yahoo!ニュース</description>
+      <pubDate>Sun, 12 Jul 2026 22:05:00 +0000</pubDate>
     </item>
     <item>
-      <title>「ポケモンスリープ」3周年イベントグッズを現地から写真で紹介ねがおポケモンのクッションなどが登場</title>
-      <link>https://game.watch.impress.co.jp/docs/news/2125603.html</link>
-      <description>横浜みなとみらいにて、7月17日より開催される睡眠ゲームアプリ「ポケモンスリープ」のリリース3周年記念イベント「横浜でみっけ！ポケモンねがおリサーチ」。本稿では、現地で販売されるオリジナルグッズを現地から先行してご紹介する。イベントの期間は8月23日まで。</description>
+      <title>【新弾・予約】ポケカ、本人確認にマイナカード「デジタル認証アプリ」 8月の抽選販売に導入 事前登録を呼び掛け（ITmedia NEWS）</title>
+      <link>https://news.google.com/rss/articles/CBMif0FVX3lxTE1rWVRFUVE5YlZMRzV2T1R6QjUyY2Zaam52WWdRUHJzVlpTTXpVa29KQVp0U05IOEd2ZXJTbFVpN3hvZ3NDS3d0aXZuM2hnaTV0NFM5Szg3UXhNOG9nUzNVdUYxdmdKdkhxUUdrRFdEWTZYdzhuVnQtOUVuNDloZFk?oc=5</link>
+      <description>出典: Yahoo!ニュース</description>
+      <pubDate>Mon, 13 Jul 2026 00:04:45 +0000</pubDate>
     </item>
     <item>
-      <title>「ポケモンスリープ」、横浜で寝顔イーブイたちを発見！【MARK IS みなとみらい編】3周年リアルイベント「横浜でみっけ！ポケモンねがおリサーチ」</title>
-      <link>https://game.watch.impress.co.jp/docs/news/2125638.html</link>
-      <description>睡眠ゲームアプリ「Pokemon Sleep（ポケモンスリープ）」のリアルイベント「Pokémon Sleep 3rd Anniversary 横浜でみっけ！ポケモンねがおリサーチ presented by MITSUBISHI ESTATE GROUP」が7月17日より開催される。期間は8月23日まで。</description>
+      <title>【新弾・予約】ポケカの抽選に「マイナンバーカード」が必要になるのか？転売目的の「複数アカウント」を完全に封じる!</title>
+      <link>https://news.google.com/rss/articles/CBMiTkFVX3lxTE1vczkyaHFvZlF5YXl0LTR4SUk5bzdIZXpRYVhvQmwyV19WYVFfSHFUUlNhUmZZeTloOGZxTTRHcVplNkJLZGprbkpyRGVMQQ?oc=5</link>
+      <description>出典: DXマガジン</description>
+      <pubDate>Tue, 14 Jul 2026 01:07:18 +0000</pubDate>
     </item>
     <item>
-      <title>「ポケモンスリープ」とタイアップ、トヨタ自動車の“昼寝ソリューション装置”を横浜で体験してきた脳波測定もしてくれるスッキリ仮眠体験</title>
-      <link>https://game.watch.impress.co.jp/docs/preview/2125713.html</link>
-      <description>横浜みなとみらいにて、昼寝や仮眠の重要さを体験できるツール「おひるねかいふく装置 supported by TOTONE」の無料体験が7月17日より開催される。期間は8月23日まで。</description>
+      <title>【新弾・予約】「メガレックウザex」のパッケージがカッコいい!『ポケカ』新弾「ストームエメラルダ」の抽選販売がヨドバシで実施</title>
+      <link>https://news.google.com/rss/articles/CBMikAVBVV95cUxPRlM5NTZlTmpBaUJrb3U1cnpNcHd5Y3VTQ25sZkR6cGtYbEh2ZTNaMUFzZmpfb19HczNHV2prRTZmRWhNMWxNTjZvSzA0UWFGbUU4UGlXMkczVXRJMU1xNkg1UURHR1ptbFJucUd4cHExb0tKQ01OMmRNZ2sxZHo3TWhUbF9ZZFpZY0J1bU5XNGNsWmpkNDBOY1U5ZzZvdXpQWV80bXYzYUJnR1RxMXN6QmRiUzJHbVdsYU83TWtpS2I3WDhrcUpoUWZNQmJMMzNBM0JwM3phajlNMXZGV21CaFo5WTZxcW1sUWZXRmhzVWVXSWtEaE9MdHVvV0dUb21JeGpyd3Iza2V0TWluVVhvTDA0b3NlR2p5bUx5WVVfcGVLcTZnSTljR3pWRmZnLUNXZzl0VnVkSmdyWV9udXk5SnFOazRZNzF5azNybDQtNkR1SGNFcXZuTDZBUk5UNEt4VlpHMk5PblhrTlNoYW51NnhwLU9UbjRxUGY4VW5Ib0RIX18tQWx1aFVSbEk4dlRvcWpJcUt4N3hDeVZSNVd4WUFzcGhwNWI3REtscjhKMjdYekZPQlJXX0xVUHBpaV8zRFNXeHZBWTExeV9HRUtfZjBDZkJaMHJtQ0NuY0tJSjNyLVg5UkRudVlKUTlDbi00MVAteWM4a09pWTZhN1lfelVMQXdjdHVrdUtrajBFbHZNTXhLcDc1RktmUjdWeFRJNVlLd090N2thM3F6QXo4Qkl6WmpTaFNoTm5VV1dYdzBrQ1RHNEpzSW1DcXAxVll1dVphc18wYTcwd09xZmlLalVyWEFyaVNiVHNPZzBOM1RmR0RTN1A4RkhNRldTNzk1amlFREhSaEt5X2Jpd3pydQ?oc=5</link>
+      <description>出典: MSN</description>
+      <pubDate>Tue, 14 Jul 2026 07:31:58 +0000</pubDate>
     </item>
     <item>
-      <title>初心者でも簡単に組み立てられる「ポケプラクイック!!」にニャースが登場！7月18日発売</title>
-      <link>https://www.ndw.jp/pokemon-goods-260715/</link>
-      <description>BANDAI SPIRITSより、「ポケモンプラモコレクション クイック!! 28　ニャース」が7月18日（土）に発売されます。 簡単に組み立てられる...</description>
-      <pubDate>Wed, 15 Jul 2026 04:28:22 +0000</pubDate>
+      <title>【新弾・予約】人気の『ポケカ』抽選販売がゲオで実施中!「ストームエメラルダ」「MEGA スターターセットex」各種の全4商品</title>
+      <link>https://news.google.com/rss/articles/CBMi0ARBVV95cUxQWmozdWdTY0V2X0cyWGJaMTlYZHFQcHNlc043cF9KUEZXUUpzNHVWTE84RFhrUUtMZHdEM0FaUzJuaHdTOVNqa1JSdVc0MnBXRlN2anBOclMwdjNHN1A2VnEyanpEY3dOb0lSXzFlNjFZdUdJU0JrVjJXVlR1OG16azlCSjRnaTg0RGEzLUZ0ckc1RjdIcGxrUHhUMElqRVh1cDRybkZmN18xaE5ONmY3dFlMMDgxZHZTT0kxWkhUeGF2Mm93aG5abjQ0d3l4cE42VjFOelZLRlBBTkIwRUg0LU1yVktxS09OdmhjQTJ2eW5RY2MyX05qdGl6S0JvYTlHOWNjYmxlcUdfOUxNWWxENk81dTRvTmZWMHFVa2tSRzhLS2RrS1M4aVdheE9KUjUxZExOMUJNUC02LUtvRHJEWXlIQ2RCZUVuajRTNFE0bHNZbnRrOUM4Um9LZ0FHTEVxazhDRmZ6Nno5d1d2MklaVy1CYVdBQnh2d2pEX2h3M3pfdVVydnpxeWtManJTYjVKY0RGYTNUY0t6Zm9oZU5tYnpwRERaNEx5SlZTZzZ1TW9YUThOTE1NYlBoSTZ1WFpid3RhRm9Idkw2ZTBCRVN1QTB6bG1JcWE2dlJ1U2Z2RjZkNmYtbnpRd3VwV19yTU5xcWN4Tm5uRTdCWEJWdVlTRjJlRVBidGZTN2xSbjhWTHFhY0poOUctTHpFQS10QmZNdHZCS3BBaFBONUI4d3hpV2k4V183dGxHSVp3Nk5jNFY1X2ZsX3hqWE5OaExubjZZ?oc=5</link>
+      <description>出典: MSN</description>
+      <pubDate>Tue, 14 Jul 2026 17:36:12 +0000</pubDate>
+    </item>
+    <item>
+      <title>【新弾・予約】7月31日（金）発売ポケモンカードゲーム関連商品の事前抽選について | お知らせ | ポケモンセンタートウキョーDX</title>
+      <link>https://news.google.com/rss/articles/CBMihwFBVV95cUxPVmZpYmxhQzAydmhZdUVHeTVUN0NfeFRUbWZvcnpxdzRxeVZQT2l3Y0wyaURfUFRoUmpVUEwzdXJaZk9IcVNISTctNmNiWnQzQXRlLWIwc1pSeC1HRFdiZUlrbFNTR1hCYXVmazhfdVQ4UzFvNWltSjgtQTl5M1hJZFM3eDRLQ1E?oc=5</link>
+      <description>出典: ポケットモンスターオフィシャルサイト</description>
+      <pubDate>Tue, 14 Jul 2026 21:51:45 +0000</pubDate>
+    </item>
+    <item>
+      <title>【新弾・予約】【ポケポケ】シャイニングメガの当たりカードと収録カード一覧【ポケモンカードアプリ】</title>
+      <link>https://news.google.com/rss/articles/CBMiWEFVX3lxTE9icFhhVFp1N1J2S21KNU9vUWtyWXlNTFVOYlM0UXlpVXU1dTA4TnZlS3BVRUk1ME1ja1o5WWZWcVV6QnpCS19CdDdlSGlDUk1LcUZfTVZEN0M?oc=5</link>
+      <description>出典: GameWith</description>
+      <pubDate>Wed, 15 Jul 2026 05:40:09 +0000</pubDate>
+    </item>
+    <item>
+      <title>【新弾・予約】【ポケポケ】進撃パラドックスの当たりカードと収録カード一覧【ポケモンカードアプリ】</title>
+      <link>https://news.google.com/rss/articles/CBMiWEFVX3lxTE4tNHJvX3BRdzUyRHVJRDBfZ1hzblJJcHIyeXFlbWhfQko0YlJuSzRvYjZjdFh6NDVoRmx2bkdKN1E4V3hwM0hwSFRyeWYwbjI2V0o3ZHFSM2Y?oc=5</link>
+      <description>出典: GameWith</description>
+      <pubDate>Wed, 15 Jul 2026 08:22:26 +0000</pubDate>
+    </item>
+    <item>
+      <title>【新弾・予約】【ポケカ】30th CELEBRATION(30th セレブレーション)の予約・抽選情報まとめ【7/16更新】</title>
+      <link>https://news.google.com/rss/articles/CBMiTEFVX3lxTE16Y1BNa2hNSWxFV2JrY1hqWVE0WEFYZXphTFVIQXJSWjJvUjNvNV9xUWRsWFE5RklTY3BnWDJYaUVWaUhMdmI1ZnRfdWg?oc=5</link>
+      <description>出典: SNKRDUNK</description>
+      <pubDate>Wed, 15 Jul 2026 13:10:18 +0000</pubDate>
+    </item>
+    <item>
+      <title>【新弾・予約】【ポケカ】スターターセットex「イーブイex」「ゾロア&amp;ゾロアークex」「ニャオハ&amp;マスカーニャex」の予約・抽選情報まとめ【7/14更新】</title>
+      <link>https://news.google.com/rss/articles/CBMiTEFVX3lxTE9KT3RUcXlaVjlfZnQxN1dnNy1IU3RuTmtKWVdIYjFFZlJQcUhkX0JueDllYmhlOVIwZlRyRlc3UFhBWFJXMWxvRHppSi0?oc=5</link>
+      <description>出典: SNKRDUNK</description>
+      <pubDate>Wed, 15 Jul 2026 14:11:17 +0000</pubDate>
+    </item>
+    <item>
+      <title>【新弾・予約】ファミマ、ポケカMEGA新商品「ストームエメラルダ」をファミマオンラインで抽選販売。2026年7月15日～7月20日まで抽選申し込み受け付け</title>
+      <link>https://news.google.com/rss/articles/CBMiXkFVX3lxTFBDY1ZDTk5jbmJtNkRqeWFjaDQzTm5VQl96TkRXWlNyZmc0R1kzTkVhWUtETDVUYVB0MEwydG9RNzJvbVVvNG96NVJmQ2pDVWdudzFweHZyeTROUjh6UUE?oc=5</link>
+      <description>出典: コンビニ チェッカー</description>
+      <pubDate>Wed, 15 Jul 2026 18:32:42 +0000</pubDate>
+    </item>
+    <item>
+      <title>【相場・高騰】【ポケカ】ポケモンカード151の当たりランキング/買取相場/封入率/予約抽選/値段まとめ</title>
+      <link>https://news.google.com/rss/articles/CBMiTEFVX3lxTFBmekkwUDE4RDlGRUNhLXl5NUhyb3IwaFg1YjFBRW9qcFVJdzdpb2NodEdyY0h0V3dwdVp2RHF3cU5yYWlHemlaUlZsSHM?oc=5</link>
+      <description>出典: SNKRDUNK</description>
+      <pubDate>Wed, 15 Jul 2026 20:08:08 +0000</pubDate>
+    </item>
+    <item>
+      <title>【相場・高騰】【ポケカ30周年】30th CELEBRATION(30th セレブレーション)の当たりランキング/買取相場/封入率/予約抽選/値段まとめ【2026年9月16日発売】</title>
+      <link>https://news.google.com/rss/articles/CBMiTEFVX3lxTE1ucWpSOW4zT25ORzEyS1Ezamo3YWVoaC03ODJ1SkVjMDlhbnlpNHpyb2QxbVdHdE1WVm1XTGIzRGNvaTZHNk92WGF4NGM?oc=5</link>
+      <description>出典: SNKRDUNK</description>
+      <pubDate>Wed, 15 Jul 2026 21:44:56 +0000</pubDate>
+    </item>
+    <item>
+      <title>【新弾・予約】【ポケポケ】パルデアワンダーの当たりカードと収録カード一覧【ポケモンカードアプリ】</title>
+      <link>https://news.google.com/rss/articles/CBMiWEFVX3lxTFBKMHgzSzV3OVVRRFYwcHRHdzBTQlFhenQ5bmF6bWhxZ0IzcFZsb2xMeGhQWDNCUW5MMFQwdGhOamFWUWJRRzhxd19xV3E3TnhtN19keHVzMHM?oc=5</link>
+      <description>出典: GameWith</description>
+      <pubDate>Wed, 15 Jul 2026 23:24:19 +0000</pubDate>
+    </item>
+    <item>
+      <title>【新弾・予約】ポケカが手に入らない人へ。『ストームエメラルダ』BOXが当たる。「カード抽選まとめ」がプレゼントキャンペーンを開催</title>
+      <link>https://news.google.com/rss/articles/CBMiakFVX3lxTFAzRDlfV3Flc3RIejBhdFROVlVrSjBERDRRUUh3eWlWdEJ0c2NxZlhfanpHWnJla3V0QlRHOG50T2VsSlhpVG9NeFhjYW5yWlFXMXF4WWdGYjBCOGFSaVN4R0NLMGxZWnlkbVE?oc=5</link>
+      <description>出典: PR TIMES</description>
+      <pubDate>Thu, 16 Jul 2026 01:00:01 +0000</pubDate>
+    </item>
+    <item>
+      <title>【新弾・予約】カード抽選まとめが贈る！ポケモンカード『ストームエメラルダ』未開封BOXプレゼントキャンペーン</title>
+      <link>https://news.google.com/rss/articles/CBMiR0FVX3lxTFAtX1VkS3NfZmVLMklnNHdyRUZ4RXdXNjdrc0lkQndHSUNya01QcTFqQno3bWdNSG9GeGRZeExvVkV4dTF3N284?oc=5</link>
+      <description>出典: ニュースメディアVOIX</description>
+      <pubDate>Thu, 16 Jul 2026 01:49:04 +0000</pubDate>
+    </item>
+    <item>
+      <title>【新弾・予約】【ポケカ】2026年の新弾発売スケジュールまとめ</title>
+      <link>https://news.google.com/rss/articles/CBMiTEFVX3lxTE1TMlp3bURLTXJiZ0dDYUhJeHJKQXpWbFlCc0RVZ2lHeFV0QlI5MUctNmtmSW5zeDJBOVZzT09ydzNCeFlnTVdId01hWHY?oc=5</link>
+      <description>出典: SNKRDUNK</description>
+      <pubDate>Thu, 16 Jul 2026 02:50:40 +0000</pubDate>
     </item>
   </channel>
 </rss>
