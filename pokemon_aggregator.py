@@ -20,12 +20,15 @@ import urllib.parse
 from datetime import datetime, timedelta, timezone
 
 import feedparser
+import requests
 from feedgen.feed import FeedGenerator
+from googlenewsdecoder import gnewsdecoder
 
 import llm_utils
 
 REPO_URL = "https://github.com/amon-jpn/pokemon_aggregator"
-ICON_URL = "https://raw.githubusercontent.com/amon-jpn/pokemon_aggregator/main/pikabou.jpg"
+PAGES_URL = "https://amon-jpn.github.io/pokemon_aggregator"
+ICON_URL = f"{PAGES_URL}/pikabou.jpg"
 OUTPUT_FILE = "pokemon_news.xml"
 ARCHIVE_FILE = "archive.json"
 
@@ -34,6 +37,7 @@ FEED_MAX_ITEMS = 60        # RSSに載せる最大件数
 SIMILARITY_THRESHOLD = 0.85  # タイトル類似度がこれを超えたら重複とみなす
 SCORE_THRESHOLD = 3        # 合計スコアがこの値以上の記事だけ採用
 SUMMARIZE_MAX_PER_RUN = 50  # 1回の実行でLLM要約を付ける最大記事数
+ENRICH_MAX_PER_RUN = 30    # 1回の実行で元記事URL・画像を取得する最大記事数
 
 
 def google_news_url(query: str) -> str:
@@ -228,12 +232,19 @@ def build_feed(entries):
     for item in entries[:FEED_MAX_ITEMS]:
         fe = fg.add_entry()
         fe.title(f"【{item['category']}】{item['title']}")
-        fe.link(href=item["link"])
+        # リンクは元記事URL優先。IDはGoogle NewsのURLで固定し、
+        # 後からreal_urlが付いてもRSSリーダー上で重複しないようにする
+        fe.link(href=item.get("real_url") or item["link"])
+        fe.guid(item["link"], permalink=False)
         source_note = f"出典: {item['source']}" if item["source"] else ""
         if item.get("summary"):
-            description = f"{item['summary']}（{source_note}）" if source_note else item["summary"]
+            text = f"{item['summary']}（{source_note}）" if source_note else item["summary"]
         else:
-            description = source_note or item["title"]
+            text = source_note or item["title"]
+        description = f"<p>{text}</p>"
+        if item.get("image"):
+            description = f'<img src="{item["image"]}" style="max-width:100%"/>{description}'
+            fe.enclosure(item["image"], 0, "image/jpeg")
         fe.description(description)
         fe.pubDate(datetime.fromisoformat(item["published"]))
 
@@ -243,8 +254,64 @@ def build_feed(entries):
         "<?xml version='1.0' encoding='UTF-8'?>",
         f'<?xml version="1.0" encoding="UTF-8"?>\n{style_line}',
     )
+    # Feedly等が対応するwebfeeds拡張でフィードアイコンを指定する
+    rss_content = rss_content.replace(
+        "<rss ", '<rss xmlns:webfeeds="http://webfeeds.org/rss/1.0" ', 1
+    )
+    rss_content = rss_content.replace(
+        "<channel>",
+        "<channel>\n"
+        f"    <webfeeds:icon>{ICON_URL}</webfeeds:icon>\n"
+        f"    <webfeeds:logo>{ICON_URL}</webfeeds:logo>\n"
+        "    <webfeeds:accentColor>FFCB05</webfeeds:accentColor>",
+        1,
+    )
     with open(OUTPUT_FILE, "w", encoding="utf-8") as f:
         f.write(rss_content)
+
+
+OG_IMAGE_PATTERN = re.compile(
+    r'<meta[^>]+property=["\']og:image["\'][^>]+content=["\']([^"\']+)["\']'
+    r'|<meta[^>]+content=["\']([^"\']+)["\'][^>]+property=["\']og:image["\']',
+    re.IGNORECASE,
+)
+
+
+def fetch_og_image(url):
+    """記事ページからOGP画像（サムネイル）のURLを取得する"""
+    try:
+        resp = requests.get(
+            url, timeout=10, headers={"User-Agent": "Mozilla/5.0 (pokemon_aggregator)"}
+        )
+        match = OG_IMAGE_PATTERN.search(resp.text[:300000])
+        if match:
+            return (match.group(1) or match.group(2)).strip()
+    except Exception:
+        pass
+    return ""
+
+
+def enrich_entries(archive):
+    """Google Newsのリダイレクトを元記事URLに変換し、サムネイル画像を取得する
+
+    失敗した記事にも空文字を記録し、毎回リトライし続けないようにする。
+    """
+    targets = [e for e in archive if "real_url" not in e][:ENRICH_MAX_PER_RUN]
+    resolved = 0
+    for entry in targets:
+        real_url = ""
+        try:
+            result = gnewsdecoder(entry["link"], interval=1)
+            if result.get("status"):
+                real_url = result["decoded_url"]
+        except Exception:
+            pass
+        entry["real_url"] = real_url
+        entry["image"] = fetch_og_image(real_url) if real_url else ""
+        if real_url:
+            resolved += 1
+    if targets:
+        print(f"🖼️ 元記事URL解決 {resolved}/{len(targets)}件")
 
 
 def add_summaries(archive):
@@ -266,6 +333,7 @@ def main():
     archive = load_archive()
     candidates = collect()
     archive, added = merge_into_archive(archive, candidates)
+    enrich_entries(archive)
     add_summaries(archive)
     save_archive(archive)
     build_feed(archive)

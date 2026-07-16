@@ -28,6 +28,8 @@ Google News RSS（カテゴリ別クエリ×3）
 archive.json に蓄積（実行をまたいだ重複排除・45日保持）
         │  URL完全一致 → タイトル類似度85% の2段階判定
         ▼
+元記事URLへの変換＋OGP画像（サムネイル）の取得
+        ▼
 Claude（Haiku）が各記事に一言解説を付与 ※APIキー設定時のみ
         ▼
 pokemon_news.xml（RSS 2.0、最新60件、カテゴリタグ付き）
@@ -52,6 +54,8 @@ archive.json（直近7日分）──▶ weekly_digest.py ──▶ digests/YYYY
 | フィード掲載件数・履歴保持期間 | `FEED_MAX_ITEMS` / `ARCHIVE_DAYS` |
 | 重複判定の厳しさ | `SIMILARITY_THRESHOLD` |
 | LLMのモデル・プロンプト | `llm_utils.py` の `MODEL` / 各プロンプト |
+| 画像・URL解決の件数/実行 | `ENRICH_MAX_PER_RUN` |
+| フィードのアイコン | `ICON_URL`（webfeeds拡張とチャンネル画像に使用） |
 | ダイジェストの構成・掲載週数 | `weekly_digest.py` |
 
 ### LLM機能の有効化（要APIキー）
@@ -78,7 +82,7 @@ python pokemon_aggregator.py
 ### 注意事項
 
 - **このリポジトリは公開されています。** APIキーや個人情報は絶対にコミットしないでください。秘匿値が必要な機能を追加する場合は GitHub Actions Secrets を使ってください。
-- Google News の記事リンクは `news.google.com` 経由のリダイレクトURLです（クリックすれば元記事に飛びます）。
+- Google News の記事リンクは `googlenewsdecoder` で元記事URLに変換しています。変換に失敗した記事は `news.google.com` 経由のリダイレクトURLのまま配信されます。
 
 ## 今後の改善アイデア
 
