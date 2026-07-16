@@ -1,0 +1,38 @@
+name: Weekly Digest
+
+on:
+  schedule:
+    # 日本時間 日曜 21:00 に実行
+    - cron: '0 12 * * 0'
+  workflow_dispatch: # 手動実行用ボタン
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Generate Weekly Digest
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: python weekly_digest.py
+
+      - name: Commit and Push
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git add digests digest.xml
+          git commit -m "Add weekly digest" || echo "No changes to commit"
+          git push
