@@ -317,6 +317,10 @@ header .tagline {{ font-size: .8rem; color: var(--text-sub); }}
   display: flex; align-items: center; justify-content: center; font-size: 2.6rem;
   background: linear-gradient(135deg, var(--border), var(--bg));
 }}
+/* モバイル: 画像がない記事はプレースホルダを出さずコンパクトに */
+@media (max-width: 640px) {{
+  .thumb-fallback {{ display: none; }}
+}}
 .card-body {{ display: flex; flex-direction: column; gap: 8px; padding: 15px 17px 17px; flex: 1; }}
 .card-meta {{ display: flex; align-items: center; gap: 8px; }}
 .badge {{
