@@ -8,8 +8,33 @@ ANTHROPIC_API_KEY が未設定（またはAPIエラー）の場合はすべて�
 
 import json
 import os
+import time
 
 MODEL = "claude-haiku-4-5"  # 1日4回の定期実行なのでコスト効率の良いHaikuを使用
+
+# SDK内蔵のリトライで解消しない一時的エラー（529 Overloadedなど）向けの追加リトライ
+RETRY_WAITS = [15, 60]  # 秒
+
+
+def _create_with_retry(client, **kwargs):
+    """messages.create を一時的エラー時のみ待機して再試行する。
+
+    認証エラーや不正リクエストなど恒久的なエラーは即座に投げ直す。
+    """
+    import anthropic
+
+    for wait in RETRY_WAITS:
+        try:
+            return client.messages.create(**kwargs)
+        except anthropic.APIConnectionError as e:
+            err = e
+        except anthropic.APIStatusError as e:
+            if e.status_code not in (408, 409, 429) and e.status_code < 500:
+                raise
+            err = e
+        print(f"⏳ 一時的なAPIエラーのため{wait}秒後に再試行します: {err}")
+        time.sleep(wait)
+    return client.messages.create(**kwargs)
 
 SYSTEM_PROMPT = (
     "あなたはポケモンカード（PSA鑑定・相場・新弾情報）のコレクター向け"
@@ -63,7 +88,8 @@ def summarize_entries(entries):
     )
     try:
         client = anthropic.Anthropic()
-        response = client.messages.create(
+        response = _create_with_retry(
+            client,
             model=MODEL,
             max_tokens=8000,
             system=SYSTEM_PROMPT,
@@ -113,7 +139,8 @@ def generate_digest_body(entries, week_label):
     )
     try:
         client = anthropic.Anthropic()
-        response = client.messages.create(
+        response = _create_with_retry(
+            client,
             model=MODEL,
             max_tokens=4000,
             system=SYSTEM_PROMPT,
