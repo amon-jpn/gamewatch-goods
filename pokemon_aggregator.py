@@ -243,7 +243,11 @@ def merge_into_archive(archive, candidates):
     known_links = {e["link"] for e in archive}
     known_titles = [e["title"] for e in archive]
     added = 0
+    # 保持期間より古い候補は追加してもすぐ削除されるだけなので最初から弾く
+    min_date = (datetime.now(timezone.utc) - timedelta(days=ARCHIVE_DAYS)).isoformat()
     for item in sorted(candidates, key=lambda x: x["published"], reverse=True):
+        if item["published"] < min_date:
+            continue
         if item["link"] in known_links:
             continue
         if is_duplicate(item["title"], known_titles):
