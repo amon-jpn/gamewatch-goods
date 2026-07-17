@@ -26,6 +26,7 @@ CATEGORY_STYLE = {
     "鑑定・PSA": {"color": "#7c5cbf", "emoji": "🔍"},
     "相場・高騰": {"color": "#2e9e5b", "emoji": "📈"},
     "新弾・予約": {"color": "#2a7fc9", "emoji": "🎁"},
+    "海外ニュース": {"color": "#d0642a", "emoji": "🌏"},
 }
 DEFAULT_STYLE = {"color": "#8a8a8a", "emoji": "📰"}
 

@@ -47,6 +47,17 @@ def google_news_url(query: str) -> str:
     return f"https://news.google.com/rss/search?q={q}&hl=ja&gl=JP&ceid=JP:ja"
 
 
+def google_news_url_en(query: str) -> str:
+    """英語圏Google News の検索クエリをRSS URLに変換する
+
+    PokeBeach等の海外専門サイトはCloudflareで直接アクセスを弾くため、
+    Google News経由で取得する（Googleのクロール済みデータが返るので
+    こちらから対象サイトへ直接アクセスする必要がない）。
+    """
+    q = urllib.parse.quote(query)
+    return f"https://news.google.com/rss/search?q={q}&hl=en-US&gl=US&ceid=US:en"
+
+
 # カテゴリごとの取得ソース。同じ記事が複数クエリにヒットした場合は
 # 先に書いたカテゴリが優先される。
 SOURCES = [
@@ -61,6 +72,17 @@ SOURCES = [
     {
         "category": "新弾・予約",
         "url": google_news_url('"ポケカ" OR "ポケモンカード" 新弾 OR 抽選 OR 予約 OR 発売 OR 収録'),
+    },
+    # 海外専門サイト。サイト限定検索なので全記事がTCC関連＝bonusで底上げし、
+    # NEGATIVE_KEYWORDS（TCG Pocket等）だけで弾く
+    {
+        "category": "海外ニュース",
+        "url": google_news_url_en("site:pokebeach.com OR site:pokeguardian.com"),
+        "bonus": 3,
+    },
+    {
+        "category": "海外ニュース",
+        "url": google_news_url_en('"Pokemon TCG" OR "Pokemon cards" PSA OR grading OR market OR price'),
     },
 ]
 
@@ -86,6 +108,17 @@ POSITIVE_KEYWORDS = {
     "開封": 1,
     "レアリティ": 1,
     "コレクション": 1,
+    # 英語圏ソース用
+    "Pokemon TCG": 2,
+    "Pokemon card": 2,  # "Pokemon cards" にも部分一致する
+    "grading": 2,
+    "graded": 2,
+    "reveal": 2,  # revealed / reveals にも一致
+    "expansion": 1,
+    "market": 1,
+    "price": 1,
+    "preorder": 1,
+    "pre-order": 1,
 }
 
 # 減点キーワード（コレクター無関係の話題を弾く）
@@ -100,6 +133,15 @@ NEGATIVE_KEYWORDS = {
     "映画": -3,
     "劇場版": -3,
     "ぬいぐるみ": -2,
+    # 英語圏ソース用（TCG Pocketはポケポケの英語名）
+    "TCG Pocket": -5,
+    "Pokemon GO": -5,
+    "Pokemon Unite": -5,
+    "Pokemon Sleep": -5,
+    # 競技プレイ（デッキ解説・メタ分析）はコレクター向けではないので弾く
+    "in Standard": -3,
+    "in Expanded": -3,
+    "Format": -2,
 }
 
 
@@ -180,7 +222,7 @@ def collect():
             if is_spam(title, source_name):
                 continue
             summary = strip_html(entry.get("summary", ""))
-            score = score_text(f"{title} {summary}")
+            score = score_text(f"{title} {summary}") + source.get("bonus", 0)
             if score < SCORE_THRESHOLD:
                 continue
             candidates.append(
