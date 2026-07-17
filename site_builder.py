@@ -241,6 +241,14 @@ header .tagline {{ font-size: .8rem; color: var(--text-sub); }}
   white-space: nowrap; font-weight: 700; font-size: .9rem;
   background: #1c1b18; color: #ffcb05; border-radius: 999px; padding: 9px 18px;
 }}
+/* モバイル: アイコンを消して縦積みにし、作者ラベルは改行して収める */
+@media (max-width: 640px) {{
+  .promo {{ flex-direction: column; align-items: flex-start; gap: 8px; padding: 14px 16px; }}
+  .promo-icon {{ display: none; }}
+  .promo-text {{ min-width: 0; }}
+  .promo-maker {{ display: block; width: fit-content; margin: 6px 0 0; }}
+  .promo-cta {{ align-self: stretch; text-align: center; }}
+}}
 .digest-box {{
   background: var(--surface); border: 1px solid var(--border); border-left: 4px solid var(--accent);
   border-radius: 10px; padding: 16px 18px; margin-bottom: 22px; box-shadow: var(--shadow);
