@@ -180,6 +180,72 @@ def translate_entries(entries):
         return {}
 
 
+def generate_digest_highlights(entries, week_label):
+    """1週間の要点を日英の箇条書き（4〜6項目）にまとめる（サイト表示用）。
+
+    戻り値は [{"ja": ..., "en": ...}, ...]。失敗時・キー未設定時は None。
+    """
+    if not api_available() or not entries:
+        return None
+    import anthropic
+
+    listing = "\n".join(
+        f"- [{e['category']}] {e['title']}"
+        + (f"（解説: {e['summary']}）" if e.get("summary") else "")
+        for e in entries
+    )
+    schema = {
+        "type": "object",
+        "properties": {
+            "highlights": {
+                "type": "array",
+                "items": {
+                    "type": "object",
+                    "properties": {
+                        "ja": {"type": "string"},
+                        "en": {"type": "string"},
+                    },
+                    "required": ["ja", "en"],
+                    "additionalProperties": False,
+                },
+            }
+        },
+        "required": ["highlights"],
+        "additionalProperties": False,
+    }
+    prompt = (
+        f"以下は{week_label}に収集したポケモンカード関連ニュースの一覧です。"
+        "コレクターにとって最重要なトピックだけを4〜6項目の箇条書きに凝縮してください。\n"
+        "- ja: 日本語で45字以内。「〜が発表」「〜が開始」のような簡潔な体言止め・短文\n"
+        "- en: 同じ内容の英語で15語以内\n"
+        "類似記事はまとめて1項目にすること。記事一覧から確実に読み取れる内容だけを使い、"
+        "価格などタイトルにない数値を創作しないこと。\n\n"
+        f"{listing}"
+    )
+    try:
+        client = anthropic.Anthropic()
+        response = _create_with_retry(
+            client,
+            model=MODEL,
+            max_tokens=2000,
+            system=SYSTEM_PROMPT,
+            messages=[{"role": "user", "content": prompt}],
+            output_config={
+                "format": {"type": "json_schema", "schema": schema}
+            },
+        )
+        text = next(b.text for b in response.content if b.type == "text")
+        highlights = json.loads(text)["highlights"]
+        return [
+            {"ja": h["ja"].strip(), "en": h["en"].strip()}
+            for h in highlights
+            if h["ja"].strip() and h["en"].strip()
+        ] or None
+    except Exception as e:
+        print(f"⚠️ LLMハイライト生成をスキップしました: {e}")
+        return None
+
+
 def generate_digest_body(entries, week_label):
     """1週間分の記事から週刊ダイジェスト本文（Markdown）を生成する。
 

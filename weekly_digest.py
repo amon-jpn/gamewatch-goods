@@ -105,6 +105,13 @@ def main():
     with open(path, "w", encoding="utf-8") as f:
         f.write(digest_md)
 
+    # サイトのダイジェスト欄用に、日英の箇条書きハイライトも保存する
+    highlights = llm_utils.generate_digest_highlights(entries, week_label)
+    if highlights:
+        with open(path.replace(".md", ".highlights.json"), "w", encoding="utf-8") as f:
+            json.dump(highlights, f, ensure_ascii=False, indent=1)
+        print(f"✨ ハイライト{len(highlights)}項目を保存しました")
+
     build_digest_feed([f for f in os.listdir(DIGEST_DIR) if f.endswith(".md")])
 
     # トップページのダイジェスト欄を最新化する

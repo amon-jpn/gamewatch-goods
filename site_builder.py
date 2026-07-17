@@ -13,10 +13,15 @@ archive.json の記事をカード型UIで一覧表示する静的ページを�
   初期値はOS設定に従い、選択はlocalStorageに保存する。
 - ページ送り: 全記事をHTMLに埋め込み、JSでページ分割して表示する
   （PER_PAGE件ずつ。カテゴリタブと連動し、切り替え時は1ページ目に戻る）。
+- ダイジェスト欄: weekly_digest.py が保存する digests/*.highlights.json
+  （日英の箇条書き）を優先表示し、なければ「今週のまとめ」段落を出す。
+- ホーム画面アイコン: apple-touch-icon.png / manifest.json（icon-192/512）を
+  参照する。元画像は pikabou.jpg。
 """
 
 import glob
 import html
+import json
 import os
 import re
 from datetime import datetime, timedelta, timezone
@@ -47,23 +52,42 @@ DEFAULT_STYLE = {"color": "#8a8a8a", "emoji": "📰", "en": "News"}
 # ライト/ダークのテーマ変数。メディアクエリ（OS設定）と
 # data-theme属性（手動切り替え）の両方から参照するため変数化している
 LIGHT_VARS = """
-  --bg: #f5f4f0;
+  --bg: #f6f5f1;
   --surface: #ffffff;
   --text: #1c1b18;
   --text-sub: #6e6a60;
-  --border: #e5e2da;
+  --border: #e7e4dc;
   --accent: #ffcb05;
-  --shadow: 0 1px 3px rgba(0,0,0,.06), 0 4px 14px rgba(0,0,0,.05);
+  --shadow: 0 1px 2px rgba(28,27,24,.04), 0 8px 24px rgba(28,27,24,.06);
+  --shadow-hover: 0 2px 6px rgba(28,27,24,.08), 0 16px 40px rgba(28,27,24,.12);
 """
 DARK_VARS = """
-  --bg: #16151a;
-  --surface: #201f26;
-  --text: #ece9e2;
-  --text-sub: #9b968c;
-  --border: #33313b;
+  --bg: #131217;
+  --surface: #1e1d24;
+  --text: #edeae3;
+  --text-sub: #9d988e;
+  --border: #302e38;
   --accent: #ffcb05;
-  --shadow: 0 1px 3px rgba(0,0,0,.4);
+  --shadow: 0 1px 2px rgba(0,0,0,.3), 0 8px 24px rgba(0,0,0,.35);
+  --shadow-hover: 0 2px 6px rgba(0,0,0,.4), 0 16px 40px rgba(0,0,0,.5);
 """
+
+SUN_SVG = (
+    '<svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" '
+    'stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4.2"/>'
+    '<path d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5 5l1.6 1.6M17.4 17.4L19 19M19 5l-1.6 1.6M6.6 17.4L5 19"/></svg>'
+)
+MOON_SVG = (
+    '<svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" '
+    'stroke-width="2" stroke-linecap="round" stroke-linejoin="round">'
+    '<path d="M20.5 14.2A8.5 8.5 0 1 1 9.8 3.5a7 7 0 0 0 10.7 10.7z"/></svg>'
+)
+
+
+def hex_rgba(hex_color, alpha):
+    h = hex_color.lstrip("#")
+    r, g, b = int(h[0:2], 16), int(h[2:4], 16), int(h[4:6], 16)
+    return f"rgba({r},{g},{b},{alpha})"
 
 
 def bilingual(ja, en):
@@ -78,22 +102,27 @@ def format_dates(iso_str):
     return ja, en
 
 
-def latest_digest_summary():
-    """最新の週刊ダイジェストから「今週のまとめ」を取り出す。
-
-    LLMなしのフォールバック形式（まとめ節がない）の場合は None を返し、
-    ページ側はリンクだけを表示する。
-    """
+def latest_digest():
+    """最新の週刊ダイジェストの日付・「今週のまとめ」・日英ハイライトを返す"""
     files = sorted(glob.glob(os.path.join(DIGEST_DIR, "*.md")))
     if not files:
-        return None, None
+        return None, None, None
     path = files[-1]
     date_str = os.path.basename(path).replace(".md", "")
     with open(path, encoding="utf-8") as f:
         text = f.read()
     match = re.search(r"## 今週のまとめ\s*\n+(.+?)(?=\n## |\Z)", text, re.DOTALL)
     summary = match.group(1).strip() if match else None
-    return date_str, summary
+
+    highlights = None
+    hl_path = path.replace(".md", ".highlights.json")
+    if os.path.exists(hl_path):
+        try:
+            with open(hl_path, encoding="utf-8") as f:
+                highlights = json.load(f)
+        except Exception:
+            pass
+    return date_str, summary, highlights
 
 
 def render_card(item):
@@ -121,12 +150,13 @@ def render_card(item):
         if summary_ja or summary_en else ""
     )
     source_html = f'<span class="source">{source}</span>' if source else ""
+    badge_style = f"background:{hex_rgba(style['color'], 0.13)};color:{style['color']}"
 
     return f"""      <a class="card" href="{url}" target="_blank" rel="noopener" data-cat="{category}">
         {thumb}
         <div class="card-body">
           <div class="card-meta">
-            <span class="badge" style="background:{style['color']}">{bilingual(category, category_en)}</span>
+            <span class="badge" style="{badge_style}">{bilingual(category, category_en)}</span>
             {new_chip}
             <span class="date">{bilingual(date_ja, date_en)}</span>
           </div>
@@ -154,16 +184,27 @@ def render_promo():
 
 
 def render_digest_box():
-    date_str, summary = latest_digest_summary()
+    date_str, summary, highlights = latest_digest()
     if not date_str:
         return ""
     link = f"{REPO_URL}/blob/main/{DIGEST_DIR}/{date_str}.md"
-    summary_html = f"<p>{html.escape(summary)}</p>" if summary else ""
     label = bilingual("週刊ダイジェスト", "Weekly Digest")
     read = bilingual("全文を読む →", "Read the full digest (Japanese) →")
+
+    if highlights:
+        items = "\n".join(
+            f"      <li>{bilingual(html.escape(h['ja']), html.escape(h['en']))}</li>"
+            for h in highlights
+        )
+        body = f'    <ul class="digest-points">\n{items}\n    </ul>'
+    elif summary:
+        body = f"    <p>{html.escape(summary)}</p>"
+    else:
+        body = ""
+
     return f"""    <section class="digest-box">
-      <div class="digest-label">📮 {label}（{html.escape(date_str)}）</div>
-      {summary_html}
+      <div class="digest-label">📮 {label}<span class="digest-date">{html.escape(date_str)}</span></div>
+{body}
       <a href="{link}" target="_blank" rel="noopener">{read}</a>
     </section>"""
 
@@ -189,7 +230,10 @@ def build_site(entries):
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>ポケカ コレクターニュース | Pokémon TCG Collector News</title>
 <meta name="description" content="PSA鑑定・相場・新弾情報など、ポケモンカードのコレクター向けニュースを自動収集して毎日更新">
-<link rel="icon" href="pikabou.jpg">
+<meta name="theme-color" content="#ffcb05">
+<link rel="icon" href="icon-192.png" type="image/png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="manifest" href="manifest.json">
 <link rel="alternate" type="application/rss+xml" title="ポケカ コレクターニュース" href="pokemon_news.xml">
 <style>
 :root {{{LIGHT_VARS}}}
@@ -198,69 +242,105 @@ def build_site(entries):
 }}
 :root[data-theme="dark"] {{{DARK_VARS}}}
 * {{ box-sizing: border-box; margin: 0; padding: 0; }}
+html {{ -webkit-text-size-adjust: 100%; }}
 body {{
   background: var(--bg); color: var(--text);
-  font-family: "Hiragino Sans", "Yu Gothic UI", "Yu Gothic", Meiryo, system-ui, sans-serif;
-  line-height: 1.6;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Hiragino Sans",
+    "Yu Gothic UI", "Yu Gothic", Meiryo, sans-serif;
+  line-height: 1.65;
+  transition: background .25s ease, color .25s ease;
 }}
 /* 日英切り替え: lang-enクラスの有無で対になったspan/要素の表示を切り替える */
 body:not(.lang-en) .en {{ display: none !important; }}
 body.lang-en .ja {{ display: none !important; }}
-.wrap {{ max-width: 1080px; margin: 0 auto; padding: 0 20px 60px; }}
-header {{
-  display: flex; align-items: center; gap: 14px; flex-wrap: wrap;
-  padding: 28px 0 18px; border-bottom: 3px solid var(--accent); margin-bottom: 20px;
+.wrap {{ max-width: 1080px; margin: 0 auto; padding: 0 20px 64px; }}
+.topbar {{
+  display: flex; justify-content: flex-end; align-items: center; gap: 10px;
+  padding: 14px 0 0;
 }}
-header img {{ width: 52px; height: 52px; border-radius: 12px; }}
-header h1 {{ font-size: 1.45rem; letter-spacing: .02em; }}
-header .tagline {{ font-size: .8rem; color: var(--text-sub); }}
-.header-right {{ margin-left: auto; display: flex; align-items: center; gap: 10px; }}
 .lang-switch {{
-  display: flex; border: 1px solid var(--border); border-radius: 999px; overflow: hidden;
-  background: var(--surface);
+  display: flex; padding: 3px; border-radius: 999px;
+  background: var(--surface); border: 1px solid var(--border); box-shadow: var(--shadow);
 }}
 .lang-btn {{
-  font: inherit; font-size: .75rem; cursor: pointer; border: none; background: none;
-  color: var(--text-sub); padding: 5px 12px;
+  font: inherit; font-size: .74rem; font-weight: 600; cursor: pointer;
+  border: none; background: none; color: var(--text-sub);
+  padding: 4px 12px; border-radius: 999px; transition: all .2s ease;
 }}
 .lang-btn.active {{ background: var(--accent); color: #1c1b18; font-weight: 700; }}
 .theme-btn {{
-  font: inherit; font-size: .9rem; cursor: pointer; line-height: 1;
-  border: 1px solid var(--border); border-radius: 999px; padding: 6px 10px;
-  background: var(--surface);
+  display: flex; align-items: center; justify-content: center;
+  width: 34px; height: 34px; cursor: pointer; color: var(--text-sub);
+  border: 1px solid var(--border); border-radius: 999px;
+  background: var(--surface); box-shadow: var(--shadow);
+  transition: color .2s ease, transform .2s ease;
 }}
+.theme-btn:hover {{ color: var(--text); transform: rotate(15deg); }}
+.theme-btn svg {{ width: 17px; height: 17px; }}
+.theme-btn .icon-sun {{ display: none; }}
+:root[data-theme="dark"] .theme-btn .icon-sun {{ display: block; }}
+:root[data-theme="dark"] .theme-btn .icon-moon {{ display: none; }}
+header {{
+  display: flex; align-items: center; gap: 14px;
+  padding: 14px 0 20px; margin-bottom: 24px; position: relative;
+}}
+header::after {{
+  content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 3px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--accent) 0%, var(--accent) 30%, transparent 100%);
+}}
+header img {{ width: 52px; height: 52px; border-radius: 14px; }}
+header h1 {{ font-size: 1.4rem; letter-spacing: .01em; line-height: 1.35; }}
+header .tagline {{ font-size: .8rem; color: var(--text-sub); }}
 .promo {{
   display: flex; align-items: center; gap: 16px; text-decoration: none; color: #1c1b18;
-  background: linear-gradient(120deg, #ffcb05, #ffe27a);
-  border-radius: 12px; padding: 16px 20px; margin-bottom: 22px;
-  box-shadow: var(--shadow); transition: transform .15s ease, box-shadow .15s ease;
+  background: linear-gradient(120deg, #ffcb05, #ffdf66);
+  border-radius: 16px; padding: 18px 22px; margin-bottom: 20px;
+  box-shadow: var(--shadow); transition: transform .2s ease, box-shadow .2s ease;
 }}
-.promo:hover {{ transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,0,0,.15); }}
+.promo:hover {{ transform: translateY(-2px); box-shadow: var(--shadow-hover); }}
 .promo-text {{ flex: 1; min-width: 0; }}
-.promo-name {{ font-weight: 800; font-size: 1.05rem; }}
-.promo-copy {{ font-size: .85rem; color: rgba(28,27,24,.8); }}
+.promo-name {{ font-weight: 800; font-size: 1.08rem; letter-spacing: .01em; }}
+.promo-copy {{ font-size: .85rem; color: rgba(28,27,24,.78); }}
 .promo-cta {{
-  white-space: nowrap; font-weight: 700; font-size: .9rem;
-  background: #1c1b18; color: #ffcb05; border-radius: 999px; padding: 9px 18px;
+  white-space: nowrap; font-weight: 700; font-size: .88rem;
+  background: #1c1b18; color: #ffcb05; border-radius: 999px; padding: 10px 20px;
+  transition: transform .2s ease;
 }}
+.promo:hover .promo-cta {{ transform: translateX(3px); }}
 /* モバイル: 縦積みにしてCTAを全幅にする */
 @media (max-width: 640px) {{
-  .promo {{ flex-direction: column; align-items: flex-start; gap: 8px; padding: 14px 16px; }}
+  .promo {{ flex-direction: column; align-items: flex-start; gap: 8px; padding: 16px; }}
   .promo-cta {{ align-self: stretch; text-align: center; }}
 }}
 .digest-box {{
-  background: var(--surface); border: 1px solid var(--border); border-left: 4px solid var(--accent);
-  border-radius: 10px; padding: 16px 18px; margin-bottom: 22px; box-shadow: var(--shadow);
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 16px; padding: 18px 20px; margin-bottom: 20px; box-shadow: var(--shadow);
 }}
-.digest-label {{ font-weight: 700; font-size: .9rem; margin-bottom: 6px; }}
-.digest-box p {{ font-size: .88rem; color: var(--text-sub); margin-bottom: 8px; }}
-.digest-box a {{ font-size: .85rem; color: inherit; font-weight: 600; }}
-.tabs {{ display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 20px; }}
+.digest-label {{
+  display: flex; align-items: baseline; gap: 8px;
+  font-weight: 700; font-size: .92rem; margin-bottom: 10px;
+}}
+.digest-date {{ font-size: .74rem; font-weight: 500; color: var(--text-sub); }}
+.digest-box p {{ font-size: .87rem; color: var(--text-sub); margin-bottom: 10px; }}
+.digest-points {{ list-style: none; margin-bottom: 12px; }}
+.digest-points li {{
+  position: relative; padding-left: 18px; font-size: .87rem;
+  color: var(--text-sub); margin-bottom: 6px;
+}}
+.digest-points li::before {{
+  content: ""; position: absolute; left: 2px; top: .58em;
+  width: 7px; height: 7px; border-radius: 999px; background: var(--accent);
+}}
+.digest-box > a {{ font-size: .83rem; color: inherit; font-weight: 600; }}
+.tabs {{ display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 22px; }}
 .tab {{
-  font: inherit; font-size: .85rem; cursor: pointer;
+  font: inherit; font-size: .84rem; font-weight: 500; cursor: pointer;
   background: var(--surface); color: var(--text-sub);
   border: 1px solid var(--border); border-radius: 999px; padding: 7px 16px;
+  transition: all .2s ease;
 }}
+.tab:hover {{ border-color: var(--accent); color: var(--text); }}
 .tab.active {{ background: var(--accent); color: #1c1b18; border-color: var(--accent); font-weight: 700; }}
 .grid {{
   display: grid; gap: 18px;
@@ -268,71 +348,76 @@ header .tagline {{ font-size: .8rem; color: var(--text-sub); }}
 }}
 .card {{
   display: flex; flex-direction: column; overflow: hidden;
-  background: var(--surface); border: 1px solid var(--border); border-radius: 12px;
+  background: var(--surface); border: 1px solid var(--border); border-radius: 16px;
   box-shadow: var(--shadow); text-decoration: none; color: inherit;
-  transition: transform .15s ease, box-shadow .15s ease;
+  transition: transform .2s ease, box-shadow .2s ease;
 }}
-.card:hover {{ transform: translateY(-3px); box-shadow: 0 6px 20px rgba(0,0,0,.12); }}
+.card:hover {{ transform: translateY(-3px); box-shadow: var(--shadow-hover); }}
 .thumb {{ width: 100%; aspect-ratio: 16/9; object-fit: cover; display: block; }}
 .thumb-fallback {{
   display: flex; align-items: center; justify-content: center; font-size: 2.6rem;
   background: linear-gradient(135deg, var(--border), var(--bg));
 }}
-.card-body {{ display: flex; flex-direction: column; gap: 8px; padding: 14px 16px 16px; flex: 1; }}
+.card-body {{ display: flex; flex-direction: column; gap: 8px; padding: 15px 17px 17px; flex: 1; }}
 .card-meta {{ display: flex; align-items: center; gap: 8px; }}
 .badge {{
-  color: #fff; font-size: .68rem; font-weight: 700; letter-spacing: .03em;
-  border-radius: 4px; padding: 3px 8px;
+  font-size: .68rem; font-weight: 700; letter-spacing: .03em;
+  border-radius: 999px; padding: 3px 10px;
 }}
 .new-chip {{
-  background: var(--accent); color: #1c1b18; font-size: .65rem; font-weight: 800;
-  border-radius: 4px; padding: 3px 6px;
+  background: var(--accent); color: #1c1b18; font-size: .63rem; font-weight: 800;
+  letter-spacing: .05em; border-radius: 999px; padding: 3px 8px;
 }}
-.date {{ margin-left: auto; font-size: .75rem; color: var(--text-sub); }}
-.card-title {{ font-size: .95rem; line-height: 1.5; font-weight: 700; }}
+.date {{ margin-left: auto; font-size: .74rem; color: var(--text-sub); }}
+.card-title {{ font-size: .95rem; line-height: 1.55; font-weight: 700; }}
 .summary {{ font-size: .82rem; color: var(--text-sub); }}
 .card-footer {{ margin-top: auto; }}
-.source {{ font-size: .75rem; color: var(--text-sub); }}
+.source {{ font-size: .74rem; color: var(--text-sub); }}
 .pager {{
-  display: flex; justify-content: center; gap: 8px; flex-wrap: wrap; margin-top: 28px;
+  display: flex; justify-content: center; gap: 8px; flex-wrap: wrap; margin-top: 32px;
 }}
 .page-btn {{
-  font: inherit; font-size: .9rem; cursor: pointer; min-width: 40px;
+  font: inherit; font-size: .9rem; cursor: pointer; min-width: 42px;
   background: var(--surface); color: var(--text-sub);
-  border: 1px solid var(--border); border-radius: 8px; padding: 7px 12px;
+  border: 1px solid var(--border); border-radius: 12px; padding: 8px 12px;
+  transition: all .2s ease; box-shadow: var(--shadow);
 }}
+.page-btn:hover:not(:disabled):not(.active) {{ border-color: var(--accent); color: var(--text); }}
 .page-btn.active {{ background: var(--accent); color: #1c1b18; border-color: var(--accent); font-weight: 700; }}
-.page-btn:disabled {{ opacity: .4; cursor: default; }}
+.page-btn:disabled {{ opacity: .35; cursor: default; box-shadow: none; }}
 footer {{
-  margin-top: 48px; padding-top: 20px; border-top: 1px solid var(--border);
+  margin-top: 52px; padding-top: 22px; border-top: 1px solid var(--border);
 }}
-.feed-links {{ display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 14px; }}
+.feed-links {{ display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 16px; }}
 .feed-links a {{
-  font-size: .78rem; color: var(--text-sub); text-decoration: none;
+  font-size: .78rem; font-weight: 500; color: var(--text-sub); text-decoration: none;
   border: 1px solid var(--border); border-radius: 999px; padding: 6px 14px;
-  background: var(--surface);
+  background: var(--surface); transition: all .2s ease;
 }}
 .feed-links a:hover {{ border-color: var(--accent); color: var(--text); }}
 .footer-meta {{
-  font-size: .78rem; color: var(--text-sub); display: flex; gap: 16px; flex-wrap: wrap;
+  font-size: .77rem; color: var(--text-sub); display: flex; gap: 16px; flex-wrap: wrap;
 }}
 .footer-meta a {{ color: inherit; }}
 </style>
 </head>
 <body>
 <div class="wrap">
+  <div class="topbar">
+    <div class="lang-switch">
+      <button class="lang-btn" data-lang="ja">日本語</button>
+      <button class="lang-btn" data-lang="en">EN</button>
+    </div>
+    <button class="theme-btn" id="theme-btn" aria-label="テーマ切り替え">
+      {SUN_SVG}
+      {MOON_SVG}
+    </button>
+  </div>
   <header>
     <img src="pikabou.jpg" alt="">
     <div>
       <h1>{bilingual("ポケカ コレクターニュース", "Pokémon TCG Collector News")}</h1>
       <div class="tagline">{bilingual("PSA鑑定・相場・新弾情報を自動収集して毎日更新", "PSA grading, market prices &amp; new set news — auto-curated daily")}</div>
-    </div>
-    <div class="header-right">
-      <div class="lang-switch">
-        <button class="lang-btn" data-lang="ja">日本語</button>
-        <button class="lang-btn" data-lang="en">EN</button>
-      </div>
-      <button class="theme-btn" id="theme-btn" aria-label="テーマ切り替え">🌙</button>
     </div>
   </header>
 {render_promo()}
@@ -377,7 +462,6 @@ const themeBtn = document.getElementById('theme-btn');
 function setTheme(theme) {{
   document.documentElement.dataset.theme = theme;
   localStorage.setItem('theme', theme);
-  themeBtn.textContent = theme === 'dark' ? '☀️' : '🌙';
 }}
 themeBtn.addEventListener('click', () =>
   setTheme(document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark'));

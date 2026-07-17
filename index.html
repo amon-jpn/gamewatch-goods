@@ -5,102 +5,144 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>ポケカ コレクターニュース | Pokémon TCG Collector News</title>
 <meta name="description" content="PSA鑑定・相場・新弾情報など、ポケモンカードのコレクター向けニュースを自動収集して毎日更新">
-<link rel="icon" href="pikabou.jpg">
+<meta name="theme-color" content="#ffcb05">
+<link rel="icon" href="icon-192.png" type="image/png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="manifest" href="manifest.json">
 <link rel="alternate" type="application/rss+xml" title="ポケカ コレクターニュース" href="pokemon_news.xml">
 <style>
 :root {
-  --bg: #f5f4f0;
+  --bg: #f6f5f1;
   --surface: #ffffff;
   --text: #1c1b18;
   --text-sub: #6e6a60;
-  --border: #e5e2da;
+  --border: #e7e4dc;
   --accent: #ffcb05;
-  --shadow: 0 1px 3px rgba(0,0,0,.06), 0 4px 14px rgba(0,0,0,.05);
+  --shadow: 0 1px 2px rgba(28,27,24,.04), 0 8px 24px rgba(28,27,24,.06);
+  --shadow-hover: 0 2px 6px rgba(28,27,24,.08), 0 16px 40px rgba(28,27,24,.12);
 }
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
-  --bg: #16151a;
-  --surface: #201f26;
-  --text: #ece9e2;
-  --text-sub: #9b968c;
-  --border: #33313b;
+  --bg: #131217;
+  --surface: #1e1d24;
+  --text: #edeae3;
+  --text-sub: #9d988e;
+  --border: #302e38;
   --accent: #ffcb05;
-  --shadow: 0 1px 3px rgba(0,0,0,.4);
+  --shadow: 0 1px 2px rgba(0,0,0,.3), 0 8px 24px rgba(0,0,0,.35);
+  --shadow-hover: 0 2px 6px rgba(0,0,0,.4), 0 16px 40px rgba(0,0,0,.5);
 }
 }
 :root[data-theme="dark"] {
-  --bg: #16151a;
-  --surface: #201f26;
-  --text: #ece9e2;
-  --text-sub: #9b968c;
-  --border: #33313b;
+  --bg: #131217;
+  --surface: #1e1d24;
+  --text: #edeae3;
+  --text-sub: #9d988e;
+  --border: #302e38;
   --accent: #ffcb05;
-  --shadow: 0 1px 3px rgba(0,0,0,.4);
+  --shadow: 0 1px 2px rgba(0,0,0,.3), 0 8px 24px rgba(0,0,0,.35);
+  --shadow-hover: 0 2px 6px rgba(0,0,0,.4), 0 16px 40px rgba(0,0,0,.5);
 }
 * { box-sizing: border-box; margin: 0; padding: 0; }
+html { -webkit-text-size-adjust: 100%; }
 body {
   background: var(--bg); color: var(--text);
-  font-family: "Hiragino Sans", "Yu Gothic UI", "Yu Gothic", Meiryo, system-ui, sans-serif;
-  line-height: 1.6;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Hiragino Sans",
+    "Yu Gothic UI", "Yu Gothic", Meiryo, sans-serif;
+  line-height: 1.65;
+  transition: background .25s ease, color .25s ease;
 }
 /* 日英切り替え: lang-enクラスの有無で対になったspan/要素の表示を切り替える */
 body:not(.lang-en) .en { display: none !important; }
 body.lang-en .ja { display: none !important; }
-.wrap { max-width: 1080px; margin: 0 auto; padding: 0 20px 60px; }
-header {
-  display: flex; align-items: center; gap: 14px; flex-wrap: wrap;
-  padding: 28px 0 18px; border-bottom: 3px solid var(--accent); margin-bottom: 20px;
+.wrap { max-width: 1080px; margin: 0 auto; padding: 0 20px 64px; }
+.topbar {
+  display: flex; justify-content: flex-end; align-items: center; gap: 10px;
+  padding: 14px 0 0;
 }
-header img { width: 52px; height: 52px; border-radius: 12px; }
-header h1 { font-size: 1.45rem; letter-spacing: .02em; }
-header .tagline { font-size: .8rem; color: var(--text-sub); }
-.header-right { margin-left: auto; display: flex; align-items: center; gap: 10px; }
 .lang-switch {
-  display: flex; border: 1px solid var(--border); border-radius: 999px; overflow: hidden;
-  background: var(--surface);
+  display: flex; padding: 3px; border-radius: 999px;
+  background: var(--surface); border: 1px solid var(--border); box-shadow: var(--shadow);
 }
 .lang-btn {
-  font: inherit; font-size: .75rem; cursor: pointer; border: none; background: none;
-  color: var(--text-sub); padding: 5px 12px;
+  font: inherit; font-size: .74rem; font-weight: 600; cursor: pointer;
+  border: none; background: none; color: var(--text-sub);
+  padding: 4px 12px; border-radius: 999px; transition: all .2s ease;
 }
 .lang-btn.active { background: var(--accent); color: #1c1b18; font-weight: 700; }
 .theme-btn {
-  font: inherit; font-size: .9rem; cursor: pointer; line-height: 1;
-  border: 1px solid var(--border); border-radius: 999px; padding: 6px 10px;
-  background: var(--surface);
+  display: flex; align-items: center; justify-content: center;
+  width: 34px; height: 34px; cursor: pointer; color: var(--text-sub);
+  border: 1px solid var(--border); border-radius: 999px;
+  background: var(--surface); box-shadow: var(--shadow);
+  transition: color .2s ease, transform .2s ease;
 }
+.theme-btn:hover { color: var(--text); transform: rotate(15deg); }
+.theme-btn svg { width: 17px; height: 17px; }
+.theme-btn .icon-sun { display: none; }
+:root[data-theme="dark"] .theme-btn .icon-sun { display: block; }
+:root[data-theme="dark"] .theme-btn .icon-moon { display: none; }
+header {
+  display: flex; align-items: center; gap: 14px;
+  padding: 14px 0 20px; margin-bottom: 24px; position: relative;
+}
+header::after {
+  content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 3px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--accent) 0%, var(--accent) 30%, transparent 100%);
+}
+header img { width: 52px; height: 52px; border-radius: 14px; }
+header h1 { font-size: 1.4rem; letter-spacing: .01em; line-height: 1.35; }
+header .tagline { font-size: .8rem; color: var(--text-sub); }
 .promo {
   display: flex; align-items: center; gap: 16px; text-decoration: none; color: #1c1b18;
-  background: linear-gradient(120deg, #ffcb05, #ffe27a);
-  border-radius: 12px; padding: 16px 20px; margin-bottom: 22px;
-  box-shadow: var(--shadow); transition: transform .15s ease, box-shadow .15s ease;
+  background: linear-gradient(120deg, #ffcb05, #ffdf66);
+  border-radius: 16px; padding: 18px 22px; margin-bottom: 20px;
+  box-shadow: var(--shadow); transition: transform .2s ease, box-shadow .2s ease;
 }
-.promo:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,0,0,.15); }
+.promo:hover { transform: translateY(-2px); box-shadow: var(--shadow-hover); }
 .promo-text { flex: 1; min-width: 0; }
-.promo-name { font-weight: 800; font-size: 1.05rem; }
-.promo-copy { font-size: .85rem; color: rgba(28,27,24,.8); }
+.promo-name { font-weight: 800; font-size: 1.08rem; letter-spacing: .01em; }
+.promo-copy { font-size: .85rem; color: rgba(28,27,24,.78); }
 .promo-cta {
-  white-space: nowrap; font-weight: 700; font-size: .9rem;
-  background: #1c1b18; color: #ffcb05; border-radius: 999px; padding: 9px 18px;
+  white-space: nowrap; font-weight: 700; font-size: .88rem;
+  background: #1c1b18; color: #ffcb05; border-radius: 999px; padding: 10px 20px;
+  transition: transform .2s ease;
 }
+.promo:hover .promo-cta { transform: translateX(3px); }
 /* モバイル: 縦積みにしてCTAを全幅にする */
 @media (max-width: 640px) {
-  .promo { flex-direction: column; align-items: flex-start; gap: 8px; padding: 14px 16px; }
+  .promo { flex-direction: column; align-items: flex-start; gap: 8px; padding: 16px; }
   .promo-cta { align-self: stretch; text-align: center; }
 }
 .digest-box {
-  background: var(--surface); border: 1px solid var(--border); border-left: 4px solid var(--accent);
-  border-radius: 10px; padding: 16px 18px; margin-bottom: 22px; box-shadow: var(--shadow);
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 16px; padding: 18px 20px; margin-bottom: 20px; box-shadow: var(--shadow);
 }
-.digest-label { font-weight: 700; font-size: .9rem; margin-bottom: 6px; }
-.digest-box p { font-size: .88rem; color: var(--text-sub); margin-bottom: 8px; }
-.digest-box a { font-size: .85rem; color: inherit; font-weight: 600; }
-.tabs { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 20px; }
+.digest-label {
+  display: flex; align-items: baseline; gap: 8px;
+  font-weight: 700; font-size: .92rem; margin-bottom: 10px;
+}
+.digest-date { font-size: .74rem; font-weight: 500; color: var(--text-sub); }
+.digest-box p { font-size: .87rem; color: var(--text-sub); margin-bottom: 10px; }
+.digest-points { list-style: none; margin-bottom: 12px; }
+.digest-points li {
+  position: relative; padding-left: 18px; font-size: .87rem;
+  color: var(--text-sub); margin-bottom: 6px;
+}
+.digest-points li::before {
+  content: ""; position: absolute; left: 2px; top: .58em;
+  width: 7px; height: 7px; border-radius: 999px; background: var(--accent);
+}
+.digest-box > a { font-size: .83rem; color: inherit; font-weight: 600; }
+.tabs { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 22px; }
 .tab {
-  font: inherit; font-size: .85rem; cursor: pointer;
+  font: inherit; font-size: .84rem; font-weight: 500; cursor: pointer;
   background: var(--surface); color: var(--text-sub);
   border: 1px solid var(--border); border-radius: 999px; padding: 7px 16px;
+  transition: all .2s ease;
 }
+.tab:hover { border-color: var(--accent); color: var(--text); }
 .tab.active { background: var(--accent); color: #1c1b18; border-color: var(--accent); font-weight: 700; }
 .grid {
   display: grid; gap: 18px;
@@ -108,71 +150,76 @@ header .tagline { font-size: .8rem; color: var(--text-sub); }
 }
 .card {
   display: flex; flex-direction: column; overflow: hidden;
-  background: var(--surface); border: 1px solid var(--border); border-radius: 12px;
+  background: var(--surface); border: 1px solid var(--border); border-radius: 16px;
   box-shadow: var(--shadow); text-decoration: none; color: inherit;
-  transition: transform .15s ease, box-shadow .15s ease;
+  transition: transform .2s ease, box-shadow .2s ease;
 }
-.card:hover { transform: translateY(-3px); box-shadow: 0 6px 20px rgba(0,0,0,.12); }
+.card:hover { transform: translateY(-3px); box-shadow: var(--shadow-hover); }
 .thumb { width: 100%; aspect-ratio: 16/9; object-fit: cover; display: block; }
 .thumb-fallback {
   display: flex; align-items: center; justify-content: center; font-size: 2.6rem;
   background: linear-gradient(135deg, var(--border), var(--bg));
 }
-.card-body { display: flex; flex-direction: column; gap: 8px; padding: 14px 16px 16px; flex: 1; }
+.card-body { display: flex; flex-direction: column; gap: 8px; padding: 15px 17px 17px; flex: 1; }
 .card-meta { display: flex; align-items: center; gap: 8px; }
 .badge {
-  color: #fff; font-size: .68rem; font-weight: 700; letter-spacing: .03em;
-  border-radius: 4px; padding: 3px 8px;
+  font-size: .68rem; font-weight: 700; letter-spacing: .03em;
+  border-radius: 999px; padding: 3px 10px;
 }
 .new-chip {
-  background: var(--accent); color: #1c1b18; font-size: .65rem; font-weight: 800;
-  border-radius: 4px; padding: 3px 6px;
+  background: var(--accent); color: #1c1b18; font-size: .63rem; font-weight: 800;
+  letter-spacing: .05em; border-radius: 999px; padding: 3px 8px;
 }
-.date { margin-left: auto; font-size: .75rem; color: var(--text-sub); }
-.card-title { font-size: .95rem; line-height: 1.5; font-weight: 700; }
+.date { margin-left: auto; font-size: .74rem; color: var(--text-sub); }
+.card-title { font-size: .95rem; line-height: 1.55; font-weight: 700; }
 .summary { font-size: .82rem; color: var(--text-sub); }
 .card-footer { margin-top: auto; }
-.source { font-size: .75rem; color: var(--text-sub); }
+.source { font-size: .74rem; color: var(--text-sub); }
 .pager {
-  display: flex; justify-content: center; gap: 8px; flex-wrap: wrap; margin-top: 28px;
+  display: flex; justify-content: center; gap: 8px; flex-wrap: wrap; margin-top: 32px;
 }
 .page-btn {
-  font: inherit; font-size: .9rem; cursor: pointer; min-width: 40px;
+  font: inherit; font-size: .9rem; cursor: pointer; min-width: 42px;
   background: var(--surface); color: var(--text-sub);
-  border: 1px solid var(--border); border-radius: 8px; padding: 7px 12px;
+  border: 1px solid var(--border); border-radius: 12px; padding: 8px 12px;
+  transition: all .2s ease; box-shadow: var(--shadow);
 }
+.page-btn:hover:not(:disabled):not(.active) { border-color: var(--accent); color: var(--text); }
 .page-btn.active { background: var(--accent); color: #1c1b18; border-color: var(--accent); font-weight: 700; }
-.page-btn:disabled { opacity: .4; cursor: default; }
+.page-btn:disabled { opacity: .35; cursor: default; box-shadow: none; }
 footer {
-  margin-top: 48px; padding-top: 20px; border-top: 1px solid var(--border);
+  margin-top: 52px; padding-top: 22px; border-top: 1px solid var(--border);
 }
-.feed-links { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 14px; }
+.feed-links { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 16px; }
 .feed-links a {
-  font-size: .78rem; color: var(--text-sub); text-decoration: none;
+  font-size: .78rem; font-weight: 500; color: var(--text-sub); text-decoration: none;
   border: 1px solid var(--border); border-radius: 999px; padding: 6px 14px;
-  background: var(--surface);
+  background: var(--surface); transition: all .2s ease;
 }
 .feed-links a:hover { border-color: var(--accent); color: var(--text); }
 .footer-meta {
-  font-size: .78rem; color: var(--text-sub); display: flex; gap: 16px; flex-wrap: wrap;
+  font-size: .77rem; color: var(--text-sub); display: flex; gap: 16px; flex-wrap: wrap;
 }
 .footer-meta a { color: inherit; }
 </style>
 </head>
 <body>
 <div class="wrap">
+  <div class="topbar">
+    <div class="lang-switch">
+      <button class="lang-btn" data-lang="ja">日本語</button>
+      <button class="lang-btn" data-lang="en">EN</button>
+    </div>
+    <button class="theme-btn" id="theme-btn" aria-label="テーマ切り替え">
+      <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5 5l1.6 1.6M17.4 17.4L19 19M19 5l-1.6 1.6M6.6 17.4L5 19"/></svg>
+      <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.5 14.2A8.5 8.5 0 1 1 9.8 3.5a7 7 0 0 0 10.7 10.7z"/></svg>
+    </button>
+  </div>
   <header>
     <img src="pikabou.jpg" alt="">
     <div>
       <h1><span class="ja">ポケカ コレクターニュース</span><span class="en">Pokémon TCG Collector News</span></h1>
       <div class="tagline"><span class="ja">PSA鑑定・相場・新弾情報を自動収集して毎日更新</span><span class="en">PSA grading, market prices &amp; new set news — auto-curated daily</span></div>
-    </div>
-    <div class="header-right">
-      <div class="lang-switch">
-        <button class="lang-btn" data-lang="ja">日本語</button>
-        <button class="lang-btn" data-lang="en">EN</button>
-      </div>
-      <button class="theme-btn" id="theme-btn" aria-label="テーマ切り替え">🌙</button>
     </div>
   </header>
     <a class="promo" href="https://pockettcg.app/?utm_source=pokeka_news" target="_blank" rel="noopener">
@@ -183,8 +230,8 @@ footer {
       <span class="promo-cta"><span class="ja">アプリを見る →</span><span class="en">Check it out →</span></span>
     </a>
     <section class="digest-box">
-      <div class="digest-label">📮 <span class="ja">週刊ダイジェスト</span><span class="en">Weekly Digest</span>（2026-07-17）</div>
-      <p>7月10日〜17日は、ポケモンカード30周年記念商品「30th CELEBRATION」と新弾「ストームエメラルダ」の抽選情報が相次ぎ報道されました。複数の販路（ファミマ、ゲオ、ヨドバシ、セブンネット、ポケセンなど）で抽選販売が実施・予定されています。また、8月から転売対策としてマイナンバーカードのデジタル認証機能をポケセンオンライン抽選販売に導入することが発表され、本人確認強化の流れが本格化します。</p>
+      <div class="digest-label">📮 <span class="ja">週刊ダイジェスト</span><span class="en">Weekly Digest</span><span class="digest-date">2026-07-17</span></div>
+    <p>7月10日〜17日は、ポケモンカード30周年記念商品「30th CELEBRATION」と新弾「ストームエメラルダ」の抽選情報が相次ぎ報道されました。複数の販路（ファミマ、ゲオ、ヨドバシ、セブンネット、ポケセンなど）で抽選販売が実施・予定されています。また、8月から転売対策としてマイナンバーカードのデジタル認証機能をポケセンオンライン抽選販売に導入することが発表され、本人確認強化の流れが本格化します。</p>
       <a href="https://github.com/amon-jpn/pokemon_aggregator/blob/main/digests/2026-07-17.md" target="_blank" rel="noopener"><span class="ja">全文を読む →</span><span class="en">Read the full digest (Japanese) →</span></a>
     </section>
   <nav class="tabs">
@@ -195,7 +242,7 @@ footer {
         <div class="thumb thumb-fallback">🌏</div>
         <div class="card-body">
           <div class="card-meta">
-            <span class="badge" style="background:#d0642a"><span class="ja">海外ニュース</span><span class="en">International</span></span>
+            <span class="badge" style="background:rgba(208,100,42,0.13);color:#d0642a"><span class="ja">海外ニュース</span><span class="en">International</span></span>
             <span class="new-chip">NEW</span>
             <span class="date"><span class="ja">7月17日(金)</span><span class="en">Jul 17 (Fri)</span></span>
           </div>
@@ -208,7 +255,7 @@ footer {
         <div class="thumb thumb-fallback">🌏</div>
         <div class="card-body">
           <div class="card-meta">
-            <span class="badge" style="background:#d0642a"><span class="ja">海外ニュース</span><span class="en">International</span></span>
+            <span class="badge" style="background:rgba(208,100,42,0.13);color:#d0642a"><span class="ja">海外ニュース</span><span class="en">International</span></span>
             
             <span class="date"><span class="ja">7月16日(木)</span><span class="en">Jul 16 (Thu)</span></span>
           </div>
@@ -221,7 +268,7 @@ footer {
         <img class="thumb" src="https://cdn.snkrdunk.com/uploads/media/20251222061410-0.jpeg" alt="" loading="lazy" onerror="this.outerHTML='<div class=&quot;thumb thumb-fallback&quot;>🎁</div>'">
         <div class="card-body">
           <div class="card-meta">
-            <span class="badge" style="background:#2a7fc9"><span class="ja">新弾・予約</span><span class="en">New Sets &amp; Preorders</span></span>
+            <span class="badge" style="background:rgba(42,127,201,0.13);color:#2a7fc9"><span class="ja">新弾・予約</span><span class="en">New Sets &amp; Preorders</span></span>
             
             <span class="date"><span class="ja">7月16日(木)</span><span class="en">Jul 16 (Thu)</span></span>
           </div>
@@ -234,7 +281,7 @@ footer {
         <img class="thumb" src="https://voix.jp/biz/wp-content/uploads/sites/3/2026/07/featured_image-49-3.jpg" alt="" loading="lazy" onerror="this.outerHTML='<div class=&quot;thumb thumb-fallback&quot;>🎁</div>'">
         <div class="card-body">
           <div class="card-meta">
-            <span class="badge" style="background:#2a7fc9"><span class="ja">新弾・予約</span><span class="en">New Sets &amp; Preorders</span></span>
+            <span class="badge" style="background:rgba(42,127,201,0.13);color:#2a7fc9"><span class="ja">新弾・予約</span><span class="en">New Sets &amp; Preorders</span></span>
             
             <span class="date"><span class="ja">7月16日(木)</span><span class="en">Jul 16 (Thu)</span></span>
           </div>
@@ -247,7 +294,7 @@ footer {
         <img class="thumb" src="https://prcdn.freetls.fastly.net/release_image/183006/4/183006-4-5100f75534b20e7c92ce63cbedca4917-2400x1260.png?format=jpeg&amp;amp;auto=webp&amp;amp;fit=bounds&amp;amp;width=2400&amp;amp;height=1260" alt="" loading="lazy" onerror="this.outerHTML='<div class=&quot;thumb thumb-fallback&quot;>🎁</div>'">
         <div class="card-body">
           <div class="card-meta">
-            <span class="badge" style="background:#2a7fc9"><span class="ja">新弾・予約</span><span class="en">New Sets &amp; Preorders</span></span>
+            <span class="badge" style="background:rgba(42,127,201,0.13);color:#2a7fc9"><span class="ja">新弾・予約</span><span class="en">New Sets &amp; Preorders</span></span>
             
             <span class="date"><span class="ja">7月16日(木)</span><span class="en">Jul 16 (Thu)</span></span>
           </div>
@@ -260,7 +307,7 @@ footer {
         <img class="thumb" src="https://cdn.snkrdunk.com/uploads/media/20251127061052-0.jpeg" alt="" loading="lazy" onerror="this.outerHTML='<div class=&quot;thumb thumb-fallback&quot;>📈</div>'">
         <div class="card-body">
           <div class="card-meta">
-            <span class="badge" style="background:#2e9e5b"><span class="ja">相場・高騰</span><span class="en">Market &amp; Prices</span></span>
+            <span class="badge" style="background:rgba(46,158,91,0.13);color:#2e9e5b"><span class="ja">相場・高騰</span><span class="en">Market &amp; Prices</span></span>
             
             <span class="date"><span class="ja">7月16日(木)</span><span class="en">Jul 16 (Thu)</span></span>
           </div>
@@ -273,7 +320,7 @@ footer {
         <img class="thumb" src="https://cdn.snkrdunk.com/uploads/media/51d7ef96-0e44-4737-9001-406a90e4373d.jpeg" alt="" loading="lazy" onerror="this.outerHTML='<div class=&quot;thumb thumb-fallback&quot;>📈</div>'">
         <div class="card-body">
           <div class="card-meta">
-            <span class="badge" style="background:#2e9e5b"><span class="ja">相場・高騰</span><span class="en">Market &amp; Prices</span></span>
+            <span class="badge" style="background:rgba(46,158,91,0.13);color:#2e9e5b"><span class="ja">相場・高騰</span><span class="en">Market &amp; Prices</span></span>
             
             <span class="date"><span class="ja">7月16日(木)</span><span class="en">Jul 16 (Thu)</span></span>
           </div>
@@ -286,7 +333,7 @@ footer {
         <img class="thumb" src="https://cdn.snkrdunk.com/uploads/media/6ea1ef47-3013-4b51-9383-82543e43db12.jpeg" alt="" loading="lazy" onerror="this.outerHTML='<div class=&quot;thumb thumb-fallback&quot;>📈</div>'">
         <div class="card-body">
           <div class="card-meta">
-            <span class="badge" style="background:#2e9e5b"><span class="ja">相場・高騰</span><span class="en">Market &amp; Prices</span></span>
+            <span class="badge" style="background:rgba(46,158,91,0.13);color:#2e9e5b"><span class="ja">相場・高騰</span><span class="en">Market &amp; Prices</span></span>
             
             <span class="date"><span class="ja">7月16日(木)</span><span class="en">Jul 16 (Thu)</span></span>
           </div>
@@ -299,7 +346,7 @@ footer {
         <img class="thumb" src="https://convenicheck.com/wp-content/uploads/2026/07/famimaonline_pokekapreseteb26062.jpg" alt="" loading="lazy" onerror="this.outerHTML='<div class=&quot;thumb thumb-fallback&quot;>🎁</div>'">
         <div class="card-body">
           <div class="card-meta">
-            <span class="badge" style="background:#2a7fc9"><span class="ja">新弾・予約</span><span class="en">New Sets &amp; Preorders</span></span>
+            <span class="badge" style="background:rgba(42,127,201,0.13);color:#2a7fc9"><span class="ja">新弾・予約</span><span class="en">New Sets &amp; Preorders</span></span>
             
             <span class="date"><span class="ja">7月16日(木)</span><span class="en">Jul 16 (Thu)</span></span>
           </div>
@@ -312,7 +359,7 @@ footer {
         <img class="thumb" src="https://cdn.snkrdunk.com/uploads/media/481c237c-2202-4390-9642-c405ebd48b9c.jpeg" alt="" loading="lazy" onerror="this.outerHTML='<div class=&quot;thumb thumb-fallback&quot;>🎁</div>'">
         <div class="card-body">
           <div class="card-meta">
-            <span class="badge" style="background:#2a7fc9"><span class="ja">新弾・予約</span><span class="en">New Sets &amp; Preorders</span></span>
+            <span class="badge" style="background:rgba(42,127,201,0.13);color:#2a7fc9"><span class="ja">新弾・予約</span><span class="en">New Sets &amp; Preorders</span></span>
             
             <span class="date"><span class="ja">7月15日(水)</span><span class="en">Jul 15 (Wed)</span></span>
           </div>
@@ -325,7 +372,7 @@ footer {
         <img class="thumb" src="https://cdn.snkrdunk.com/uploads/media/f6fbd3a3-a36f-47a9-93ea-8c16b48ac4f3.jpeg" alt="" loading="lazy" onerror="this.outerHTML='<div class=&quot;thumb thumb-fallback&quot;>🎁</div>'">
         <div class="card-body">
           <div class="card-meta">
-            <span class="badge" style="background:#2a7fc9"><span class="ja">新弾・予約</span><span class="en">New Sets &amp; Preorders</span></span>
+            <span class="badge" style="background:rgba(42,127,201,0.13);color:#2a7fc9"><span class="ja">新弾・予約</span><span class="en">New Sets &amp; Preorders</span></span>
             
             <span class="date"><span class="ja">7月15日(水)</span><span class="en">Jul 15 (Wed)</span></span>
           </div>
@@ -338,7 +385,7 @@ footer {
         <div class="thumb thumb-fallback">🌏</div>
         <div class="card-body">
           <div class="card-meta">
-            <span class="badge" style="background:#d0642a"><span class="ja">海外ニュース</span><span class="en">International</span></span>
+            <span class="badge" style="background:rgba(208,100,42,0.13);color:#d0642a"><span class="ja">海外ニュース</span><span class="en">International</span></span>
             
             <span class="date"><span class="ja">7月15日(水)</span><span class="en">Jul 15 (Wed)</span></span>
           </div>
@@ -351,7 +398,7 @@ footer {
         <div class="thumb thumb-fallback">🌏</div>
         <div class="card-body">
           <div class="card-meta">
-            <span class="badge" style="background:#d0642a"><span class="ja">海外ニュース</span><span class="en">International</span></span>
+            <span class="badge" style="background:rgba(208,100,42,0.13);color:#d0642a"><span class="ja">海外ニュース</span><span class="en">International</span></span>
             
             <span class="date"><span class="ja">7月15日(水)</span><span class="en">Jul 15 (Wed)</span></span>
           </div>
@@ -364,7 +411,7 @@ footer {
         <img class="thumb" src="https://shop.pokemon.co.jp/ja/shop/pokemoncenter-tokyodx/images/0b97d9fc29843c5644dbf044ec39f62de0cc6ec1.png" alt="" loading="lazy" onerror="this.outerHTML='<div class=&quot;thumb thumb-fallback&quot;>🎁</div>'">
         <div class="card-body">
           <div class="card-meta">
-            <span class="badge" style="background:#2a7fc9"><span class="ja">新弾・予約</span><span class="en">New Sets &amp; Preorders</span></span>
+            <span class="badge" style="background:rgba(42,127,201,0.13);color:#2a7fc9"><span class="ja">新弾・予約</span><span class="en">New Sets &amp; Preorders</span></span>
             
             <span class="date"><span class="ja">7月15日(水)</span><span class="en">Jul 15 (Wed)</span></span>
           </div>
@@ -377,7 +424,7 @@ footer {
         <div class="thumb thumb-fallback">🎁</div>
         <div class="card-body">
           <div class="card-meta">
-            <span class="badge" style="background:#2a7fc9"><span class="ja">新弾・予約</span><span class="en">New Sets &amp; Preorders</span></span>
+            <span class="badge" style="background:rgba(42,127,201,0.13);color:#2a7fc9"><span class="ja">新弾・予約</span><span class="en">New Sets &amp; Preorders</span></span>
             
             <span class="date"><span class="ja">7月15日(水)</span><span class="en">Jul 15 (Wed)</span></span>
           </div>
@@ -390,7 +437,7 @@ footer {
         <div class="thumb thumb-fallback">🎁</div>
         <div class="card-body">
           <div class="card-meta">
-            <span class="badge" style="background:#2a7fc9"><span class="ja">新弾・予約</span><span class="en">New Sets &amp; Preorders</span></span>
+            <span class="badge" style="background:rgba(42,127,201,0.13);color:#2a7fc9"><span class="ja">新弾・予約</span><span class="en">New Sets &amp; Preorders</span></span>
             
             <span class="date"><span class="ja">7月14日(火)</span><span class="en">Jul 14 (Tue)</span></span>
           </div>
@@ -403,7 +450,7 @@ footer {
         <div class="thumb thumb-fallback">🎁</div>
         <div class="card-body">
           <div class="card-meta">
-            <span class="badge" style="background:#2a7fc9"><span class="ja">新弾・予約</span><span class="en">New Sets &amp; Preorders</span></span>
+            <span class="badge" style="background:rgba(42,127,201,0.13);color:#2a7fc9"><span class="ja">新弾・予約</span><span class="en">New Sets &amp; Preorders</span></span>
             
             <span class="date"><span class="ja">7月14日(火)</span><span class="en">Jul 14 (Tue)</span></span>
           </div>
@@ -416,7 +463,7 @@ footer {
         <div class="thumb thumb-fallback">🌏</div>
         <div class="card-body">
           <div class="card-meta">
-            <span class="badge" style="background:#d0642a"><span class="ja">海外ニュース</span><span class="en">International</span></span>
+            <span class="badge" style="background:rgba(208,100,42,0.13);color:#d0642a"><span class="ja">海外ニュース</span><span class="en">International</span></span>
             
             <span class="date"><span class="ja">7月13日(月)</span><span class="en">Jul 13 (Mon)</span></span>
           </div>
@@ -429,7 +476,7 @@ footer {
         <img class="thumb" src="https://newsatcl-pctr.c.yimg.jp/t/amd-img/20260713-00000053-zdn_n-000-1-view.jpg?exp=10800" alt="" loading="lazy" onerror="this.outerHTML='<div class=&quot;thumb thumb-fallback&quot;>🎁</div>'">
         <div class="card-body">
           <div class="card-meta">
-            <span class="badge" style="background:#2a7fc9"><span class="ja">新弾・予約</span><span class="en">New Sets &amp; Preorders</span></span>
+            <span class="badge" style="background:rgba(42,127,201,0.13);color:#2a7fc9"><span class="ja">新弾・予約</span><span class="en">New Sets &amp; Preorders</span></span>
             
             <span class="date"><span class="ja">7月13日(月)</span><span class="en">Jul 13 (Mon)</span></span>
           </div>
@@ -442,7 +489,7 @@ footer {
         <img class="thumb" src="https://newsatcl-pctr.c.yimg.jp/t/amd-img/20260713-00000012-impgmw-000-1-view.jpg?exp=10800" alt="" loading="lazy" onerror="this.outerHTML='<div class=&quot;thumb thumb-fallback&quot;>🎁</div>'">
         <div class="card-body">
           <div class="card-meta">
-            <span class="badge" style="background:#2a7fc9"><span class="ja">新弾・予約</span><span class="en">New Sets &amp; Preorders</span></span>
+            <span class="badge" style="background:rgba(42,127,201,0.13);color:#2a7fc9"><span class="ja">新弾・予約</span><span class="en">New Sets &amp; Preorders</span></span>
             
             <span class="date"><span class="ja">7月13日(月)</span><span class="en">Jul 13 (Mon)</span></span>
           </div>
@@ -455,7 +502,7 @@ footer {
         <img class="thumb" src="https://newsatcl-pctr.c.yimg.jp/t/amd-img/20260713-00000250-spnannex-000-18-view.jpg?exp=10800" alt="" loading="lazy" onerror="this.outerHTML='<div class=&quot;thumb thumb-fallback&quot;>🎁</div>'">
         <div class="card-body">
           <div class="card-meta">
-            <span class="badge" style="background:#2a7fc9"><span class="ja">新弾・予約</span><span class="en">New Sets &amp; Preorders</span></span>
+            <span class="badge" style="background:rgba(42,127,201,0.13);color:#2a7fc9"><span class="ja">新弾・予約</span><span class="en">New Sets &amp; Preorders</span></span>
             
             <span class="date"><span class="ja">7月13日(月)</span><span class="en">Jul 13 (Mon)</span></span>
           </div>
@@ -468,7 +515,7 @@ footer {
         <div class="thumb thumb-fallback">🌏</div>
         <div class="card-body">
           <div class="card-meta">
-            <span class="badge" style="background:#d0642a"><span class="ja">海外ニュース</span><span class="en">International</span></span>
+            <span class="badge" style="background:rgba(208,100,42,0.13);color:#d0642a"><span class="ja">海外ニュース</span><span class="en">International</span></span>
             
             <span class="date"><span class="ja">7月12日(日)</span><span class="en">Jul 12 (Sun)</span></span>
           </div>
@@ -481,7 +528,7 @@ footer {
         <img class="thumb" src="https://cdn.snkrdunk.com/uploads/media/7d2a3480-d3b8-4e0b-acf4-436a6b137e93.jpeg" alt="" loading="lazy" onerror="this.outerHTML='<div class=&quot;thumb thumb-fallback&quot;>🎁</div>'">
         <div class="card-body">
           <div class="card-meta">
-            <span class="badge" style="background:#2a7fc9"><span class="ja">新弾・予約</span><span class="en">New Sets &amp; Preorders</span></span>
+            <span class="badge" style="background:rgba(42,127,201,0.13);color:#2a7fc9"><span class="ja">新弾・予約</span><span class="en">New Sets &amp; Preorders</span></span>
             
             <span class="date"><span class="ja">7月12日(日)</span><span class="en">Jul 12 (Sun)</span></span>
           </div>
@@ -494,7 +541,7 @@ footer {
         <div class="thumb thumb-fallback">🌏</div>
         <div class="card-body">
           <div class="card-meta">
-            <span class="badge" style="background:#d0642a"><span class="ja">海外ニュース</span><span class="en">International</span></span>
+            <span class="badge" style="background:rgba(208,100,42,0.13);color:#d0642a"><span class="ja">海外ニュース</span><span class="en">International</span></span>
             
             <span class="date"><span class="ja">7月11日(土)</span><span class="en">Jul 11 (Sat)</span></span>
           </div>
@@ -507,7 +554,7 @@ footer {
         <img class="thumb" src="https://www.inside-games.jp/imgs/ogp_f/1739636.jpg" alt="" loading="lazy" onerror="this.outerHTML='<div class=&quot;thumb thumb-fallback&quot;>🎁</div>'">
         <div class="card-body">
           <div class="card-meta">
-            <span class="badge" style="background:#2a7fc9"><span class="ja">新弾・予約</span><span class="en">New Sets &amp; Preorders</span></span>
+            <span class="badge" style="background:rgba(42,127,201,0.13);color:#2a7fc9"><span class="ja">新弾・予約</span><span class="en">New Sets &amp; Preorders</span></span>
             
             <span class="date"><span class="ja">7月11日(土)</span><span class="en">Jul 11 (Sat)</span></span>
           </div>
@@ -520,7 +567,7 @@ footer {
         <img class="thumb" src="https://newsatcl-pctr.c.yimg.jp/t/amd-img/20260711-01597754-nkt-000-2-view.jpg?exp=10800" alt="" loading="lazy" onerror="this.outerHTML='<div class=&quot;thumb thumb-fallback&quot;>🎁</div>'">
         <div class="card-body">
           <div class="card-meta">
-            <span class="badge" style="background:#2a7fc9"><span class="ja">新弾・予約</span><span class="en">New Sets &amp; Preorders</span></span>
+            <span class="badge" style="background:rgba(42,127,201,0.13);color:#2a7fc9"><span class="ja">新弾・予約</span><span class="en">New Sets &amp; Preorders</span></span>
             
             <span class="date"><span class="ja">7月10日(金)</span><span class="en">Jul 10 (Fri)</span></span>
           </div>
@@ -533,7 +580,7 @@ footer {
         <div class="thumb thumb-fallback">🌏</div>
         <div class="card-body">
           <div class="card-meta">
-            <span class="badge" style="background:#d0642a"><span class="ja">海外ニュース</span><span class="en">International</span></span>
+            <span class="badge" style="background:rgba(208,100,42,0.13);color:#d0642a"><span class="ja">海外ニュース</span><span class="en">International</span></span>
             
             <span class="date"><span class="ja">7月10日(金)</span><span class="en">Jul 10 (Fri)</span></span>
           </div>
@@ -546,7 +593,7 @@ footer {
         <img class="thumb" src="https://www.inside-games.jp/imgs/ogp_f/1753001.jpg" alt="" loading="lazy" onerror="this.outerHTML='<div class=&quot;thumb thumb-fallback&quot;>🎁</div>'">
         <div class="card-body">
           <div class="card-meta">
-            <span class="badge" style="background:#2a7fc9"><span class="ja">新弾・予約</span><span class="en">New Sets &amp; Preorders</span></span>
+            <span class="badge" style="background:rgba(42,127,201,0.13);color:#2a7fc9"><span class="ja">新弾・予約</span><span class="en">New Sets &amp; Preorders</span></span>
             
             <span class="date"><span class="ja">7月10日(金)</span><span class="en">Jul 10 (Fri)</span></span>
           </div>
@@ -559,7 +606,7 @@ footer {
         <div class="thumb thumb-fallback">🌏</div>
         <div class="card-body">
           <div class="card-meta">
-            <span class="badge" style="background:#d0642a"><span class="ja">海外ニュース</span><span class="en">International</span></span>
+            <span class="badge" style="background:rgba(208,100,42,0.13);color:#d0642a"><span class="ja">海外ニュース</span><span class="en">International</span></span>
             
             <span class="date"><span class="ja">7月10日(金)</span><span class="en">Jul 10 (Fri)</span></span>
           </div>
@@ -572,7 +619,7 @@ footer {
         <img class="thumb" src="https://shop.pokemon.co.jp/ja/shop/common/images/pctr_dummy_1920x1080.webp" alt="" loading="lazy" onerror="this.outerHTML='<div class=&quot;thumb thumb-fallback&quot;>🎁</div>'">
         <div class="card-body">
           <div class="card-meta">
-            <span class="badge" style="background:#2a7fc9"><span class="ja">新弾・予約</span><span class="en">New Sets &amp; Preorders</span></span>
+            <span class="badge" style="background:rgba(42,127,201,0.13);color:#2a7fc9"><span class="ja">新弾・予約</span><span class="en">New Sets &amp; Preorders</span></span>
             
             <span class="date"><span class="ja">7月10日(金)</span><span class="en">Jul 10 (Fri)</span></span>
           </div>
@@ -585,7 +632,7 @@ footer {
         <img class="thumb" src="https://cdn.snkrdunk.com/uploads/media/3e319f51-f2c1-4e13-90a4-e3e496f3e3f4.jpeg" alt="" loading="lazy" onerror="this.outerHTML='<div class=&quot;thumb thumb-fallback&quot;>📈</div>'">
         <div class="card-body">
           <div class="card-meta">
-            <span class="badge" style="background:#2e9e5b"><span class="ja">相場・高騰</span><span class="en">Market &amp; Prices</span></span>
+            <span class="badge" style="background:rgba(46,158,91,0.13);color:#2e9e5b"><span class="ja">相場・高騰</span><span class="en">Market &amp; Prices</span></span>
             
             <span class="date"><span class="ja">7月9日(木)</span><span class="en">Jul 9 (Thu)</span></span>
           </div>
@@ -598,7 +645,7 @@ footer {
         <div class="thumb thumb-fallback">🌏</div>
         <div class="card-body">
           <div class="card-meta">
-            <span class="badge" style="background:#d0642a"><span class="ja">海外ニュース</span><span class="en">International</span></span>
+            <span class="badge" style="background:rgba(208,100,42,0.13);color:#d0642a"><span class="ja">海外ニュース</span><span class="en">International</span></span>
             
             <span class="date"><span class="ja">7月8日(水)</span><span class="en">Jul 8 (Wed)</span></span>
           </div>
@@ -611,7 +658,7 @@ footer {
         <div class="thumb thumb-fallback">🌏</div>
         <div class="card-body">
           <div class="card-meta">
-            <span class="badge" style="background:#d0642a"><span class="ja">海外ニュース</span><span class="en">International</span></span>
+            <span class="badge" style="background:rgba(208,100,42,0.13);color:#d0642a"><span class="ja">海外ニュース</span><span class="en">International</span></span>
             
             <span class="date"><span class="ja">7月8日(水)</span><span class="en">Jul 8 (Wed)</span></span>
           </div>
@@ -624,7 +671,7 @@ footer {
         <div class="thumb thumb-fallback">🌏</div>
         <div class="card-body">
           <div class="card-meta">
-            <span class="badge" style="background:#d0642a"><span class="ja">海外ニュース</span><span class="en">International</span></span>
+            <span class="badge" style="background:rgba(208,100,42,0.13);color:#d0642a"><span class="ja">海外ニュース</span><span class="en">International</span></span>
             
             <span class="date"><span class="ja">7月8日(水)</span><span class="en">Jul 8 (Wed)</span></span>
           </div>
@@ -637,7 +684,7 @@ footer {
         <img class="thumb" src="https://cdn.snkrdunk.com/uploads/media/8c0ad5ea-f297-4abf-84c6-179569582280.jpeg" alt="" loading="lazy" onerror="this.outerHTML='<div class=&quot;thumb thumb-fallback&quot;>🎁</div>'">
         <div class="card-body">
           <div class="card-meta">
-            <span class="badge" style="background:#2a7fc9"><span class="ja">新弾・予約</span><span class="en">New Sets &amp; Preorders</span></span>
+            <span class="badge" style="background:rgba(42,127,201,0.13);color:#2a7fc9"><span class="ja">新弾・予約</span><span class="en">New Sets &amp; Preorders</span></span>
             
             <span class="date"><span class="ja">7月7日(火)</span><span class="en">Jul 7 (Tue)</span></span>
           </div>
@@ -650,7 +697,7 @@ footer {
         <div class="thumb thumb-fallback">🌏</div>
         <div class="card-body">
           <div class="card-meta">
-            <span class="badge" style="background:#d0642a"><span class="ja">海外ニュース</span><span class="en">International</span></span>
+            <span class="badge" style="background:rgba(208,100,42,0.13);color:#d0642a"><span class="ja">海外ニュース</span><span class="en">International</span></span>
             
             <span class="date"><span class="ja">7月7日(火)</span><span class="en">Jul 7 (Tue)</span></span>
           </div>
@@ -663,7 +710,7 @@ footer {
         <div class="thumb thumb-fallback">🌏</div>
         <div class="card-body">
           <div class="card-meta">
-            <span class="badge" style="background:#d0642a"><span class="ja">海外ニュース</span><span class="en">International</span></span>
+            <span class="badge" style="background:rgba(208,100,42,0.13);color:#d0642a"><span class="ja">海外ニュース</span><span class="en">International</span></span>
             
             <span class="date"><span class="ja">7月7日(火)</span><span class="en">Jul 7 (Tue)</span></span>
           </div>
@@ -676,7 +723,7 @@ footer {
         <img class="thumb" src="https://prtimes.jp/img/135668/69/resize/d135668-69-d4a2de2e8a4e60e0fc28-1.jpg" alt="" loading="lazy" onerror="this.outerHTML='<div class=&quot;thumb thumb-fallback&quot;>🔍</div>'">
         <div class="card-body">
           <div class="card-meta">
-            <span class="badge" style="background:#7c5cbf"><span class="ja">鑑定・PSA</span><span class="en">Grading &amp; PSA</span></span>
+            <span class="badge" style="background:rgba(124,92,191,0.13);color:#7c5cbf"><span class="ja">鑑定・PSA</span><span class="en">Grading &amp; PSA</span></span>
             
             <span class="date"><span class="ja">7月7日(火)</span><span class="en">Jul 7 (Tue)</span></span>
           </div>
@@ -689,7 +736,7 @@ footer {
         <div class="thumb thumb-fallback">🎁</div>
         <div class="card-body">
           <div class="card-meta">
-            <span class="badge" style="background:#2a7fc9"><span class="ja">新弾・予約</span><span class="en">New Sets &amp; Preorders</span></span>
+            <span class="badge" style="background:rgba(42,127,201,0.13);color:#2a7fc9"><span class="ja">新弾・予約</span><span class="en">New Sets &amp; Preorders</span></span>
             
             <span class="date"><span class="ja">7月6日(月)</span><span class="en">Jul 6 (Mon)</span></span>
           </div>
@@ -702,7 +749,7 @@ footer {
         <img class="thumb" src="https://www.inside-games.jp/imgs/ogp_f/1739636.jpg" alt="" loading="lazy" onerror="this.outerHTML='<div class=&quot;thumb thumb-fallback&quot;>🎁</div>'">
         <div class="card-body">
           <div class="card-meta">
-            <span class="badge" style="background:#2a7fc9"><span class="ja">新弾・予約</span><span class="en">New Sets &amp; Preorders</span></span>
+            <span class="badge" style="background:rgba(42,127,201,0.13);color:#2a7fc9"><span class="ja">新弾・予約</span><span class="en">New Sets &amp; Preorders</span></span>
             
             <span class="date"><span class="ja">7月6日(月)</span><span class="en">Jul 6 (Mon)</span></span>
           </div>
@@ -715,7 +762,7 @@ footer {
         <img class="thumb" src="https://www.inside-games.jp/imgs/ogp_f/1741034.jpg" alt="" loading="lazy" onerror="this.outerHTML='<div class=&quot;thumb thumb-fallback&quot;>🎁</div>'">
         <div class="card-body">
           <div class="card-meta">
-            <span class="badge" style="background:#2a7fc9"><span class="ja">新弾・予約</span><span class="en">New Sets &amp; Preorders</span></span>
+            <span class="badge" style="background:rgba(42,127,201,0.13);color:#2a7fc9"><span class="ja">新弾・予約</span><span class="en">New Sets &amp; Preorders</span></span>
             
             <span class="date"><span class="ja">7月5日(日)</span><span class="en">Jul 5 (Sun)</span></span>
           </div>
@@ -728,7 +775,7 @@ footer {
         <img class="thumb" src="https://www.inside-games.jp/imgs/ogp_f/1740957.jpg" alt="" loading="lazy" onerror="this.outerHTML='<div class=&quot;thumb thumb-fallback&quot;>🎁</div>'">
         <div class="card-body">
           <div class="card-meta">
-            <span class="badge" style="background:#2a7fc9"><span class="ja">新弾・予約</span><span class="en">New Sets &amp; Preorders</span></span>
+            <span class="badge" style="background:rgba(42,127,201,0.13);color:#2a7fc9"><span class="ja">新弾・予約</span><span class="en">New Sets &amp; Preorders</span></span>
             
             <span class="date"><span class="ja">7月5日(日)</span><span class="en">Jul 5 (Sun)</span></span>
           </div>
@@ -741,7 +788,7 @@ footer {
         <img class="thumb" src="https://www.inside-games.jp/imgs/ogp_f/1750460.jpg" alt="" loading="lazy" onerror="this.outerHTML='<div class=&quot;thumb thumb-fallback&quot;>🎁</div>'">
         <div class="card-body">
           <div class="card-meta">
-            <span class="badge" style="background:#2a7fc9"><span class="ja">新弾・予約</span><span class="en">New Sets &amp; Preorders</span></span>
+            <span class="badge" style="background:rgba(42,127,201,0.13);color:#2a7fc9"><span class="ja">新弾・予約</span><span class="en">New Sets &amp; Preorders</span></span>
             
             <span class="date"><span class="ja">7月3日(金)</span><span class="en">Jul 3 (Fri)</span></span>
           </div>
@@ -754,7 +801,7 @@ footer {
         <div class="thumb thumb-fallback">🎁</div>
         <div class="card-body">
           <div class="card-meta">
-            <span class="badge" style="background:#2a7fc9"><span class="ja">新弾・予約</span><span class="en">New Sets &amp; Preorders</span></span>
+            <span class="badge" style="background:rgba(42,127,201,0.13);color:#2a7fc9"><span class="ja">新弾・予約</span><span class="en">New Sets &amp; Preorders</span></span>
             
             <span class="date"><span class="ja">7月3日(金)</span><span class="en">Jul 3 (Fri)</span></span>
           </div>
@@ -767,7 +814,7 @@ footer {
         <div class="thumb thumb-fallback">🎁</div>
         <div class="card-body">
           <div class="card-meta">
-            <span class="badge" style="background:#2a7fc9"><span class="ja">新弾・予約</span><span class="en">New Sets &amp; Preorders</span></span>
+            <span class="badge" style="background:rgba(42,127,201,0.13);color:#2a7fc9"><span class="ja">新弾・予約</span><span class="en">New Sets &amp; Preorders</span></span>
             
             <span class="date"><span class="ja">7月3日(金)</span><span class="en">Jul 3 (Fri)</span></span>
           </div>
@@ -780,7 +827,7 @@ footer {
         <div class="thumb thumb-fallback">🌏</div>
         <div class="card-body">
           <div class="card-meta">
-            <span class="badge" style="background:#d0642a"><span class="ja">海外ニュース</span><span class="en">International</span></span>
+            <span class="badge" style="background:rgba(208,100,42,0.13);color:#d0642a"><span class="ja">海外ニュース</span><span class="en">International</span></span>
             
             <span class="date"><span class="ja">7月3日(金)</span><span class="en">Jul 3 (Fri)</span></span>
           </div>
@@ -793,7 +840,7 @@ footer {
         <div class="thumb thumb-fallback">🌏</div>
         <div class="card-body">
           <div class="card-meta">
-            <span class="badge" style="background:#d0642a"><span class="ja">海外ニュース</span><span class="en">International</span></span>
+            <span class="badge" style="background:rgba(208,100,42,0.13);color:#d0642a"><span class="ja">海外ニュース</span><span class="en">International</span></span>
             
             <span class="date"><span class="ja">7月3日(金)</span><span class="en">Jul 3 (Fri)</span></span>
           </div>
@@ -806,7 +853,7 @@ footer {
         <img class="thumb" src="https://newsatcl-pctr.c.yimg.jp/t/amd-img/20260422-00121017-toushin-000-2-view.jpg?exp=10800" alt="" loading="lazy" onerror="this.outerHTML='<div class=&quot;thumb thumb-fallback&quot;>📈</div>'">
         <div class="card-body">
           <div class="card-meta">
-            <span class="badge" style="background:#2e9e5b"><span class="ja">相場・高騰</span><span class="en">Market &amp; Prices</span></span>
+            <span class="badge" style="background:rgba(46,158,91,0.13);color:#2e9e5b"><span class="ja">相場・高騰</span><span class="en">Market &amp; Prices</span></span>
             
             <span class="date"><span class="ja">7月2日(木)</span><span class="en">Jul 2 (Thu)</span></span>
           </div>
@@ -819,7 +866,7 @@ footer {
         <img class="thumb" src="https://cdn.snkrdunk.com/uploads/media/20250926063800-0.jpeg" alt="" loading="lazy" onerror="this.outerHTML='<div class=&quot;thumb thumb-fallback&quot;>📈</div>'">
         <div class="card-body">
           <div class="card-meta">
-            <span class="badge" style="background:#2e9e5b"><span class="ja">相場・高騰</span><span class="en">Market &amp; Prices</span></span>
+            <span class="badge" style="background:rgba(46,158,91,0.13);color:#2e9e5b"><span class="ja">相場・高騰</span><span class="en">Market &amp; Prices</span></span>
             
             <span class="date"><span class="ja">7月1日(水)</span><span class="en">Jul 1 (Wed)</span></span>
           </div>
@@ -832,7 +879,7 @@ footer {
         <div class="thumb thumb-fallback">🌏</div>
         <div class="card-body">
           <div class="card-meta">
-            <span class="badge" style="background:#d0642a"><span class="ja">海外ニュース</span><span class="en">International</span></span>
+            <span class="badge" style="background:rgba(208,100,42,0.13);color:#d0642a"><span class="ja">海外ニュース</span><span class="en">International</span></span>
             
             <span class="date"><span class="ja">6月30日(火)</span><span class="en">Jun 30 (Tue)</span></span>
           </div>
@@ -845,7 +892,7 @@ footer {
         <div class="thumb thumb-fallback">🌏</div>
         <div class="card-body">
           <div class="card-meta">
-            <span class="badge" style="background:#d0642a"><span class="ja">海外ニュース</span><span class="en">International</span></span>
+            <span class="badge" style="background:rgba(208,100,42,0.13);color:#d0642a"><span class="ja">海外ニュース</span><span class="en">International</span></span>
             
             <span class="date"><span class="ja">6月30日(火)</span><span class="en">Jun 30 (Tue)</span></span>
           </div>
@@ -858,7 +905,7 @@ footer {
         <img class="thumb" src="https://d.player.one/en/full/229004/eevee.jpg" alt="" loading="lazy" onerror="this.outerHTML='<div class=&quot;thumb thumb-fallback&quot;>🌏</div>'">
         <div class="card-body">
           <div class="card-meta">
-            <span class="badge" style="background:#d0642a"><span class="ja">海外ニュース</span><span class="en">International</span></span>
+            <span class="badge" style="background:rgba(208,100,42,0.13);color:#d0642a"><span class="ja">海外ニュース</span><span class="en">International</span></span>
             
             <span class="date"><span class="ja">6月30日(火)</span><span class="en">Jun 30 (Tue)</span></span>
           </div>
@@ -871,7 +918,7 @@ footer {
         <div class="thumb thumb-fallback">🌏</div>
         <div class="card-body">
           <div class="card-meta">
-            <span class="badge" style="background:#d0642a"><span class="ja">海外ニュース</span><span class="en">International</span></span>
+            <span class="badge" style="background:rgba(208,100,42,0.13);color:#d0642a"><span class="ja">海外ニュース</span><span class="en">International</span></span>
             
             <span class="date"><span class="ja">6月29日(月)</span><span class="en">Jun 29 (Mon)</span></span>
           </div>
@@ -884,7 +931,7 @@ footer {
         <div class="thumb thumb-fallback">🌏</div>
         <div class="card-body">
           <div class="card-meta">
-            <span class="badge" style="background:#d0642a"><span class="ja">海外ニュース</span><span class="en">International</span></span>
+            <span class="badge" style="background:rgba(208,100,42,0.13);color:#d0642a"><span class="ja">海外ニュース</span><span class="en">International</span></span>
             
             <span class="date"><span class="ja">6月29日(月)</span><span class="en">Jun 29 (Mon)</span></span>
           </div>
@@ -897,7 +944,7 @@ footer {
         <div class="thumb thumb-fallback">🌏</div>
         <div class="card-body">
           <div class="card-meta">
-            <span class="badge" style="background:#d0642a"><span class="ja">海外ニュース</span><span class="en">International</span></span>
+            <span class="badge" style="background:rgba(208,100,42,0.13);color:#d0642a"><span class="ja">海外ニュース</span><span class="en">International</span></span>
             
             <span class="date"><span class="ja">6月29日(月)</span><span class="en">Jun 29 (Mon)</span></span>
           </div>
@@ -910,7 +957,7 @@ footer {
         <img class="thumb" src="https://www.inside-games.jp/imgs/ogp_f/1746267.jpg" alt="" loading="lazy" onerror="this.outerHTML='<div class=&quot;thumb thumb-fallback&quot;>🎁</div>'">
         <div class="card-body">
           <div class="card-meta">
-            <span class="badge" style="background:#2a7fc9"><span class="ja">新弾・予約</span><span class="en">New Sets &amp; Preorders</span></span>
+            <span class="badge" style="background:rgba(42,127,201,0.13);color:#2a7fc9"><span class="ja">新弾・予約</span><span class="en">New Sets &amp; Preorders</span></span>
             
             <span class="date"><span class="ja">6月28日(日)</span><span class="en">Jun 28 (Sun)</span></span>
           </div>
@@ -923,7 +970,7 @@ footer {
         <img class="thumb" src="https://pokeca-pocket.dbfw-days.com/wp-content/uploads/2026/06/IMG_4321.jpg" alt="" loading="lazy" onerror="this.outerHTML='<div class=&quot;thumb thumb-fallback&quot;>🎁</div>'">
         <div class="card-body">
           <div class="card-meta">
-            <span class="badge" style="background:#2a7fc9"><span class="ja">新弾・予約</span><span class="en">New Sets &amp; Preorders</span></span>
+            <span class="badge" style="background:rgba(42,127,201,0.13);color:#2a7fc9"><span class="ja">新弾・予約</span><span class="en">New Sets &amp; Preorders</span></span>
             
             <span class="date"><span class="ja">6月27日(土)</span><span class="en">Jun 27 (Sat)</span></span>
           </div>
@@ -936,7 +983,7 @@ footer {
         <div class="thumb thumb-fallback">🌏</div>
         <div class="card-body">
           <div class="card-meta">
-            <span class="badge" style="background:#d0642a"><span class="ja">海外ニュース</span><span class="en">International</span></span>
+            <span class="badge" style="background:rgba(208,100,42,0.13);color:#d0642a"><span class="ja">海外ニュース</span><span class="en">International</span></span>
             
             <span class="date"><span class="ja">6月27日(土)</span><span class="en">Jun 27 (Sat)</span></span>
           </div>
@@ -949,7 +996,7 @@ footer {
         <div class="thumb thumb-fallback">🌏</div>
         <div class="card-body">
           <div class="card-meta">
-            <span class="badge" style="background:#d0642a"><span class="ja">海外ニュース</span><span class="en">International</span></span>
+            <span class="badge" style="background:rgba(208,100,42,0.13);color:#d0642a"><span class="ja">海外ニュース</span><span class="en">International</span></span>
             
             <span class="date"><span class="ja">6月27日(土)</span><span class="en">Jun 27 (Sat)</span></span>
           </div>
@@ -962,7 +1009,7 @@ footer {
         <img class="thumb" src="https://www.sankei.com/resizer/v2/M2GXMSOEDRPPJHPEJSHQWGI4ME.jpg?auth=a65dee0b94ff44a1ca1cdffd453d37af8b17d95d4567c6b2ea9e4d379a889b10&amp;amp;quality=50&amp;amp;smart=true&amp;amp;width=1200&amp;amp;height=675" alt="" loading="lazy" onerror="this.outerHTML='<div class=&quot;thumb thumb-fallback&quot;>🎁</div>'">
         <div class="card-body">
           <div class="card-meta">
-            <span class="badge" style="background:#2a7fc9"><span class="ja">新弾・予約</span><span class="en">New Sets &amp; Preorders</span></span>
+            <span class="badge" style="background:rgba(42,127,201,0.13);color:#2a7fc9"><span class="ja">新弾・予約</span><span class="en">New Sets &amp; Preorders</span></span>
             
             <span class="date"><span class="ja">6月26日(金)</span><span class="en">Jun 26 (Fri)</span></span>
           </div>
@@ -975,7 +1022,7 @@ footer {
         <img class="thumb" src="https://contents.oricon.co.jp/upimg/news/2464000/2463930/20260626_142735_p_o_18183226.jpg" alt="" loading="lazy" onerror="this.outerHTML='<div class=&quot;thumb thumb-fallback&quot;>🎁</div>'">
         <div class="card-body">
           <div class="card-meta">
-            <span class="badge" style="background:#2a7fc9"><span class="ja">新弾・予約</span><span class="en">New Sets &amp; Preorders</span></span>
+            <span class="badge" style="background:rgba(42,127,201,0.13);color:#2a7fc9"><span class="ja">新弾・予約</span><span class="en">New Sets &amp; Preorders</span></span>
             
             <span class="date"><span class="ja">6月26日(金)</span><span class="en">Jun 26 (Fri)</span></span>
           </div>
@@ -988,7 +1035,7 @@ footer {
         <img class="thumb" src="https://www.inside-games.jp/imgs/ogp_f/1747661.jpg" alt="" loading="lazy" onerror="this.outerHTML='<div class=&quot;thumb thumb-fallback&quot;>🎁</div>'">
         <div class="card-body">
           <div class="card-meta">
-            <span class="badge" style="background:#2a7fc9"><span class="ja">新弾・予約</span><span class="en">New Sets &amp; Preorders</span></span>
+            <span class="badge" style="background:rgba(42,127,201,0.13);color:#2a7fc9"><span class="ja">新弾・予約</span><span class="en">New Sets &amp; Preorders</span></span>
             
             <span class="date"><span class="ja">6月26日(金)</span><span class="en">Jun 26 (Fri)</span></span>
           </div>
@@ -1001,7 +1048,7 @@ footer {
         <img class="thumb" src="https://www.inside-games.jp/imgs/ogp_f/1747717.jpg" alt="" loading="lazy" onerror="this.outerHTML='<div class=&quot;thumb thumb-fallback&quot;>🎁</div>'">
         <div class="card-body">
           <div class="card-meta">
-            <span class="badge" style="background:#2a7fc9"><span class="ja">新弾・予約</span><span class="en">New Sets &amp; Preorders</span></span>
+            <span class="badge" style="background:rgba(42,127,201,0.13);color:#2a7fc9"><span class="ja">新弾・予約</span><span class="en">New Sets &amp; Preorders</span></span>
             
             <span class="date"><span class="ja">6月26日(金)</span><span class="en">Jun 26 (Fri)</span></span>
           </div>
@@ -1014,7 +1061,7 @@ footer {
         <div class="thumb thumb-fallback">🌏</div>
         <div class="card-body">
           <div class="card-meta">
-            <span class="badge" style="background:#d0642a"><span class="ja">海外ニュース</span><span class="en">International</span></span>
+            <span class="badge" style="background:rgba(208,100,42,0.13);color:#d0642a"><span class="ja">海外ニュース</span><span class="en">International</span></span>
             
             <span class="date"><span class="ja">6月26日(金)</span><span class="en">Jun 26 (Fri)</span></span>
           </div>
@@ -1027,7 +1074,7 @@ footer {
         <div class="thumb thumb-fallback">🌏</div>
         <div class="card-body">
           <div class="card-meta">
-            <span class="badge" style="background:#d0642a"><span class="ja">海外ニュース</span><span class="en">International</span></span>
+            <span class="badge" style="background:rgba(208,100,42,0.13);color:#d0642a"><span class="ja">海外ニュース</span><span class="en">International</span></span>
             
             <span class="date"><span class="ja">6月25日(木)</span><span class="en">Jun 25 (Thu)</span></span>
           </div>
@@ -1040,7 +1087,7 @@ footer {
         <img class="thumb" src="https://pokeca-pocket.dbfw-days.com/wp-content/uploads/2026/06/IMG_3627.jpeg" alt="" loading="lazy" onerror="this.outerHTML='<div class=&quot;thumb thumb-fallback&quot;>📈</div>'">
         <div class="card-body">
           <div class="card-meta">
-            <span class="badge" style="background:#2e9e5b"><span class="ja">相場・高騰</span><span class="en">Market &amp; Prices</span></span>
+            <span class="badge" style="background:rgba(46,158,91,0.13);color:#2e9e5b"><span class="ja">相場・高騰</span><span class="en">Market &amp; Prices</span></span>
             
             <span class="date"><span class="ja">6月24日(水)</span><span class="en">Jun 24 (Wed)</span></span>
           </div>
@@ -1053,7 +1100,7 @@ footer {
         <img class="thumb" src="https://prcdn.freetls.fastly.net/release_image/183006/3/183006-3-a5de59b57c3f0dd93ad8f6a4b8f17c10-2000x1132.png?format=jpeg&amp;amp;auto=webp&amp;amp;fit=bounds&amp;amp;width=2400&amp;amp;height=1260" alt="" loading="lazy" onerror="this.outerHTML='<div class=&quot;thumb thumb-fallback&quot;>📈</div>'">
         <div class="card-body">
           <div class="card-meta">
-            <span class="badge" style="background:#2e9e5b"><span class="ja">相場・高騰</span><span class="en">Market &amp; Prices</span></span>
+            <span class="badge" style="background:rgba(46,158,91,0.13);color:#2e9e5b"><span class="ja">相場・高騰</span><span class="en">Market &amp; Prices</span></span>
             
             <span class="date"><span class="ja">6月24日(水)</span><span class="en">Jun 24 (Wed)</span></span>
           </div>
@@ -1066,7 +1113,7 @@ footer {
         <img class="thumb" src="https://hobby.dengeki.com/ss/hobby/2026/06/card_O9Z6trmdCFxf_W5_hdeKu1SEnTk5fH9t_12KqL_CbaKp4ScaECn8y5aZUtpKMTdHD.jpg" alt="" loading="lazy" onerror="this.outerHTML='<div class=&quot;thumb thumb-fallback&quot;>🎁</div>'">
         <div class="card-body">
           <div class="card-meta">
-            <span class="badge" style="background:#2a7fc9"><span class="ja">新弾・予約</span><span class="en">New Sets &amp; Preorders</span></span>
+            <span class="badge" style="background:rgba(42,127,201,0.13);color:#2a7fc9"><span class="ja">新弾・予約</span><span class="en">New Sets &amp; Preorders</span></span>
             
             <span class="date"><span class="ja">6月24日(水)</span><span class="en">Jun 24 (Wed)</span></span>
           </div>
@@ -1079,7 +1126,7 @@ footer {
         <img class="thumb" src="https://cdn.snkrdunk.com/uploads/media/20260122103018-0.jpeg" alt="" loading="lazy" onerror="this.outerHTML='<div class=&quot;thumb thumb-fallback&quot;>📈</div>'">
         <div class="card-body">
           <div class="card-meta">
-            <span class="badge" style="background:#2e9e5b"><span class="ja">相場・高騰</span><span class="en">Market &amp; Prices</span></span>
+            <span class="badge" style="background:rgba(46,158,91,0.13);color:#2e9e5b"><span class="ja">相場・高騰</span><span class="en">Market &amp; Prices</span></span>
             
             <span class="date"><span class="ja">6月23日(火)</span><span class="en">Jun 23 (Tue)</span></span>
           </div>
@@ -1092,7 +1139,7 @@ footer {
         <img class="thumb" src="https://cdn.snkrdunk.com/uploads/media/ad5c37ea-d291-488c-a7c7-be2c68547e06.jpeg" alt="" loading="lazy" onerror="this.outerHTML='<div class=&quot;thumb thumb-fallback&quot;>📈</div>'">
         <div class="card-body">
           <div class="card-meta">
-            <span class="badge" style="background:#2e9e5b"><span class="ja">相場・高騰</span><span class="en">Market &amp; Prices</span></span>
+            <span class="badge" style="background:rgba(46,158,91,0.13);color:#2e9e5b"><span class="ja">相場・高騰</span><span class="en">Market &amp; Prices</span></span>
             
             <span class="date"><span class="ja">6月23日(火)</span><span class="en">Jun 23 (Tue)</span></span>
           </div>
@@ -1105,7 +1152,7 @@ footer {
         <img class="thumb" src="https://www.inside-games.jp/imgs/ogp_f/1746223.jpg" alt="" loading="lazy" onerror="this.outerHTML='<div class=&quot;thumb thumb-fallback&quot;>🎁</div>'">
         <div class="card-body">
           <div class="card-meta">
-            <span class="badge" style="background:#2a7fc9"><span class="ja">新弾・予約</span><span class="en">New Sets &amp; Preorders</span></span>
+            <span class="badge" style="background:rgba(42,127,201,0.13);color:#2a7fc9"><span class="ja">新弾・予約</span><span class="en">New Sets &amp; Preorders</span></span>
             
             <span class="date"><span class="ja">6月23日(火)</span><span class="en">Jun 23 (Tue)</span></span>
           </div>
@@ -1118,7 +1165,7 @@ footer {
         <div class="thumb thumb-fallback">🎁</div>
         <div class="card-body">
           <div class="card-meta">
-            <span class="badge" style="background:#2a7fc9"><span class="ja">新弾・予約</span><span class="en">New Sets &amp; Preorders</span></span>
+            <span class="badge" style="background:rgba(42,127,201,0.13);color:#2a7fc9"><span class="ja">新弾・予約</span><span class="en">New Sets &amp; Preorders</span></span>
             
             <span class="date"><span class="ja">6月23日(火)</span><span class="en">Jun 23 (Tue)</span></span>
           </div>
@@ -1131,7 +1178,7 @@ footer {
         <img class="thumb" src="https://www.lawson.co.jp/lab/entertainment/art/__icsFiles/afieldfile/2026/06/22/20260623_gift_pokemon_g_2.jpg" alt="" loading="lazy" onerror="this.outerHTML='<div class=&quot;thumb thumb-fallback&quot;>🎁</div>'">
         <div class="card-body">
           <div class="card-meta">
-            <span class="badge" style="background:#2a7fc9"><span class="ja">新弾・予約</span><span class="en">New Sets &amp; Preorders</span></span>
+            <span class="badge" style="background:rgba(42,127,201,0.13);color:#2a7fc9"><span class="ja">新弾・予約</span><span class="en">New Sets &amp; Preorders</span></span>
             
             <span class="date"><span class="ja">6月23日(火)</span><span class="en">Jun 23 (Tue)</span></span>
           </div>
@@ -1144,7 +1191,7 @@ footer {
         <img class="thumb" src="https://hobby.watch.impress.co.jp/img/hbw/list/2119/328/01.jpg" alt="" loading="lazy" onerror="this.outerHTML='<div class=&quot;thumb thumb-fallback&quot;>🎁</div>'">
         <div class="card-body">
           <div class="card-meta">
-            <span class="badge" style="background:#2a7fc9"><span class="ja">新弾・予約</span><span class="en">New Sets &amp; Preorders</span></span>
+            <span class="badge" style="background:rgba(42,127,201,0.13);color:#2a7fc9"><span class="ja">新弾・予約</span><span class="en">New Sets &amp; Preorders</span></span>
             
             <span class="date"><span class="ja">6月23日(火)</span><span class="en">Jun 23 (Tue)</span></span>
           </div>
@@ -1157,7 +1204,7 @@ footer {
         <img class="thumb" src="https://cdn.snkrdunk.com/uploads/media/2b8e3a68-8a0a-4398-b262-5f9bb8872275.jpeg" alt="" loading="lazy" onerror="this.outerHTML='<div class=&quot;thumb thumb-fallback&quot;>📈</div>'">
         <div class="card-body">
           <div class="card-meta">
-            <span class="badge" style="background:#2e9e5b"><span class="ja">相場・高騰</span><span class="en">Market &amp; Prices</span></span>
+            <span class="badge" style="background:rgba(46,158,91,0.13);color:#2e9e5b"><span class="ja">相場・高騰</span><span class="en">Market &amp; Prices</span></span>
             
             <span class="date"><span class="ja">6月22日(月)</span><span class="en">Jun 22 (Mon)</span></span>
           </div>
@@ -1170,7 +1217,7 @@ footer {
         <img class="thumb" src="https://cimg.kgl-systems.io/camion/files/79131/ogp_koHY.jpg?x=1280" alt="" loading="lazy" onerror="this.outerHTML='<div class=&quot;thumb thumb-fallback&quot;>🎁</div>'">
         <div class="card-body">
           <div class="card-meta">
-            <span class="badge" style="background:#2a7fc9"><span class="ja">新弾・予約</span><span class="en">New Sets &amp; Preorders</span></span>
+            <span class="badge" style="background:rgba(42,127,201,0.13);color:#2a7fc9"><span class="ja">新弾・予約</span><span class="en">New Sets &amp; Preorders</span></span>
             
             <span class="date"><span class="ja">6月22日(月)</span><span class="en">Jun 22 (Mon)</span></span>
           </div>
@@ -1183,7 +1230,7 @@ footer {
         <img class="thumb" src="https://newsatcl-pctr.c.yimg.jp/t/iwiz-yn/rpr/tanekiyoshi/02648123/title-1781858523512.jpeg?exp=10800" alt="" loading="lazy" onerror="this.outerHTML='<div class=&quot;thumb thumb-fallback&quot;>🔍</div>'">
         <div class="card-body">
           <div class="card-meta">
-            <span class="badge" style="background:#7c5cbf"><span class="ja">鑑定・PSA</span><span class="en">Grading &amp; PSA</span></span>
+            <span class="badge" style="background:rgba(124,92,191,0.13);color:#7c5cbf"><span class="ja">鑑定・PSA</span><span class="en">Grading &amp; PSA</span></span>
             
             <span class="date"><span class="ja">6月20日(土)</span><span class="en">Jun 20 (Sat)</span></span>
           </div>
@@ -1196,7 +1243,7 @@ footer {
         <div class="thumb thumb-fallback">🌏</div>
         <div class="card-body">
           <div class="card-meta">
-            <span class="badge" style="background:#d0642a"><span class="ja">海外ニュース</span><span class="en">International</span></span>
+            <span class="badge" style="background:rgba(208,100,42,0.13);color:#d0642a"><span class="ja">海外ニュース</span><span class="en">International</span></span>
             
             <span class="date"><span class="ja">6月20日(土)</span><span class="en">Jun 20 (Sat)</span></span>
           </div>
@@ -1209,7 +1256,7 @@ footer {
         <div class="thumb thumb-fallback">📈</div>
         <div class="card-body">
           <div class="card-meta">
-            <span class="badge" style="background:#2e9e5b"><span class="ja">相場・高騰</span><span class="en">Market &amp; Prices</span></span>
+            <span class="badge" style="background:rgba(46,158,91,0.13);color:#2e9e5b"><span class="ja">相場・高騰</span><span class="en">Market &amp; Prices</span></span>
             
             <span class="date"><span class="ja">6月19日(金)</span><span class="en">Jun 19 (Fri)</span></span>
           </div>
@@ -1222,7 +1269,7 @@ footer {
         <img class="thumb" src="https://www.inside-games.jp/imgs/ogp_f/1744766.jpg" alt="" loading="lazy" onerror="this.outerHTML='<div class=&quot;thumb thumb-fallback&quot;>🎁</div>'">
         <div class="card-body">
           <div class="card-meta">
-            <span class="badge" style="background:#2a7fc9"><span class="ja">新弾・予約</span><span class="en">New Sets &amp; Preorders</span></span>
+            <span class="badge" style="background:rgba(42,127,201,0.13);color:#2a7fc9"><span class="ja">新弾・予約</span><span class="en">New Sets &amp; Preorders</span></span>
             
             <span class="date"><span class="ja">6月19日(金)</span><span class="en">Jun 19 (Fri)</span></span>
           </div>
@@ -1235,7 +1282,7 @@ footer {
         <div class="thumb thumb-fallback">🌏</div>
         <div class="card-body">
           <div class="card-meta">
-            <span class="badge" style="background:#d0642a"><span class="ja">海外ニュース</span><span class="en">International</span></span>
+            <span class="badge" style="background:rgba(208,100,42,0.13);color:#d0642a"><span class="ja">海外ニュース</span><span class="en">International</span></span>
             
             <span class="date"><span class="ja">6月19日(金)</span><span class="en">Jun 19 (Fri)</span></span>
           </div>
@@ -1248,7 +1295,7 @@ footer {
         <img class="thumb" src="https://cdn.snkrdunk.com/uploads/media/2989b9e7-e8f4-4557-bee3-ff9f7db28e77.jpeg" alt="" loading="lazy" onerror="this.outerHTML='<div class=&quot;thumb thumb-fallback&quot;>🎁</div>'">
         <div class="card-body">
           <div class="card-meta">
-            <span class="badge" style="background:#2a7fc9"><span class="ja">新弾・予約</span><span class="en">New Sets &amp; Preorders</span></span>
+            <span class="badge" style="background:rgba(42,127,201,0.13);color:#2a7fc9"><span class="ja">新弾・予約</span><span class="en">New Sets &amp; Preorders</span></span>
             
             <span class="date"><span class="ja">6月18日(木)</span><span class="en">Jun 18 (Thu)</span></span>
           </div>
@@ -1261,7 +1308,7 @@ footer {
         <img class="thumb" src="https://pokeca-pocket.dbfw-days.com/wp-content/uploads/2026/05/IMG_2815.jpeg" alt="" loading="lazy" onerror="this.outerHTML='<div class=&quot;thumb thumb-fallback&quot;>📈</div>'">
         <div class="card-body">
           <div class="card-meta">
-            <span class="badge" style="background:#2e9e5b"><span class="ja">相場・高騰</span><span class="en">Market &amp; Prices</span></span>
+            <span class="badge" style="background:rgba(46,158,91,0.13);color:#2e9e5b"><span class="ja">相場・高騰</span><span class="en">Market &amp; Prices</span></span>
             
             <span class="date"><span class="ja">6月18日(木)</span><span class="en">Jun 18 (Thu)</span></span>
           </div>
@@ -1274,7 +1321,7 @@ footer {
         <img class="thumb" src="https://www.pokebeach.com/news/2026/06/Pokemon-TCG-Mega-Evolution—Ascended-Heroes-Tin-Mega-Feraligatr_EN-1206x1500-3d8f6f2-1.jpg" alt="" loading="lazy" onerror="this.outerHTML='<div class=&quot;thumb thumb-fallback&quot;>🌏</div>'">
         <div class="card-body">
           <div class="card-meta">
-            <span class="badge" style="background:#d0642a"><span class="ja">海外ニュース</span><span class="en">International</span></span>
+            <span class="badge" style="background:rgba(208,100,42,0.13);color:#d0642a"><span class="ja">海外ニュース</span><span class="en">International</span></span>
             
             <span class="date"><span class="ja">6月18日(木)</span><span class="en">Jun 18 (Thu)</span></span>
           </div>
@@ -1287,7 +1334,7 @@ footer {
         <img class="thumb" src="https://www.pokebeach.com/news/2026/06/pokebeach-20260618-08200530-129360269360266.jpg" alt="" loading="lazy" onerror="this.outerHTML='<div class=&quot;thumb thumb-fallback&quot;>🌏</div>'">
         <div class="card-body">
           <div class="card-meta">
-            <span class="badge" style="background:#d0642a"><span class="ja">海外ニュース</span><span class="en">International</span></span>
+            <span class="badge" style="background:rgba(208,100,42,0.13);color:#d0642a"><span class="ja">海外ニュース</span><span class="en">International</span></span>
             
             <span class="date"><span class="ja">6月18日(木)</span><span class="en">Jun 18 (Thu)</span></span>
           </div>
@@ -1300,7 +1347,7 @@ footer {
         <img class="thumb" src="https://img.biggo.com/sQQ0tnvqU_D7bYzh245sxwQCOWF1ZPHfX44oODhGT28/fit/1720/0/sm/0/aHR0cHM6Ly9pbWcuYmdvLm9uZS9uZXdzLWltYWdlL2FpX2dlbmVyYXRlZC8yMDI2LTA2L2U5MWQ1NzQ2NDBjZjM1NWNfMTc4MTcwMzg2NV9jb3Zlci5qcGc.webp" alt="" loading="lazy" onerror="this.outerHTML='<div class=&quot;thumb thumb-fallback&quot;>🔍</div>'">
         <div class="card-body">
           <div class="card-meta">
-            <span class="badge" style="background:#7c5cbf"><span class="ja">鑑定・PSA</span><span class="en">Grading &amp; PSA</span></span>
+            <span class="badge" style="background:rgba(124,92,191,0.13);color:#7c5cbf"><span class="ja">鑑定・PSA</span><span class="en">Grading &amp; PSA</span></span>
             
             <span class="date"><span class="ja">6月17日(水)</span><span class="en">Jun 17 (Wed)</span></span>
           </div>
@@ -1313,7 +1360,7 @@ footer {
         <img class="thumb" src="https://cimg.kgl-systems.io/camion/files/78553/thumbnail_qyXv.jpg?x=1280" alt="" loading="lazy" onerror="this.outerHTML='<div class=&quot;thumb thumb-fallback&quot;>🎁</div>'">
         <div class="card-body">
           <div class="card-meta">
-            <span class="badge" style="background:#2a7fc9"><span class="ja">新弾・予約</span><span class="en">New Sets &amp; Preorders</span></span>
+            <span class="badge" style="background:rgba(42,127,201,0.13);color:#2a7fc9"><span class="ja">新弾・予約</span><span class="en">New Sets &amp; Preorders</span></span>
             
             <span class="date"><span class="ja">6月17日(水)</span><span class="en">Jun 17 (Wed)</span></span>
           </div>
@@ -1326,7 +1373,7 @@ footer {
         <img class="thumb" src="https://pokeca-pocket.dbfw-days.com/wp-content/uploads/2026/04/IMG_1020.jpeg" alt="" loading="lazy" onerror="this.outerHTML='<div class=&quot;thumb thumb-fallback&quot;>📈</div>'">
         <div class="card-body">
           <div class="card-meta">
-            <span class="badge" style="background:#2e9e5b"><span class="ja">相場・高騰</span><span class="en">Market &amp; Prices</span></span>
+            <span class="badge" style="background:rgba(46,158,91,0.13);color:#2e9e5b"><span class="ja">相場・高騰</span><span class="en">Market &amp; Prices</span></span>
             
             <span class="date"><span class="ja">6月16日(火)</span><span class="en">Jun 16 (Tue)</span></span>
           </div>
@@ -1339,7 +1386,7 @@ footer {
         <img class="thumb" src="https://cdn.snkrdunk.com/uploads/media/bdb8b955-05c2-46f0-b6a1-f3bbeb9a374d.png" alt="" loading="lazy" onerror="this.outerHTML='<div class=&quot;thumb thumb-fallback&quot;>🔍</div>'">
         <div class="card-body">
           <div class="card-meta">
-            <span class="badge" style="background:#7c5cbf"><span class="ja">鑑定・PSA</span><span class="en">Grading &amp; PSA</span></span>
+            <span class="badge" style="background:rgba(124,92,191,0.13);color:#7c5cbf"><span class="ja">鑑定・PSA</span><span class="en">Grading &amp; PSA</span></span>
             
             <span class="date"><span class="ja">6月12日(金)</span><span class="en">Jun 12 (Fri)</span></span>
           </div>
@@ -1352,7 +1399,7 @@ footer {
         <img class="thumb" src="https://cimg.kgl-systems.io/camion/files/78040/thumbnail_hXsX.jpg?x=1280" alt="" loading="lazy" onerror="this.outerHTML='<div class=&quot;thumb thumb-fallback&quot;>🎁</div>'">
         <div class="card-body">
           <div class="card-meta">
-            <span class="badge" style="background:#2a7fc9"><span class="ja">新弾・予約</span><span class="en">New Sets &amp; Preorders</span></span>
+            <span class="badge" style="background:rgba(42,127,201,0.13);color:#2a7fc9"><span class="ja">新弾・予約</span><span class="en">New Sets &amp; Preorders</span></span>
             
             <span class="date"><span class="ja">6月12日(金)</span><span class="en">Jun 12 (Fri)</span></span>
           </div>
@@ -1365,7 +1412,7 @@ footer {
         <img class="thumb" src="https://s.yimg.jp/images/news-web/versions/20260716-8d0fa2f/all/images/ogp_default.png" alt="" loading="lazy" onerror="this.outerHTML='<div class=&quot;thumb thumb-fallback&quot;>📈</div>'">
         <div class="card-body">
           <div class="card-meta">
-            <span class="badge" style="background:#2e9e5b"><span class="ja">相場・高騰</span><span class="en">Market &amp; Prices</span></span>
+            <span class="badge" style="background:rgba(46,158,91,0.13);color:#2e9e5b"><span class="ja">相場・高騰</span><span class="en">Market &amp; Prices</span></span>
             
             <span class="date"><span class="ja">6月11日(木)</span><span class="en">Jun 11 (Thu)</span></span>
           </div>
@@ -1378,7 +1425,7 @@ footer {
         <img class="thumb" src="https://pinzuba.ismcdn.jp/mwimgs/e/8/1200wm/img_e83dfb1bfa47af63878f9b20bfa5049b4289753.png" alt="" loading="lazy" onerror="this.outerHTML='<div class=&quot;thumb thumb-fallback&quot;>📈</div>'">
         <div class="card-body">
           <div class="card-meta">
-            <span class="badge" style="background:#2e9e5b"><span class="ja">相場・高騰</span><span class="en">Market &amp; Prices</span></span>
+            <span class="badge" style="background:rgba(46,158,91,0.13);color:#2e9e5b"><span class="ja">相場・高騰</span><span class="en">Market &amp; Prices</span></span>
             
             <span class="date"><span class="ja">6月11日(木)</span><span class="en">Jun 11 (Thu)</span></span>
           </div>
@@ -1391,7 +1438,7 @@ footer {
         <img class="thumb" src="https://cimg.kgl-systems.io/camion/files/77986/thumbnail_aKfx.jpg?x=1280" alt="" loading="lazy" onerror="this.outerHTML='<div class=&quot;thumb thumb-fallback&quot;>🎁</div>'">
         <div class="card-body">
           <div class="card-meta">
-            <span class="badge" style="background:#2a7fc9"><span class="ja">新弾・予約</span><span class="en">New Sets &amp; Preorders</span></span>
+            <span class="badge" style="background:rgba(42,127,201,0.13);color:#2a7fc9"><span class="ja">新弾・予約</span><span class="en">New Sets &amp; Preorders</span></span>
             
             <span class="date"><span class="ja">6月11日(木)</span><span class="en">Jun 11 (Thu)</span></span>
           </div>
@@ -1404,7 +1451,7 @@ footer {
         <img class="thumb" src="https://img.toy-people.com/member/177721219767.jpg" alt="" loading="lazy" onerror="this.outerHTML='<div class=&quot;thumb thumb-fallback&quot;>📈</div>'">
         <div class="card-body">
           <div class="card-meta">
-            <span class="badge" style="background:#2e9e5b"><span class="ja">相場・高騰</span><span class="en">Market &amp; Prices</span></span>
+            <span class="badge" style="background:rgba(46,158,91,0.13);color:#2e9e5b"><span class="ja">相場・高騰</span><span class="en">Market &amp; Prices</span></span>
             
             <span class="date"><span class="ja">6月10日(水)</span><span class="en">Jun 10 (Wed)</span></span>
           </div>
@@ -1417,7 +1464,7 @@ footer {
         <img class="thumb" src="https://cdn.snkrdunk.com/uploads/media/fc00351e-3b4e-4880-b1f9-52bddecdfec2.jpeg" alt="" loading="lazy" onerror="this.outerHTML='<div class=&quot;thumb thumb-fallback&quot;>📈</div>'">
         <div class="card-body">
           <div class="card-meta">
-            <span class="badge" style="background:#2e9e5b"><span class="ja">相場・高騰</span><span class="en">Market &amp; Prices</span></span>
+            <span class="badge" style="background:rgba(46,158,91,0.13);color:#2e9e5b"><span class="ja">相場・高騰</span><span class="en">Market &amp; Prices</span></span>
             
             <span class="date"><span class="ja">6月8日(月)</span><span class="en">Jun 8 (Mon)</span></span>
           </div>
@@ -1430,7 +1477,7 @@ footer {
         <img class="thumb" src="https://cdn.snkrdunk.com/uploads/media/20231129100103-0.jpeg" alt="" loading="lazy" onerror="this.outerHTML='<div class=&quot;thumb thumb-fallback&quot;>📈</div>'">
         <div class="card-body">
           <div class="card-meta">
-            <span class="badge" style="background:#2e9e5b"><span class="ja">相場・高騰</span><span class="en">Market &amp; Prices</span></span>
+            <span class="badge" style="background:rgba(46,158,91,0.13);color:#2e9e5b"><span class="ja">相場・高騰</span><span class="en">Market &amp; Prices</span></span>
             
             <span class="date"><span class="ja">6月7日(日)</span><span class="en">Jun 7 (Sun)</span></span>
           </div>
@@ -1443,7 +1490,7 @@ footer {
         <img class="thumb" src="https://www.pokebeach.com/news/2026/06/mf_044_6r7dmqt2.jpg" alt="" loading="lazy" onerror="this.outerHTML='<div class=&quot;thumb thumb-fallback&quot;>🌏</div>'">
         <div class="card-body">
           <div class="card-meta">
-            <span class="badge" style="background:#d0642a"><span class="ja">海外ニュース</span><span class="en">International</span></span>
+            <span class="badge" style="background:rgba(208,100,42,0.13);color:#d0642a"><span class="ja">海外ニュース</span><span class="en">International</span></span>
             
             <span class="date"><span class="ja">6月6日(土)</span><span class="en">Jun 6 (Sat)</span></span>
           </div>
@@ -1456,7 +1503,7 @@ footer {
         <div class="thumb thumb-fallback">📈</div>
         <div class="card-body">
           <div class="card-meta">
-            <span class="badge" style="background:#2e9e5b"><span class="ja">相場・高騰</span><span class="en">Market &amp; Prices</span></span>
+            <span class="badge" style="background:rgba(46,158,91,0.13);color:#2e9e5b"><span class="ja">相場・高騰</span><span class="en">Market &amp; Prices</span></span>
             
             <span class="date"><span class="ja">6月4日(木)</span><span class="en">Jun 4 (Thu)</span></span>
           </div>
@@ -1469,7 +1516,7 @@ footer {
         <img class="thumb" src="https://contents.oricon.co.jp/upimg/news/2459000/2458615/20260601_220830_p_o_40287118.jpg" alt="" loading="lazy" onerror="this.outerHTML='<div class=&quot;thumb thumb-fallback&quot;>🎁</div>'">
         <div class="card-body">
           <div class="card-meta">
-            <span class="badge" style="background:#2a7fc9"><span class="ja">新弾・予約</span><span class="en">New Sets &amp; Preorders</span></span>
+            <span class="badge" style="background:rgba(42,127,201,0.13);color:#2a7fc9"><span class="ja">新弾・予約</span><span class="en">New Sets &amp; Preorders</span></span>
             
             <span class="date"><span class="ja">6月2日(火)</span><span class="en">Jun 2 (Tue)</span></span>
           </div>
@@ -1488,7 +1535,7 @@ footer {
       <a href="https://pockettcg.app/?utm_source=pokeka_news" target="_blank" rel="noopener">Pocket!</a>
     </nav>
     <div class="footer-meta">
-      <span><span class="ja">最終更新</span><span class="en">Last updated</span>: 2026-07-17 17:56 JST</span>
+      <span><span class="ja">最終更新</span><span class="en">Last updated</span>: 2026-07-17 18:02 JST</span>
       <span><span class="ja">掲載 99 件（直近45日）</span><span class="en">99 articles (last 45 days)</span></span>
       <a href="https://github.com/amon-jpn/pokemon_aggregator" target="_blank" rel="noopener"><span class="ja">ソースコード</span><span class="en">Source code</span></a>
     </div>
@@ -1513,7 +1560,6 @@ const themeBtn = document.getElementById('theme-btn');
 function setTheme(theme) {
   document.documentElement.dataset.theme = theme;
   localStorage.setItem('theme', theme);
-  themeBtn.textContent = theme === 'dark' ? '☀️' : '🌙';
 }
 themeBtn.addEventListener('click', () =>
   setTheme(document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark'));
