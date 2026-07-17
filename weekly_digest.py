@@ -49,7 +49,8 @@ def fallback_body(entries):
         lines.append(f"### {category}")
         for e in items:
             source = f"（{e['source']}）" if e.get("source") else ""
-            lines.append(f"- [{e['title']}]({e['link']}){source}")
+            url = e.get("real_url") or e["link"]
+            lines.append(f"- [{e['title']}]({url}){source}")
         lines.append("")
     return "\n".join(lines).strip()
 
@@ -93,6 +94,9 @@ def main():
     if body is None:
         print("ℹ️ LLMなしのフォールバック形式で生成します")
         body = fallback_body(entries)
+    else:
+        # LLM本文には元記事リンクが含まれないため、リンク付き記事一覧を末尾に付ける
+        body = f"{body}\n\n{fallback_body(entries)}"
 
     os.makedirs(DIGEST_DIR, exist_ok=True)
     digest_md = f"# 週刊ポケカ高騰ダイジェスト（{week_label}）\n\n{body}\n"
