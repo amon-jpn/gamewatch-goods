@@ -5,10 +5,14 @@ archive.json の記事をカード型UIで一覧表示する静的ページを�
 外部CSS/JSに依存しない自己完結型のHTMLを出力し、Pages（mainブランチの
 ルート配信）にそのまま載せる。デザイン調整はこのファイル内のCSSを編集する。
 
-日英切り替え: 各テキストを <span class="ja"> / <span class="en"> の対で
-埋め込み、bodyのlang-enクラスをJSでトグルして表示を切り替える（再取得なし）。
-記事の英訳は pokemon_aggregator.add_translations がLLMで付与する
-title_en / summary_en を使い、未翻訳の記事は原文にフォールバックする。
+- 日英切り替え: 各テキストを <span class="ja"> / <span class="en"> の対で
+  埋め込み、bodyのlang-enクラスをJSでトグルして表示を切り替える。
+  記事の英訳は pokemon_aggregator.add_translations がLLMで付与する
+  title_en / summary_en を使い、未翻訳の記事は原文にフォールバックする。
+- テーマ切り替え: html要素の data-theme 属性（light/dark）で上書き。
+  初期値はOS設定に従い、選択はlocalStorageに保存する。
+- ページ送り: 全記事をHTMLに埋め込み、JSでページ分割して表示する
+  （PER_PAGE件ずつ。カテゴリタブと連動し、切り替え時は1ページ目に戻る）。
 """
 
 import glob
@@ -22,6 +26,7 @@ DIGEST_DIR = "digests"
 PAGES_URL = "https://amon-jpn.github.io/pokemon_aggregator"
 REPO_URL = "https://github.com/amon-jpn/pokemon_aggregator"
 PROMO_URL = "https://pockettcg.app/?utm_source=pokeka_news"
+PER_PAGE = 24  # 1ページあたりのカード数
 
 JST = timezone(timedelta(hours=9))
 
@@ -38,6 +43,27 @@ CATEGORY_STYLE = {
     "海外ニュース": {"color": "#d0642a", "emoji": "🌏", "en": "International"},
 }
 DEFAULT_STYLE = {"color": "#8a8a8a", "emoji": "📰", "en": "News"}
+
+# ライト/ダークのテーマ変数。メディアクエリ（OS設定）と
+# data-theme属性（手動切り替え）の両方から参照するため変数化している
+LIGHT_VARS = """
+  --bg: #f5f4f0;
+  --surface: #ffffff;
+  --text: #1c1b18;
+  --text-sub: #6e6a60;
+  --border: #e5e2da;
+  --accent: #ffcb05;
+  --shadow: 0 1px 3px rgba(0,0,0,.06), 0 4px 14px rgba(0,0,0,.05);
+"""
+DARK_VARS = """
+  --bg: #16151a;
+  --surface: #201f26;
+  --text: #ece9e2;
+  --text-sub: #9b968c;
+  --border: #33313b;
+  --accent: #ffcb05;
+  --shadow: 0 1px 3px rgba(0,0,0,.4);
+"""
 
 
 def bilingual(ja, en):
@@ -168,25 +194,11 @@ def build_site(entries):
 <link rel="icon" href="pikabou.jpg">
 <link rel="alternate" type="application/rss+xml" title="ポケカ コレクターニュース" href="pokemon_news.xml">
 <style>
-:root {{
-  --bg: #f5f4f0;
-  --surface: #ffffff;
-  --text: #1c1b18;
-  --text-sub: #6e6a60;
-  --border: #e5e2da;
-  --accent: #ffcb05;
-  --shadow: 0 1px 3px rgba(0,0,0,.06), 0 4px 14px rgba(0,0,0,.05);
-}}
+:root {{{LIGHT_VARS}}}
 @media (prefers-color-scheme: dark) {{
-  :root {{
-    --bg: #16151a;
-    --surface: #201f26;
-    --text: #ece9e2;
-    --text-sub: #9b968c;
-    --border: #33313b;
-    --shadow: 0 1px 3px rgba(0,0,0,.4);
-  }}
+  :root:not([data-theme="light"]) {{{DARK_VARS}}}
 }}
+:root[data-theme="dark"] {{{DARK_VARS}}}
 * {{ box-sizing: border-box; margin: 0; padding: 0; }}
 body {{
   background: var(--bg); color: var(--text);
@@ -204,7 +216,7 @@ header {{
 header img {{ width: 52px; height: 52px; border-radius: 12px; }}
 header h1 {{ font-size: 1.45rem; letter-spacing: .02em; }}
 header .tagline {{ font-size: .8rem; color: var(--text-sub); }}
-.header-right {{ margin-left: auto; display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }}
+.header-right {{ margin-left: auto; display: flex; align-items: center; gap: 10px; }}
 .lang-switch {{
   display: flex; border: 1px solid var(--border); border-radius: 999px; overflow: hidden;
   background: var(--surface);
@@ -214,13 +226,11 @@ header .tagline {{ font-size: .8rem; color: var(--text-sub); }}
   color: var(--text-sub); padding: 5px 12px;
 }}
 .lang-btn.active {{ background: var(--accent); color: #1c1b18; font-weight: 700; }}
-.feed-links {{ display: flex; gap: 10px; flex-wrap: wrap; }}
-.feed-links a {{
-  font-size: .75rem; color: var(--text-sub); text-decoration: none;
-  border: 1px solid var(--border); border-radius: 999px; padding: 5px 12px;
+.theme-btn {{
+  font: inherit; font-size: .9rem; cursor: pointer; line-height: 1;
+  border: 1px solid var(--border); border-radius: 999px; padding: 6px 10px;
   background: var(--surface);
 }}
-.feed-links a:hover {{ border-color: var(--accent); color: var(--text); }}
 .promo {{
   display: flex; align-items: center; gap: 16px; text-decoration: none; color: #1c1b18;
   background: linear-gradient(120deg, #ffcb05, #ffe27a);
@@ -229,7 +239,7 @@ header .tagline {{ font-size: .8rem; color: var(--text-sub); }}
 }}
 .promo:hover {{ transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,0,0,.15); }}
 .promo-icon {{ font-size: 2rem; }}
-.promo-text {{ flex: 1; min-width: 200px; }}
+.promo-text {{ flex: 1; min-width: 0; }}
 .promo-name {{ font-weight: 800; font-size: 1.05rem; }}
 .promo-maker {{
   font-size: .68rem; font-weight: 600; color: rgba(28,27,24,.65);
@@ -245,7 +255,6 @@ header .tagline {{ font-size: .8rem; color: var(--text-sub); }}
 @media (max-width: 640px) {{
   .promo {{ flex-direction: column; align-items: flex-start; gap: 8px; padding: 14px 16px; }}
   .promo-icon {{ display: none; }}
-  .promo-text {{ min-width: 0; }}
   .promo-maker {{ display: block; width: fit-content; margin: 6px 0 0; }}
   .promo-cta {{ align-self: stretch; text-align: center; }}
 }}
@@ -294,11 +303,30 @@ header .tagline {{ font-size: .8rem; color: var(--text-sub); }}
 .summary {{ font-size: .82rem; color: var(--text-sub); }}
 .card-footer {{ margin-top: auto; }}
 .source {{ font-size: .75rem; color: var(--text-sub); }}
+.pager {{
+  display: flex; justify-content: center; gap: 8px; flex-wrap: wrap; margin-top: 28px;
+}}
+.page-btn {{
+  font: inherit; font-size: .9rem; cursor: pointer; min-width: 40px;
+  background: var(--surface); color: var(--text-sub);
+  border: 1px solid var(--border); border-radius: 8px; padding: 7px 12px;
+}}
+.page-btn.active {{ background: var(--accent); color: #1c1b18; border-color: var(--accent); font-weight: 700; }}
+.page-btn:disabled {{ opacity: .4; cursor: default; }}
 footer {{
-  margin-top: 40px; padding-top: 16px; border-top: 1px solid var(--border);
+  margin-top: 48px; padding-top: 20px; border-top: 1px solid var(--border);
+}}
+.feed-links {{ display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 14px; }}
+.feed-links a {{
+  font-size: .78rem; color: var(--text-sub); text-decoration: none;
+  border: 1px solid var(--border); border-radius: 999px; padding: 6px 14px;
+  background: var(--surface);
+}}
+.feed-links a:hover {{ border-color: var(--accent); color: var(--text); }}
+.footer-meta {{
   font-size: .78rem; color: var(--text-sub); display: flex; gap: 16px; flex-wrap: wrap;
 }}
-footer a {{ color: inherit; }}
+.footer-meta a {{ color: inherit; }}
 </style>
 </head>
 <body>
@@ -314,11 +342,7 @@ footer a {{ color: inherit; }}
         <button class="lang-btn" data-lang="ja">日本語</button>
         <button class="lang-btn" data-lang="en">EN</button>
       </div>
-      <nav class="feed-links">
-        <a href="pokemon_news.xml">📡 RSS</a>
-        <a href="digest.xml">📮 {bilingual("週刊ダイジェストRSS", "Weekly Digest RSS")}</a>
-        <a href="{REPO_URL}" target="_blank" rel="noopener">GitHub</a>
-      </nav>
+      <button class="theme-btn" id="theme-btn" aria-label="テーマ切り替え">🌙</button>
     </div>
   </header>
 {render_promo()}
@@ -326,17 +350,26 @@ footer a {{ color: inherit; }}
   <nav class="tabs">
     {' '.join(tabs)}
   </nav>
-  <main class="grid">
+  <main class="grid" id="grid">
 {cards}
   </main>
+  <nav class="pager" id="pager"></nav>
   <footer>
-    <span>{bilingual("最終更新", "Last updated")}: {updated} JST</span>
-    <span>{bilingual(f"掲載 {len(entries)} 件（直近45日）", f"{len(entries)} articles (last 45 days)")}</span>
-    <a href="{PROMO_URL}" target="_blank" rel="noopener">Pocket!</a>
-    <a href="{REPO_URL}" target="_blank" rel="noopener">{bilingual("ソースコード", "Source code")}</a>
+    <nav class="feed-links">
+      <a href="pokemon_news.xml">📡 RSS</a>
+      <a href="digest.xml">📮 {bilingual("週刊ダイジェストRSS", "Weekly Digest RSS")}</a>
+      <a href="{REPO_URL}" target="_blank" rel="noopener">GitHub</a>
+      <a href="{PROMO_URL}" target="_blank" rel="noopener">💎 Pocket!</a>
+    </nav>
+    <div class="footer-meta">
+      <span>{bilingual("最終更新", "Last updated")}: {updated} JST</span>
+      <span>{bilingual(f"掲載 {len(entries)} 件（直近45日）", f"{len(entries)} articles (last 45 days)")}</span>
+      <a href="{REPO_URL}" target="_blank" rel="noopener">{bilingual("ソースコード", "Source code")}</a>
+    </div>
   </footer>
 </div>
 <script>
+// ---- 言語切り替え ----
 function setLang(lang) {{
   document.body.classList.toggle('lang-en', lang === 'en');
   document.documentElement.lang = lang;
@@ -349,16 +382,60 @@ document.querySelectorAll('.lang-btn').forEach(b =>
 setLang(localStorage.getItem('lang') ||
   ((navigator.language || '').startsWith('ja') ? 'ja' : 'en'));
 
+// ---- テーマ切り替え ----
+const themeBtn = document.getElementById('theme-btn');
+function setTheme(theme) {{
+  document.documentElement.dataset.theme = theme;
+  localStorage.setItem('theme', theme);
+  themeBtn.textContent = theme === 'dark' ? '☀️' : '🌙';
+}}
+themeBtn.addEventListener('click', () =>
+  setTheme(document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark'));
+setTheme(localStorage.getItem('theme') ||
+  (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'));
+
+// ---- カテゴリフィルタ + ページ送り ----
+const PER_PAGE = {PER_PAGE};
+const cards = Array.from(document.querySelectorAll('.card'));
+let currentCat = 'all';
+let currentPage = 1;
+
+function apply(scroll) {{
+  const visible = cards.filter(c => currentCat === 'all' || c.dataset.cat === currentCat);
+  const pages = Math.max(1, Math.ceil(visible.length / PER_PAGE));
+  currentPage = Math.min(Math.max(1, currentPage), pages);
+  cards.forEach(c => c.style.display = 'none');
+  visible.slice((currentPage - 1) * PER_PAGE, currentPage * PER_PAGE)
+    .forEach(c => c.style.display = '');
+
+  const pager = document.getElementById('pager');
+  pager.innerHTML = '';
+  if (pages > 1) {{
+    const mk = (label, page, opts = {{}}) => {{
+      const b = document.createElement('button');
+      b.className = 'page-btn' + (opts.active ? ' active' : '');
+      b.textContent = label;
+      b.disabled = !!opts.disabled;
+      b.addEventListener('click', () => {{ currentPage = page; apply(true); }});
+      pager.appendChild(b);
+    }};
+    mk('‹', currentPage - 1, {{disabled: currentPage === 1}});
+    for (let i = 1; i <= pages; i++) mk(i, i, {{active: i === currentPage}});
+    mk('›', currentPage + 1, {{disabled: currentPage === pages}});
+  }}
+  if (scroll) document.querySelector('.tabs').scrollIntoView({{behavior: 'smooth'}});
+}}
+
 document.querySelectorAll('.tab').forEach(tab => {{
   tab.addEventListener('click', () => {{
     document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
     tab.classList.add('active');
-    const cat = tab.dataset.cat;
-    document.querySelectorAll('.card').forEach(card => {{
-      card.style.display = (cat === 'all' || card.dataset.cat === cat) ? '' : 'none';
-    }});
+    currentCat = tab.dataset.cat;
+    currentPage = 1;
+    apply(false);
   }});
 }});
+apply(false);
 </script>
 </body>
 </html>
