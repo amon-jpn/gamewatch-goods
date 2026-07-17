@@ -149,7 +149,7 @@ NEGATIVE_KEYWORDS = {
 # スパム転載サイトの排除。タイトル末尾のランダム英数字ID や
 # ツイート本文のURL断片は、SNS転載スパムに典型的なパターン。
 SPAM_TITLE_PATTERN = re.compile(r"\([A-Za-z0-9]{6,}\)\s*$|https?://")
-BLOCKED_SOURCES = {"KuCoin"}
+BLOCKED_SOURCES = {"KuCoin", "ニュースメディアVOIX"}
 
 
 def is_spam(title, source_name):
