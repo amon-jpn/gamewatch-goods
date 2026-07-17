@@ -110,6 +110,76 @@ def summarize_entries(entries):
         return {}
 
 
+def translate_entries(entries):
+    """記事リストに英語タイトルと英語の一言解説を付ける（サイトの英語表示用）。
+
+    戻り値は {リスト内index: {"title_en": ..., "summary_en": ...}}。
+    キー未設定・失敗時は {} を返し、呼び出し側は翻訳なしで続行する。
+    """
+    if not api_available() or not entries:
+        return {}
+    import anthropic
+
+    listing = "\n".join(
+        f"{i}: {e['title']}"
+        + (f"｜解説: {e['summary']}" if e.get("summary") else "")
+        for i, e in enumerate(entries)
+    )
+    schema = {
+        "type": "object",
+        "properties": {
+            "translations": {
+                "type": "array",
+                "items": {
+                    "type": "object",
+                    "properties": {
+                        "index": {"type": "integer"},
+                        "title_en": {"type": "string"},
+                        "summary_en": {"type": "string"},
+                    },
+                    "required": ["index", "title_en", "summary_en"],
+                    "additionalProperties": False,
+                },
+            }
+        },
+        "required": ["translations"],
+        "additionalProperties": False,
+    }
+    prompt = (
+        "以下はポケモンカード関連ニュースのタイトル一覧（と一部は日本語の解説）です。"
+        "英語圏のコレクター向けサイト表示用に、各記事へ次の2つを付けてください。\n"
+        "- title_en: タイトルの自然な英訳。元から英語のタイトルはそのまま返す。\n"
+        "- summary_en: 読むべきか判断できる英語の一言解説（20語以内）。"
+        "解説があればそれを踏まえ、なければタイトルから確実に読み取れる内容だけで書く。"
+        "価格や日付など元にない情報を創作しないこと。\n\n"
+        f"{listing}"
+    )
+    try:
+        client = anthropic.Anthropic()
+        response = _create_with_retry(
+            client,
+            model=MODEL,
+            max_tokens=8000,
+            system=SYSTEM_PROMPT,
+            messages=[{"role": "user", "content": prompt}],
+            output_config={
+                "format": {"type": "json_schema", "schema": schema}
+            },
+        )
+        text = next(b.text for b in response.content if b.type == "text")
+        data = json.loads(text)
+        return {
+            item["index"]: {
+                "title_en": item["title_en"].strip(),
+                "summary_en": item["summary_en"].strip(),
+            }
+            for item in data["translations"]
+        }
+    except Exception as e:
+        print(f"⚠️ LLM英訳をスキップしました: {e}")
+        return {}
+
+
 def generate_digest_body(entries, week_label):
     """1週間分の記事から週刊ダイジェスト本文（Markdown）を生成する。
 

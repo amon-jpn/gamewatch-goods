@@ -38,6 +38,7 @@ FEED_MAX_ITEMS = 60        # RSSに載せる最大件数
 SIMILARITY_THRESHOLD = 0.85  # タイトル類似度がこれを超えたら重複とみなす
 SCORE_THRESHOLD = 3        # 合計スコアがこの値以上の記事だけ採用
 SUMMARIZE_MAX_PER_RUN = 50  # 1回の実行でLLM要約を付ける最大記事数
+TRANSLATE_MAX_PER_RUN = 50  # 1回の実行でLLM英訳を付ける最大記事数
 ENRICH_MAX_PER_RUN = 30    # 1回の実行で元記事URL・画像を取得する最大記事数
 
 
@@ -376,12 +377,28 @@ def add_summaries(archive):
     print(f"📝 LLM要約を{len(summaries)}件付与しました")
 
 
+def add_translations(archive):
+    """英訳がまだない記事に英語タイトル・解説を付ける（サイトの英語表示用）"""
+    targets = [e for e in archive if "title_en" not in e][:TRANSLATE_MAX_PER_RUN]
+    if not targets:
+        return
+    translations = llm_utils.translate_entries(targets)
+    if not translations:
+        return
+    for i, entry in enumerate(targets):
+        t = translations.get(i, {})
+        entry["title_en"] = t.get("title_en", "")
+        entry["summary_en"] = t.get("summary_en", "")
+    print(f"🌐 英語訳を{len(translations)}件付与しました")
+
+
 def main():
     archive = load_archive()
     candidates = collect()
     archive, added = merge_into_archive(archive, candidates)
     enrich_entries(archive)
     add_summaries(archive)
+    add_translations(archive)
     save_archive(archive)
     build_feed(archive)
     site_builder.build_site(archive)

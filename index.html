@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>ポケカ コレクターニュース</title>
+<title>ポケカ コレクターニュース | Pokémon TCG Collector News</title>
 <meta name="description" content="PSA鑑定・相場・新弾情報など、ポケモンカードのコレクター向けニュースを自動収集して毎日更新">
 <link rel="icon" href="pikabou.jpg">
 <link rel="alternate" type="application/rss+xml" title="ポケカ コレクターニュース" href="pokemon_news.xml">
@@ -33,21 +33,54 @@ body {
   font-family: "Hiragino Sans", "Yu Gothic UI", "Yu Gothic", Meiryo, system-ui, sans-serif;
   line-height: 1.6;
 }
+/* 日英切り替え: lang-enクラスの有無で対になったspan/要素の表示を切り替える */
+body:not(.lang-en) .en { display: none !important; }
+body.lang-en .ja { display: none !important; }
 .wrap { max-width: 1080px; margin: 0 auto; padding: 0 20px 60px; }
 header {
-  display: flex; align-items: center; gap: 14px;
+  display: flex; align-items: center; gap: 14px; flex-wrap: wrap;
   padding: 28px 0 18px; border-bottom: 3px solid var(--accent); margin-bottom: 20px;
 }
 header img { width: 52px; height: 52px; border-radius: 12px; }
 header h1 { font-size: 1.45rem; letter-spacing: .02em; }
 header .tagline { font-size: .8rem; color: var(--text-sub); }
-.feed-links { margin-left: auto; display: flex; gap: 10px; flex-wrap: wrap; }
+.header-right { margin-left: auto; display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.lang-switch {
+  display: flex; border: 1px solid var(--border); border-radius: 999px; overflow: hidden;
+  background: var(--surface);
+}
+.lang-btn {
+  font: inherit; font-size: .75rem; cursor: pointer; border: none; background: none;
+  color: var(--text-sub); padding: 5px 12px;
+}
+.lang-btn.active { background: var(--accent); color: #1c1b18; font-weight: 700; }
+.feed-links { display: flex; gap: 10px; flex-wrap: wrap; }
 .feed-links a {
   font-size: .75rem; color: var(--text-sub); text-decoration: none;
   border: 1px solid var(--border); border-radius: 999px; padding: 5px 12px;
   background: var(--surface);
 }
 .feed-links a:hover { border-color: var(--accent); color: var(--text); }
+.promo {
+  display: flex; align-items: center; gap: 16px; text-decoration: none; color: #1c1b18;
+  background: linear-gradient(120deg, #ffcb05, #ffe27a);
+  border-radius: 12px; padding: 16px 20px; margin-bottom: 22px;
+  box-shadow: var(--shadow); transition: transform .15s ease, box-shadow .15s ease;
+}
+.promo:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,0,0,.15); }
+.promo-icon { font-size: 2rem; }
+.promo-text { flex: 1; min-width: 200px; }
+.promo-name { font-weight: 800; font-size: 1.05rem; }
+.promo-maker {
+  font-size: .68rem; font-weight: 600; color: rgba(28,27,24,.65);
+  border: 1px solid rgba(28,27,24,.25); border-radius: 999px; padding: 2px 8px;
+  margin-left: 6px; vertical-align: middle;
+}
+.promo-copy { font-size: .85rem; color: rgba(28,27,24,.8); }
+.promo-cta {
+  white-space: nowrap; font-weight: 700; font-size: .9rem;
+  background: #1c1b18; color: #ffcb05; border-radius: 999px; padding: 9px 18px;
+}
 .digest-box {
   background: var(--surface); border: 1px solid var(--border); border-left: 4px solid var(--accent);
   border-radius: 10px; padding: 16px 18px; margin-bottom: 22px; box-shadow: var(--shadow);
@@ -105,34 +138,48 @@ footer a { color: inherit; }
   <header>
     <img src="pikabou.jpg" alt="">
     <div>
-      <h1>ポケカ コレクターニュース</h1>
-      <div class="tagline">PSA鑑定・相場・新弾情報を自動収集して毎日更新</div>
+      <h1><span class="ja">ポケカ コレクターニュース</span><span class="en">Pokémon TCG Collector News</span></h1>
+      <div class="tagline"><span class="ja">PSA鑑定・相場・新弾情報を自動収集して毎日更新</span><span class="en">PSA grading, market prices &amp; new set news — auto-curated daily</span></div>
     </div>
-    <nav class="feed-links">
-      <a href="pokemon_news.xml">📡 RSS</a>
-      <a href="digest.xml">📮 週刊ダイジェストRSS</a>
-      <a href="https://github.com/amon-jpn/pokemon_aggregator" target="_blank" rel="noopener">GitHub</a>
-    </nav>
+    <div class="header-right">
+      <div class="lang-switch">
+        <button class="lang-btn" data-lang="ja">日本語</button>
+        <button class="lang-btn" data-lang="en">EN</button>
+      </div>
+      <nav class="feed-links">
+        <a href="pokemon_news.xml">📡 RSS</a>
+        <a href="digest.xml">📮 <span class="ja">週刊ダイジェストRSS</span><span class="en">Weekly Digest RSS</span></a>
+        <a href="https://github.com/amon-jpn/pokemon_aggregator" target="_blank" rel="noopener">GitHub</a>
+      </nav>
+    </div>
   </header>
+    <a class="promo" href="https://pockettcg.app/?utm_source=pokeka_news" target="_blank" rel="noopener">
+      <div class="promo-icon">💎</div>
+      <div class="promo-text">
+        <div class="promo-name">Pocket! <span class="promo-maker"><span class="ja">このサイトの作者が開発</span><span class="en">Built by the maker of this site</span></span></div>
+        <p class="promo-copy"><span class="ja">あなたのカードは今日、いくら？ ポケカのコレクション価値をまとめてトラッキング。</span><span class="en">What are your cards worth today? Track your Pok&#233;mon card collection&#8217;s value.</span></p>
+      </div>
+      <span class="promo-cta"><span class="ja">アプリを見る →</span><span class="en">Check it out →</span></span>
+    </a>
     <section class="digest-box">
-      <div class="digest-label">📮 週刊ダイジェスト（2026-07-17）</div>
+      <div class="digest-label">📮 <span class="ja">週刊ダイジェスト</span><span class="en">Weekly Digest</span>（2026-07-17）</div>
       <p>7月10日〜17日は、ポケモンカード30周年記念商品「30th CELEBRATION」と新弾「ストームエメラルダ」の抽選情報が相次ぎ報道されました。複数の販路（ファミマ、ゲオ、ヨドバシ、セブンネット、ポケセンなど）で抽選販売が実施・予定されています。また、8月から転売対策としてマイナンバーカードのデジタル認証機能をポケセンオンライン抽選販売に導入することが発表され、本人確認強化の流れが本格化します。</p>
-      <a href="https://github.com/amon-jpn/pokemon_aggregator/blob/main/digests/2026-07-17.md" target="_blank" rel="noopener">全文を読む →</a>
+      <a href="https://github.com/amon-jpn/pokemon_aggregator/blob/main/digests/2026-07-17.md" target="_blank" rel="noopener"><span class="ja">全文を読む →</span><span class="en">Read the full digest (Japanese) →</span></a>
     </section>
   <nav class="tabs">
-    <button class="tab active" data-cat="all">すべて</button> <button class="tab" data-cat="海外ニュース">海外ニュース</button> <button class="tab" data-cat="新弾・予約">新弾・予約</button> <button class="tab" data-cat="相場・高騰">相場・高騰</button> <button class="tab" data-cat="鑑定・PSA">鑑定・PSA</button>
+    <button class="tab active" data-cat="all"><span class="ja">すべて</span><span class="en">All</span></button> <button class="tab" data-cat="海外ニュース"><span class="ja">海外ニュース</span><span class="en">International</span></button> <button class="tab" data-cat="新弾・予約"><span class="ja">新弾・予約</span><span class="en">New Sets &amp; Preorders</span></button> <button class="tab" data-cat="相場・高騰"><span class="ja">相場・高騰</span><span class="en">Market &amp; Prices</span></button> <button class="tab" data-cat="鑑定・PSA"><span class="ja">鑑定・PSA</span><span class="en">Grading &amp; PSA</span></button>
   </nav>
   <main class="grid">
       <a class="card" href="https://www.pokebeach.com/2026/07/mega-tatsugiri-ex-lida-and-other-gym-promos-revealed-for-august" target="_blank" rel="noopener" data-cat="海外ニュース">
         <div class="thumb thumb-fallback">🌏</div>
         <div class="card-body">
           <div class="card-meta">
-            <span class="badge" style="background:#d0642a">海外ニュース</span>
+            <span class="badge" style="background:#d0642a"><span class="ja">海外ニュース</span><span class="en">International</span></span>
             <span class="new-chip">NEW</span>
-            <span class="date">7月17日(金)</span>
+            <span class="date"><span class="ja">7月17日(金)</span><span class="en">Jul 17 (Fri)</span></span>
           </div>
-          <h2 class="card-title">Mega Tatsugiri ex, Lida, and Other Gym Promos Revealed for August!</h2>
-          <p class="summary">8月に発売予定のジムプロモカード（メガタツゴンexやリーダーなど）が公開されました。新カードの情報収集に。</p>
+          <h2 class="card-title"><span class="ja">Mega Tatsugiri ex, Lida, and Other Gym Promos Revealed for August!</span><span class="en">Mega Tatsugiri ex, Lida, and Other Gym Promos Revealed for August!</span></h2>
+          <p class="summary"><span class="ja">8月に発売予定のジムプロモカード（メガタツゴンexやリーダーなど）が公開されました。新カードの情報収集に。</span><span class="en">8月に発売予定のジムプロモカード（メガタツゴンexやリーダーなど）が公開されました。新カードの情報収集に。</span></p>
           <div class="card-footer"><span class="source">PokeBeach</span></div>
         </div>
       </a>
@@ -140,12 +187,12 @@ footer a { color: inherit; }
         <div class="thumb thumb-fallback">🌏</div>
         <div class="card-body">
           <div class="card-meta">
-            <span class="badge" style="background:#d0642a">海外ニュース</span>
+            <span class="badge" style="background:#d0642a"><span class="ja">海外ニュース</span><span class="en">International</span></span>
             
-            <span class="date">7月16日(木)</span>
+            <span class="date"><span class="ja">7月16日(木)</span><span class="en">Jul 16 (Thu)</span></span>
           </div>
-          <h2 class="card-title">New Gengar &quot;Enhanced 2-Pack Blister&quot; and Mega Greninja Mini Portfolio to Release in October</h2>
-          <p class="summary">10月発売予定のゲンガーブリスターとメガフシギダネミニポートフォリオが発表されました。今後の製品ラインナップ確認に。</p>
+          <h2 class="card-title"><span class="ja">New Gengar &quot;Enhanced 2-Pack Blister&quot; and Mega Greninja Mini Portfolio to Release in October</span><span class="en">New Gengar &quot;Enhanced 2-Pack Blister&quot; and Mega Greninja Mini Portfolio to Release in October</span></h2>
+          <p class="summary"><span class="ja">10月発売予定のゲンガーブリスターとメガフシギダネミニポートフォリオが発表されました。今後の製品ラインナップ確認に。</span><span class="en">10月発売予定のゲンガーブリスターとメガフシギダネミニポートフォリオが発表されました。今後の製品ラインナップ確認に。</span></p>
           <div class="card-footer"><span class="source">PokeBeach</span></div>
         </div>
       </a>
@@ -153,12 +200,12 @@ footer a { color: inherit; }
         <img class="thumb" src="https://cdn.snkrdunk.com/uploads/media/20251222061410-0.jpeg" alt="" loading="lazy" onerror="this.outerHTML='<div class=&quot;thumb thumb-fallback&quot;>🎁</div>'">
         <div class="card-body">
           <div class="card-meta">
-            <span class="badge" style="background:#2a7fc9">新弾・予約</span>
+            <span class="badge" style="background:#2a7fc9"><span class="ja">新弾・予約</span><span class="en">New Sets &amp; Preorders</span></span>
             
-            <span class="date">7月16日(木)</span>
+            <span class="date"><span class="ja">7月16日(木)</span><span class="en">Jul 16 (Thu)</span></span>
           </div>
-          <h2 class="card-title">【ポケカ】2026年の新弾発売スケジュールまとめ</h2>
-          <p class="summary">2026年のポケモンカード新弾発売スケジュールをまとめた記事。今後の新弾予定を把握したいコレクター向け。</p>
+          <h2 class="card-title"><span class="ja">【ポケカ】2026年の新弾発売スケジュールまとめ</span><span class="en">【ポケカ】2026年の新弾発売スケジュールまとめ</span></h2>
+          <p class="summary"><span class="ja">2026年のポケモンカード新弾発売スケジュールをまとめた記事。今後の新弾予定を把握したいコレクター向け。</span><span class="en">2026年のポケモンカード新弾発売スケジュールをまとめた記事。今後の新弾予定を把握したいコレクター向け。</span></p>
           <div class="card-footer"><span class="source">SNKRDUNK</span></div>
         </div>
       </a>
@@ -166,12 +213,12 @@ footer a { color: inherit; }
         <img class="thumb" src="https://voix.jp/biz/wp-content/uploads/sites/3/2026/07/featured_image-49-3.jpg" alt="" loading="lazy" onerror="this.outerHTML='<div class=&quot;thumb thumb-fallback&quot;>🎁</div>'">
         <div class="card-body">
           <div class="card-meta">
-            <span class="badge" style="background:#2a7fc9">新弾・予約</span>
+            <span class="badge" style="background:#2a7fc9"><span class="ja">新弾・予約</span><span class="en">New Sets &amp; Preorders</span></span>
             
-            <span class="date">7月16日(木)</span>
+            <span class="date"><span class="ja">7月16日(木)</span><span class="en">Jul 16 (Thu)</span></span>
           </div>
-          <h2 class="card-title">カード抽選まとめが贈る！ポケモンカード『ストームエメラルダ』未開封BOXプレゼントキャンペーン</h2>
-          <p class="summary">ニュースメディアVOIXが実施するストームエメラルダ未開封BOXプレゼントキャンペーン。応募情報を確認したい人向け。</p>
+          <h2 class="card-title"><span class="ja">カード抽選まとめが贈る！ポケモンカード『ストームエメラルダ』未開封BOXプレゼントキャンペーン</span><span class="en">カード抽選まとめが贈る！ポケモンカード『ストームエメラルダ』未開封BOXプレゼントキャンペーン</span></h2>
+          <p class="summary"><span class="ja">ニュースメディアVOIXが実施するストームエメラルダ未開封BOXプレゼントキャンペーン。応募情報を確認したい人向け。</span><span class="en">ニュースメディアVOIXが実施するストームエメラルダ未開封BOXプレゼントキャンペーン。応募情報を確認したい人向け。</span></p>
           <div class="card-footer"><span class="source">ニュースメディアVOIX</span></div>
         </div>
       </a>
@@ -179,12 +226,12 @@ footer a { color: inherit; }
         <img class="thumb" src="https://prcdn.freetls.fastly.net/release_image/183006/4/183006-4-5100f75534b20e7c92ce63cbedca4917-2400x1260.png?format=jpeg&amp;amp;auto=webp&amp;amp;fit=bounds&amp;amp;width=2400&amp;amp;height=1260" alt="" loading="lazy" onerror="this.outerHTML='<div class=&quot;thumb thumb-fallback&quot;>🎁</div>'">
         <div class="card-body">
           <div class="card-meta">
-            <span class="badge" style="background:#2a7fc9">新弾・予約</span>
+            <span class="badge" style="background:#2a7fc9"><span class="ja">新弾・予約</span><span class="en">New Sets &amp; Preorders</span></span>
             
-            <span class="date">7月16日(木)</span>
+            <span class="date"><span class="ja">7月16日(木)</span><span class="en">Jul 16 (Thu)</span></span>
           </div>
-          <h2 class="card-title">ポケカが手に入らない人へ。『ストームエメラルダ』BOXが当たる。「カード抽選まとめ」がプレゼントキャンペーンを開催</h2>
-          <p class="summary">PR TIMESが報道するカード抽選まとめのプレゼントキャンペーン。ストームエメラルダBOX当選機会の詳細情報。</p>
+          <h2 class="card-title"><span class="ja">ポケカが手に入らない人へ。『ストームエメラルダ』BOXが当たる。「カード抽選まとめ」がプレゼントキャンペーンを開催</span><span class="en">ポケカが手に入らない人へ。『ストームエメラルダ』BOXが当たる。「カード抽選まとめ」がプレゼントキャンペーンを開催</span></h2>
+          <p class="summary"><span class="ja">PR TIMESが報道するカード抽選まとめのプレゼントキャンペーン。ストームエメラルダBOX当選機会の詳細情報。</span><span class="en">PR TIMESが報道するカード抽選まとめのプレゼントキャンペーン。ストームエメラルダBOX当選機会の詳細情報。</span></p>
           <div class="card-footer"><span class="source">PR TIMES</span></div>
         </div>
       </a>
@@ -192,12 +239,12 @@ footer a { color: inherit; }
         <img class="thumb" src="https://cdn.snkrdunk.com/uploads/media/20251127061052-0.jpeg" alt="" loading="lazy" onerror="this.outerHTML='<div class=&quot;thumb thumb-fallback&quot;>📈</div>'">
         <div class="card-body">
           <div class="card-meta">
-            <span class="badge" style="background:#2e9e5b">相場・高騰</span>
+            <span class="badge" style="background:#2e9e5b"><span class="ja">相場・高騰</span><span class="en">Market &amp; Prices</span></span>
             
-            <span class="date">7月16日(木)</span>
+            <span class="date"><span class="ja">7月16日(木)</span><span class="en">Jul 16 (Thu)</span></span>
           </div>
-          <h2 class="card-title">【ポケカ】MEGAドリームexの当たりランキング/買取相場/封入率/レア別相場/値段まとめ【7/6更新】</h2>
-          <p class="summary">MEGAドリームexの当たりランキング・買取相場・封入率をまとめた記事。相場動向と収録内容確認に有用。</p>
+          <h2 class="card-title"><span class="ja">【ポケカ】MEGAドリームexの当たりランキング/買取相場/封入率/レア別相場/値段まとめ【7/6更新】</span><span class="en">【ポケカ】MEGAドリームexの当たりランキング/買取相場/封入率/レア別相場/値段まとめ【7/6更新】</span></h2>
+          <p class="summary"><span class="ja">MEGAドリームexの当たりランキング・買取相場・封入率をまとめた記事。相場動向と収録内容確認に有用。</span><span class="en">MEGAドリームexの当たりランキング・買取相場・封入率をまとめた記事。相場動向と収録内容確認に有用。</span></p>
           <div class="card-footer"><span class="source">SNKRDUNK</span></div>
         </div>
       </a>
@@ -205,12 +252,12 @@ footer a { color: inherit; }
         <img class="thumb" src="https://cdn.snkrdunk.com/uploads/media/51d7ef96-0e44-4737-9001-406a90e4373d.jpeg" alt="" loading="lazy" onerror="this.outerHTML='<div class=&quot;thumb thumb-fallback&quot;>📈</div>'">
         <div class="card-body">
           <div class="card-meta">
-            <span class="badge" style="background:#2e9e5b">相場・高騰</span>
+            <span class="badge" style="background:#2e9e5b"><span class="ja">相場・高騰</span><span class="en">Market &amp; Prices</span></span>
             
-            <span class="date">7月16日(木)</span>
+            <span class="date"><span class="ja">7月16日(木)</span><span class="en">Jul 16 (Thu)</span></span>
           </div>
-          <h2 class="card-title">【ポケカ30周年】30th CELEBRATION(30th セレブレーション)の当たりランキング/買取相場/封入率/予約抽選/値段まとめ【2026年9月16日発売】</h2>
-          <p class="summary">2026年9月16日発売予定の30周年記念商品「30th CELEBRATION」の相場情報と発売予定の詳細。</p>
+          <h2 class="card-title"><span class="ja">【ポケカ30周年】30th CELEBRATION(30th セレブレーション)の当たりランキング/買取相場/封入率/予約抽選/値段まとめ【2026年9月16日発売】</span><span class="en">【ポケカ30周年】30th CELEBRATION(30th セレブレーション)の当たりランキング/買取相場/封入率/予約抽選/値段まとめ【2026年9月16日発売】</span></h2>
+          <p class="summary"><span class="ja">2026年9月16日発売予定の30周年記念商品「30th CELEBRATION」の相場情報と発売予定の詳細。</span><span class="en">2026年9月16日発売予定の30周年記念商品「30th CELEBRATION」の相場情報と発売予定の詳細。</span></p>
           <div class="card-footer"><span class="source">SNKRDUNK</span></div>
         </div>
       </a>
@@ -218,12 +265,12 @@ footer a { color: inherit; }
         <img class="thumb" src="https://cdn.snkrdunk.com/uploads/media/6ea1ef47-3013-4b51-9383-82543e43db12.jpeg" alt="" loading="lazy" onerror="this.outerHTML='<div class=&quot;thumb thumb-fallback&quot;>📈</div>'">
         <div class="card-body">
           <div class="card-meta">
-            <span class="badge" style="background:#2e9e5b">相場・高騰</span>
+            <span class="badge" style="background:#2e9e5b"><span class="ja">相場・高騰</span><span class="en">Market &amp; Prices</span></span>
             
-            <span class="date">7月16日(木)</span>
+            <span class="date"><span class="ja">7月16日(木)</span><span class="en">Jul 16 (Thu)</span></span>
           </div>
-          <h2 class="card-title">【ポケカ】ポケモンカード151の当たりランキング/買取相場/封入率/予約抽選/値段まとめ</h2>
-          <p class="summary">ポケモンカード151の当たりランキング・買取相場・封入率をまとめた記事。相場動向確認に必要。</p>
+          <h2 class="card-title"><span class="ja">【ポケカ】ポケモンカード151の当たりランキング/買取相場/封入率/予約抽選/値段まとめ</span><span class="en">【ポケカ】ポケモンカード151の当たりランキング/買取相場/封入率/予約抽選/値段まとめ</span></h2>
+          <p class="summary"><span class="ja">ポケモンカード151の当たりランキング・買取相場・封入率をまとめた記事。相場動向確認に必要。</span><span class="en">ポケモンカード151の当たりランキング・買取相場・封入率をまとめた記事。相場動向確認に必要。</span></p>
           <div class="card-footer"><span class="source">SNKRDUNK</span></div>
         </div>
       </a>
@@ -231,12 +278,12 @@ footer a { color: inherit; }
         <img class="thumb" src="https://convenicheck.com/wp-content/uploads/2026/07/famimaonline_pokekapreseteb26062.jpg" alt="" loading="lazy" onerror="this.outerHTML='<div class=&quot;thumb thumb-fallback&quot;>🎁</div>'">
         <div class="card-body">
           <div class="card-meta">
-            <span class="badge" style="background:#2a7fc9">新弾・予約</span>
+            <span class="badge" style="background:#2a7fc9"><span class="ja">新弾・予約</span><span class="en">New Sets &amp; Preorders</span></span>
             
-            <span class="date">7月16日(木)</span>
+            <span class="date"><span class="ja">7月16日(木)</span><span class="en">Jul 16 (Thu)</span></span>
           </div>
-          <h2 class="card-title">ファミマ、ポケカMEGA新商品「ストームエメラルダ」をファミマオンラインで抽選販売。2026年7月15日～7月20日まで抽選申し込み受け付け</h2>
-          <p class="summary">ファミリーマートがストームエメラルダをオンライン抽選販売。2026年7月15日～20日の期間限定。</p>
+          <h2 class="card-title"><span class="ja">ファミマ、ポケカMEGA新商品「ストームエメラルダ」をファミマオンラインで抽選販売。2026年7月15日～7月20日まで抽選申し込み受け付け</span><span class="en">ファミマ、ポケカMEGA新商品「ストームエメラルダ」をファミマオンラインで抽選販売。2026年7月15日～7月20日まで抽選申し込み受け付け</span></h2>
+          <p class="summary"><span class="ja">ファミリーマートがストームエメラルダをオンライン抽選販売。2026年7月15日～20日の期間限定。</span><span class="en">ファミリーマートがストームエメラルダをオンライン抽選販売。2026年7月15日～20日の期間限定。</span></p>
           <div class="card-footer"><span class="source">コンビニ チェッカー</span></div>
         </div>
       </a>
@@ -244,12 +291,12 @@ footer a { color: inherit; }
         <img class="thumb" src="https://cdn.snkrdunk.com/uploads/media/481c237c-2202-4390-9642-c405ebd48b9c.jpeg" alt="" loading="lazy" onerror="this.outerHTML='<div class=&quot;thumb thumb-fallback&quot;>🎁</div>'">
         <div class="card-body">
           <div class="card-meta">
-            <span class="badge" style="background:#2a7fc9">新弾・予約</span>
+            <span class="badge" style="background:#2a7fc9"><span class="ja">新弾・予約</span><span class="en">New Sets &amp; Preorders</span></span>
             
-            <span class="date">7月15日(水)</span>
+            <span class="date"><span class="ja">7月15日(水)</span><span class="en">Jul 15 (Wed)</span></span>
           </div>
-          <h2 class="card-title">【ポケカ】スターターセットex「イーブイex」「ゾロア&amp;ゾロアークex」「ニャオハ&amp;マスカーニャex」の予約・抽選情報まとめ【7/14更新】</h2>
-          <p class="summary">スターターセットex（イーブイex、ゾロア&amp;ゾロアークex、ニャオハ&amp;マスカーニャex）の予約・抽選情報。</p>
+          <h2 class="card-title"><span class="ja">【ポケカ】スターターセットex「イーブイex」「ゾロア&amp;ゾロアークex」「ニャオハ&amp;マスカーニャex」の予約・抽選情報まとめ【7/14更新】</span><span class="en">【ポケカ】スターターセットex「イーブイex」「ゾロア&amp;ゾロアークex」「ニャオハ&amp;マスカーニャex」の予約・抽選情報まとめ【7/14更新】</span></h2>
+          <p class="summary"><span class="ja">スターターセットex（イーブイex、ゾロア&amp;ゾロアークex、ニャオハ&amp;マスカーニャex）の予約・抽選情報。</span><span class="en">スターターセットex（イーブイex、ゾロア&amp;ゾロアークex、ニャオハ&amp;マスカーニャex）の予約・抽選情報。</span></p>
           <div class="card-footer"><span class="source">SNKRDUNK</span></div>
         </div>
       </a>
@@ -257,12 +304,12 @@ footer a { color: inherit; }
         <img class="thumb" src="https://cdn.snkrdunk.com/uploads/media/f6fbd3a3-a36f-47a9-93ea-8c16b48ac4f3.jpeg" alt="" loading="lazy" onerror="this.outerHTML='<div class=&quot;thumb thumb-fallback&quot;>🎁</div>'">
         <div class="card-body">
           <div class="card-meta">
-            <span class="badge" style="background:#2a7fc9">新弾・予約</span>
+            <span class="badge" style="background:#2a7fc9"><span class="ja">新弾・予約</span><span class="en">New Sets &amp; Preorders</span></span>
             
-            <span class="date">7月15日(水)</span>
+            <span class="date"><span class="ja">7月15日(水)</span><span class="en">Jul 15 (Wed)</span></span>
           </div>
-          <h2 class="card-title">【ポケカ】30th CELEBRATION(30th セレブレーション)の予約・抽選情報まとめ【7/16更新】</h2>
-          <p class="summary">30周年記念商品「30th CELEBRATION」の予約・抽選情報をまとめた記事。入手方法の最新情報を掲載。</p>
+          <h2 class="card-title"><span class="ja">【ポケカ】30th CELEBRATION(30th セレブレーション)の予約・抽選情報まとめ【7/16更新】</span><span class="en">【ポケカ】30th CELEBRATION(30th セレブレーション)の予約・抽選情報まとめ【7/16更新】</span></h2>
+          <p class="summary"><span class="ja">30周年記念商品「30th CELEBRATION」の予約・抽選情報をまとめた記事。入手方法の最新情報を掲載。</span><span class="en">30周年記念商品「30th CELEBRATION」の予約・抽選情報をまとめた記事。入手方法の最新情報を掲載。</span></p>
           <div class="card-footer"><span class="source">SNKRDUNK</span></div>
         </div>
       </a>
@@ -270,12 +317,12 @@ footer a { color: inherit; }
         <div class="thumb thumb-fallback">🌏</div>
         <div class="card-body">
           <div class="card-meta">
-            <span class="badge" style="background:#d0642a">海外ニュース</span>
+            <span class="badge" style="background:#d0642a"><span class="ja">海外ニュース</span><span class="en">International</span></span>
             
-            <span class="date">7月15日(水)</span>
+            <span class="date"><span class="ja">7月15日(水)</span><span class="en">Jul 15 (Wed)</span></span>
           </div>
-          <h2 class="card-title">&quot;30th Celebration&quot; Preorders Now Live on Pokemon Center!</h2>
-          <p class="summary">ポケモンセンターで30周年記念セットの予約受付が開始されました。新製品の入手機会に関心がある方向け。</p>
+          <h2 class="card-title"><span class="ja">&quot;30th Celebration&quot; Preorders Now Live on Pokemon Center!</span><span class="en">&quot;30th Celebration&quot; Preorders Now Live on Pokemon Center!</span></h2>
+          <p class="summary"><span class="ja">ポケモンセンターで30周年記念セットの予約受付が開始されました。新製品の入手機会に関心がある方向け。</span><span class="en">ポケモンセンターで30周年記念セットの予約受付が開始されました。新製品の入手機会に関心がある方向け。</span></p>
           <div class="card-footer"><span class="source">PokeBeach</span></div>
         </div>
       </a>
@@ -283,12 +330,12 @@ footer a { color: inherit; }
         <div class="thumb thumb-fallback">🌏</div>
         <div class="card-body">
           <div class="card-meta">
-            <span class="badge" style="background:#d0642a">海外ニュース</span>
+            <span class="badge" style="background:#d0642a"><span class="ja">海外ニュース</span><span class="en">International</span></span>
             
-            <span class="date">7月15日(水)</span>
+            <span class="date"><span class="ja">7月15日(水)</span><span class="en">Jul 15 (Wed)</span></span>
           </div>
-          <h2 class="card-title">2027 Pokemon Championship Series Event Schedule and Changes Announced!</h2>
-          <p class="summary">2027年のポケモンチャンピオンシップシリーズの開催予定と変更点が発表されました。公式大会への参加検討者向け。</p>
+          <h2 class="card-title"><span class="ja">2027 Pokemon Championship Series Event Schedule and Changes Announced!</span><span class="en">2027 Pokemon Championship Series Event Schedule and Changes Announced!</span></h2>
+          <p class="summary"><span class="ja">2027年のポケモンチャンピオンシップシリーズの開催予定と変更点が発表されました。公式大会への参加検討者向け。</span><span class="en">2027年のポケモンチャンピオンシップシリーズの開催予定と変更点が発表されました。公式大会への参加検討者向け。</span></p>
           <div class="card-footer"><span class="source">PokeBeach</span></div>
         </div>
       </a>
@@ -296,12 +343,12 @@ footer a { color: inherit; }
         <img class="thumb" src="https://shop.pokemon.co.jp/ja/shop/pokemoncenter-tokyodx/images/0b97d9fc29843c5644dbf044ec39f62de0cc6ec1.png" alt="" loading="lazy" onerror="this.outerHTML='<div class=&quot;thumb thumb-fallback&quot;>🎁</div>'">
         <div class="card-body">
           <div class="card-meta">
-            <span class="badge" style="background:#2a7fc9">新弾・予約</span>
+            <span class="badge" style="background:#2a7fc9"><span class="ja">新弾・予約</span><span class="en">New Sets &amp; Preorders</span></span>
             
-            <span class="date">7月15日(水)</span>
+            <span class="date"><span class="ja">7月15日(水)</span><span class="en">Jul 15 (Wed)</span></span>
           </div>
-          <h2 class="card-title">7月31日（金）発売ポケモンカードゲーム関連商品の事前抽選について | お知らせ | ポケモンセンタートウキョーDX</h2>
-          <p class="summary">ポケモンセンタートウキョーDXが7月31日発売商品の事前抽選を実施。申し込み詳細は公式サイトで確認。</p>
+          <h2 class="card-title"><span class="ja">7月31日（金）発売ポケモンカードゲーム関連商品の事前抽選について | お知らせ | ポケモンセンタートウキョーDX</span><span class="en">7月31日（金）発売ポケモンカードゲーム関連商品の事前抽選について | お知らせ | ポケモンセンタートウキョーDX</span></h2>
+          <p class="summary"><span class="ja">ポケモンセンタートウキョーDXが7月31日発売商品の事前抽選を実施。申し込み詳細は公式サイトで確認。</span><span class="en">ポケモンセンタートウキョーDXが7月31日発売商品の事前抽選を実施。申し込み詳細は公式サイトで確認。</span></p>
           <div class="card-footer"><span class="source">ポケットモンスターオフィシャルサイト</span></div>
         </div>
       </a>
@@ -309,12 +356,12 @@ footer a { color: inherit; }
         <div class="thumb thumb-fallback">🎁</div>
         <div class="card-body">
           <div class="card-meta">
-            <span class="badge" style="background:#2a7fc9">新弾・予約</span>
+            <span class="badge" style="background:#2a7fc9"><span class="ja">新弾・予約</span><span class="en">New Sets &amp; Preorders</span></span>
             
-            <span class="date">7月15日(水)</span>
+            <span class="date"><span class="ja">7月15日(水)</span><span class="en">Jul 15 (Wed)</span></span>
           </div>
-          <h2 class="card-title">人気の『ポケカ』抽選販売がゲオで実施中!「ストームエメラルダ」「MEGA スターターセットex」各種の全4商品</h2>
-          <p class="summary">ゲオでストームエメラルダとMEGA スターターセットex各種の抽選販売実施中。複数の販売機会がある。</p>
+          <h2 class="card-title"><span class="ja">人気の『ポケカ』抽選販売がゲオで実施中!「ストームエメラルダ」「MEGA スターターセットex」各種の全4商品</span><span class="en">人気の『ポケカ』抽選販売がゲオで実施中!「ストームエメラルダ」「MEGA スターターセットex」各種の全4商品</span></h2>
+          <p class="summary"><span class="ja">ゲオでストームエメラルダとMEGA スターターセットex各種の抽選販売実施中。複数の販売機会がある。</span><span class="en">ゲオでストームエメラルダとMEGA スターターセットex各種の抽選販売実施中。複数の販売機会がある。</span></p>
           <div class="card-footer"><span class="source">MSN</span></div>
         </div>
       </a>
@@ -322,12 +369,12 @@ footer a { color: inherit; }
         <div class="thumb thumb-fallback">🎁</div>
         <div class="card-body">
           <div class="card-meta">
-            <span class="badge" style="background:#2a7fc9">新弾・予約</span>
+            <span class="badge" style="background:#2a7fc9"><span class="ja">新弾・予約</span><span class="en">New Sets &amp; Preorders</span></span>
             
-            <span class="date">7月14日(火)</span>
+            <span class="date"><span class="ja">7月14日(火)</span><span class="en">Jul 14 (Tue)</span></span>
           </div>
-          <h2 class="card-title">「メガレックウザex」のパッケージがカッコいい!『ポケカ』新弾「ストームエメラルダ」の抽選販売がヨドバシで実施</h2>
-          <p class="summary">ヨドバシでストームエメラルダの抽選販売実施。メガレックウザexのパッケージデザインを紹介。</p>
+          <h2 class="card-title"><span class="ja">「メガレックウザex」のパッケージがカッコいい!『ポケカ』新弾「ストームエメラルダ」の抽選販売がヨドバシで実施</span><span class="en">「メガレックウザex」のパッケージがカッコいい!『ポケカ』新弾「ストームエメラルダ」の抽選販売がヨドバシで実施</span></h2>
+          <p class="summary"><span class="ja">ヨドバシでストームエメラルダの抽選販売実施。メガレックウザexのパッケージデザインを紹介。</span><span class="en">ヨドバシでストームエメラルダの抽選販売実施。メガレックウザexのパッケージデザインを紹介。</span></p>
           <div class="card-footer"><span class="source">MSN</span></div>
         </div>
       </a>
@@ -335,12 +382,12 @@ footer a { color: inherit; }
         <div class="thumb thumb-fallback">🎁</div>
         <div class="card-body">
           <div class="card-meta">
-            <span class="badge" style="background:#2a7fc9">新弾・予約</span>
+            <span class="badge" style="background:#2a7fc9"><span class="ja">新弾・予約</span><span class="en">New Sets &amp; Preorders</span></span>
             
-            <span class="date">7月14日(火)</span>
+            <span class="date"><span class="ja">7月14日(火)</span><span class="en">Jul 14 (Tue)</span></span>
           </div>
-          <h2 class="card-title">ポケカの抽選に「マイナンバーカード」が必要になるのか？転売目的の「複数アカウント」を完全に封じる!</h2>
-          <p class="summary">ポケカ抽選販売でマイナンバーカード活用の転売対策方法について解説。本人確認強化の動き。</p>
+          <h2 class="card-title"><span class="ja">ポケカの抽選に「マイナンバーカード」が必要になるのか？転売目的の「複数アカウント」を完全に封じる!</span><span class="en">ポケカの抽選に「マイナンバーカード」が必要になるのか？転売目的の「複数アカウント」を完全に封じる!</span></h2>
+          <p class="summary"><span class="ja">ポケカ抽選販売でマイナンバーカード活用の転売対策方法について解説。本人確認強化の動き。</span><span class="en">ポケカ抽選販売でマイナンバーカード活用の転売対策方法について解説。本人確認強化の動き。</span></p>
           <div class="card-footer"><span class="source">DXマガジン</span></div>
         </div>
       </a>
@@ -348,12 +395,12 @@ footer a { color: inherit; }
         <div class="thumb thumb-fallback">🌏</div>
         <div class="card-body">
           <div class="card-meta">
-            <span class="badge" style="background:#d0642a">海外ニュース</span>
+            <span class="badge" style="background:#d0642a"><span class="ja">海外ニュース</span><span class="en">International</span></span>
             
-            <span class="date">7月13日(月)</span>
+            <span class="date"><span class="ja">7月13日(月)</span><span class="en">Jul 13 (Mon)</span></span>
           </div>
-          <h2 class="card-title">Tornadus, Thundurus, Landorus, and Enamorus from &quot;Storm Emeralda&quot; Revealed!</h2>
-          <p class="summary">「ストームエメラルダ」に収録される4伝説ポケモンカードが公開されました。新弾の性能・装飾確認に。</p>
+          <h2 class="card-title"><span class="ja">Tornadus, Thundurus, Landorus, and Enamorus from &quot;Storm Emeralda&quot; Revealed!</span><span class="en">Tornadus, Thundurus, Landorus, and Enamorus from &quot;Storm Emeralda&quot; Revealed!</span></h2>
+          <p class="summary"><span class="ja">「ストームエメラルダ」に収録される4伝説ポケモンカードが公開されました。新弾の性能・装飾確認に。</span><span class="en">「ストームエメラルダ」に収録される4伝説ポケモンカードが公開されました。新弾の性能・装飾確認に。</span></p>
           <div class="card-footer"><span class="source">PokeBeach</span></div>
         </div>
       </a>
@@ -361,12 +408,12 @@ footer a { color: inherit; }
         <img class="thumb" src="https://newsatcl-pctr.c.yimg.jp/t/amd-img/20260713-00000053-zdn_n-000-1-view.jpg?exp=10800" alt="" loading="lazy" onerror="this.outerHTML='<div class=&quot;thumb thumb-fallback&quot;>🎁</div>'">
         <div class="card-body">
           <div class="card-meta">
-            <span class="badge" style="background:#2a7fc9">新弾・予約</span>
+            <span class="badge" style="background:#2a7fc9"><span class="ja">新弾・予約</span><span class="en">New Sets &amp; Preorders</span></span>
             
-            <span class="date">7月13日(月)</span>
+            <span class="date"><span class="ja">7月13日(月)</span><span class="en">Jul 13 (Mon)</span></span>
           </div>
-          <h2 class="card-title">ポケカ、本人確認にマイナカード「デジタル認証アプリ」 8月の抽選販売に導入 事前登録を呼び掛け（ITmedia NEWS）</h2>
-          <p class="summary">8月からポケセンオンライン抽選販売にデジタル認証アプリによる本人確認機能導入予定。事前登録推奨。</p>
+          <h2 class="card-title"><span class="ja">ポケカ、本人確認にマイナカード「デジタル認証アプリ」 8月の抽選販売に導入 事前登録を呼び掛け（ITmedia NEWS）</span><span class="en">ポケカ、本人確認にマイナカード「デジタル認証アプリ」 8月の抽選販売に導入 事前登録を呼び掛け（ITmedia NEWS）</span></h2>
+          <p class="summary"><span class="ja">8月からポケセンオンライン抽選販売にデジタル認証アプリによる本人確認機能導入予定。事前登録推奨。</span><span class="en">8月からポケセンオンライン抽選販売にデジタル認証アプリによる本人確認機能導入予定。事前登録推奨。</span></p>
           <div class="card-footer"><span class="source">Yahoo!ニュース</span></div>
         </div>
       </a>
@@ -374,12 +421,12 @@ footer a { color: inherit; }
         <img class="thumb" src="https://newsatcl-pctr.c.yimg.jp/t/amd-img/20260713-00000012-impgmw-000-1-view.jpg?exp=10800" alt="" loading="lazy" onerror="this.outerHTML='<div class=&quot;thumb thumb-fallback&quot;>🎁</div>'">
         <div class="card-body">
           <div class="card-meta">
-            <span class="badge" style="background:#2a7fc9">新弾・予約</span>
+            <span class="badge" style="background:#2a7fc9"><span class="ja">新弾・予約</span><span class="en">New Sets &amp; Preorders</span></span>
             
-            <span class="date">7月13日(月)</span>
+            <span class="date"><span class="ja">7月13日(月)</span><span class="en">Jul 13 (Mon)</span></span>
           </div>
-          <h2 class="card-title">【ポケモン】ポケセンオンラインにて本人認証機能を使ったポケカの抽選販売が8月に開始（GAME Watch）</h2>
-          <p class="summary">ポケセンオンラインが8月から本人認証機能を用いた抽選販売開始。転売対策として導入される。</p>
+          <h2 class="card-title"><span class="ja">【ポケモン】ポケセンオンラインにて本人認証機能を使ったポケカの抽選販売が8月に開始（GAME Watch）</span><span class="en">【ポケモン】ポケセンオンラインにて本人認証機能を使ったポケカの抽選販売が8月に開始（GAME Watch）</span></h2>
+          <p class="summary"><span class="ja">ポケセンオンラインが8月から本人認証機能を用いた抽選販売開始。転売対策として導入される。</span><span class="en">ポケセンオンラインが8月から本人認証機能を用いた抽選販売開始。転売対策として導入される。</span></p>
           <div class="card-footer"><span class="source">Yahoo!ニュース</span></div>
         </div>
       </a>
@@ -387,12 +434,12 @@ footer a { color: inherit; }
         <img class="thumb" src="https://newsatcl-pctr.c.yimg.jp/t/amd-img/20260713-00000250-spnannex-000-18-view.jpg?exp=10800" alt="" loading="lazy" onerror="this.outerHTML='<div class=&quot;thumb thumb-fallback&quot;>🎁</div>'">
         <div class="card-body">
           <div class="card-meta">
-            <span class="badge" style="background:#2a7fc9">新弾・予約</span>
+            <span class="badge" style="background:#2a7fc9"><span class="ja">新弾・予約</span><span class="en">New Sets &amp; Preorders</span></span>
             
-            <span class="date">7月13日(月)</span>
+            <span class="date"><span class="ja">7月13日(月)</span><span class="en">Jul 13 (Mon)</span></span>
           </div>
-          <h2 class="card-title">ポケカ 本人認証にデジタル庁アプリ導入 転売対策、8月抽選販売から開始予定（スポニチアネックス）</h2>
-          <p class="summary">ポケカ抽選販売でデジタル庁アプリによる本人認証を8月から導入予定。転売防止が目的。</p>
+          <h2 class="card-title"><span class="ja">ポケカ 本人認証にデジタル庁アプリ導入 転売対策、8月抽選販売から開始予定（スポニチアネックス）</span><span class="en">ポケカ 本人認証にデジタル庁アプリ導入 転売対策、8月抽選販売から開始予定（スポニチアネックス）</span></h2>
+          <p class="summary"><span class="ja">ポケカ抽選販売でデジタル庁アプリによる本人認証を8月から導入予定。転売防止が目的。</span><span class="en">ポケカ抽選販売でデジタル庁アプリによる本人認証を8月から導入予定。転売防止が目的。</span></p>
           <div class="card-footer"><span class="source">Yahoo!ニュース</span></div>
         </div>
       </a>
@@ -400,12 +447,12 @@ footer a { color: inherit; }
         <div class="thumb thumb-fallback">🌏</div>
         <div class="card-body">
           <div class="card-meta">
-            <span class="badge" style="background:#d0642a">海外ニュース</span>
+            <span class="badge" style="background:#d0642a"><span class="ja">海外ニュース</span><span class="en">International</span></span>
             
-            <span class="date">7月12日(日)</span>
+            <span class="date"><span class="ja">7月12日(日)</span><span class="en">Jul 12 (Sun)</span></span>
           </div>
-          <h2 class="card-title">Team Rocket Returns — Did Chaos Rising Give Team Rocket New Life?</h2>
-          <p class="summary">「Chaos Rising」弾でチームロケットのカードが新たに登場。テーマデッキの構築検討者向け。</p>
+          <h2 class="card-title"><span class="ja">Team Rocket Returns — Did Chaos Rising Give Team Rocket New Life?</span><span class="en">Team Rocket Returns — Did Chaos Rising Give Team Rocket New Life?</span></h2>
+          <p class="summary"><span class="ja">「Chaos Rising」弾でチームロケットのカードが新たに登場。テーマデッキの構築検討者向け。</span><span class="en">「Chaos Rising」弾でチームロケットのカードが新たに登場。テーマデッキの構築検討者向け。</span></p>
           <div class="card-footer"><span class="source">PokeBeach</span></div>
         </div>
       </a>
@@ -413,12 +460,12 @@ footer a { color: inherit; }
         <img class="thumb" src="https://cdn.snkrdunk.com/uploads/media/7d2a3480-d3b8-4e0b-acf4-436a6b137e93.jpeg" alt="" loading="lazy" onerror="this.outerHTML='<div class=&quot;thumb thumb-fallback&quot;>🎁</div>'">
         <div class="card-body">
           <div class="card-meta">
-            <span class="badge" style="background:#2a7fc9">新弾・予約</span>
+            <span class="badge" style="background:#2a7fc9"><span class="ja">新弾・予約</span><span class="en">New Sets &amp; Preorders</span></span>
             
-            <span class="date">7月12日(日)</span>
+            <span class="date"><span class="ja">7月12日(日)</span><span class="en">Jul 12 (Sun)</span></span>
           </div>
-          <h2 class="card-title">【ポケカ】30th CELEBRATION プレミアムデッキセット エーフィ・ブラッキーの収録カード・予約抽選情報まとめ</h2>
-          <p class="summary">30周年記念商品「プレミアムデッキセット エーフィ・ブラッキー」の収録カードと予約・抽選情報。</p>
+          <h2 class="card-title"><span class="ja">【ポケカ】30th CELEBRATION プレミアムデッキセット エーフィ・ブラッキーの収録カード・予約抽選情報まとめ</span><span class="en">【ポケカ】30th CELEBRATION プレミアムデッキセット エーフィ・ブラッキーの収録カード・予約抽選情報まとめ</span></h2>
+          <p class="summary"><span class="ja">30周年記念商品「プレミアムデッキセット エーフィ・ブラッキー」の収録カードと予約・抽選情報。</span><span class="en">30周年記念商品「プレミアムデッキセット エーフィ・ブラッキー」の収録カードと予約・抽選情報。</span></p>
           <div class="card-footer"><span class="source">SNKRDUNK</span></div>
         </div>
       </a>
@@ -426,12 +473,12 @@ footer a { color: inherit; }
         <div class="thumb thumb-fallback">🌏</div>
         <div class="card-body">
           <div class="card-meta">
-            <span class="badge" style="background:#d0642a">海外ニュース</span>
+            <span class="badge" style="background:#d0642a"><span class="ja">海外ニュース</span><span class="en">International</span></span>
             
-            <span class="date">7月11日(土)</span>
+            <span class="date"><span class="ja">7月11日(土)</span><span class="en">Jul 11 (Sat)</span></span>
           </div>
-          <h2 class="card-title">Chasing Perfection – The Unfair Reality of the Pokemon TCG</h2>
-          <p class="summary">ポケモンカードTCGの完全性追求の困難さについての解説記事。コレクター心理や市場の課題を知りたい方向け。</p>
+          <h2 class="card-title"><span class="ja">Chasing Perfection – The Unfair Reality of the Pokemon TCG</span><span class="en">Chasing Perfection – The Unfair Reality of the Pokemon TCG</span></h2>
+          <p class="summary"><span class="ja">ポケモンカードTCGの完全性追求の困難さについての解説記事。コレクター心理や市場の課題を知りたい方向け。</span><span class="en">ポケモンカードTCGの完全性追求の困難さについての解説記事。コレクター心理や市場の課題を知りたい方向け。</span></p>
           <div class="card-footer"><span class="source">PokeBeach</span></div>
         </div>
       </a>
@@ -439,12 +486,12 @@ footer a { color: inherit; }
         <img class="thumb" src="https://www.inside-games.jp/imgs/ogp_f/1739636.jpg" alt="" loading="lazy" onerror="this.outerHTML='<div class=&quot;thumb thumb-fallback&quot;>🎁</div>'">
         <div class="card-body">
           <div class="card-meta">
-            <span class="badge" style="background:#2a7fc9">新弾・予約</span>
+            <span class="badge" style="background:#2a7fc9"><span class="ja">新弾・予約</span><span class="en">New Sets &amp; Preorders</span></span>
             
-            <span class="date">7月11日(土)</span>
+            <span class="date"><span class="ja">7月11日(土)</span><span class="en">Jul 11 (Sat)</span></span>
           </div>
-          <h2 class="card-title">『ポケカ』30周年記念商品がセブンネットショッピングで抽選販売！拡張パック「30th CELEBRATION」と「エーフィ・ブラッキーセット」が対象</h2>
-          <p class="summary">セブンネットショッピングで30周年記念商品の抽選販売。拡張パックとエーフィ・ブラッキーセットが対象。</p>
+          <h2 class="card-title"><span class="ja">『ポケカ』30周年記念商品がセブンネットショッピングで抽選販売！拡張パック「30th CELEBRATION」と「エーフィ・ブラッキーセット」が対象</span><span class="en">『ポケカ』30周年記念商品がセブンネットショッピングで抽選販売！拡張パック「30th CELEBRATION」と「エーフィ・ブラッキーセット」が対象</span></h2>
+          <p class="summary"><span class="ja">セブンネットショッピングで30周年記念商品の抽選販売。拡張パックとエーフィ・ブラッキーセットが対象。</span><span class="en">セブンネットショッピングで30周年記念商品の抽選販売。拡張パックとエーフィ・ブラッキーセットが対象。</span></p>
           <div class="card-footer"><span class="source">インサイド</span></div>
         </div>
       </a>
@@ -452,12 +499,12 @@ footer a { color: inherit; }
         <img class="thumb" src="https://newsatcl-pctr.c.yimg.jp/t/amd-img/20260711-01597754-nkt-000-2-view.jpg?exp=10800" alt="" loading="lazy" onerror="this.outerHTML='<div class=&quot;thumb thumb-fallback&quot;>🎁</div>'">
         <div class="card-body">
           <div class="card-meta">
-            <span class="badge" style="background:#2a7fc9">新弾・予約</span>
+            <span class="badge" style="background:#2a7fc9"><span class="ja">新弾・予約</span><span class="en">New Sets &amp; Preorders</span></span>
             
-            <span class="date">7月10日(金)</span>
+            <span class="date"><span class="ja">7月10日(金)</span><span class="en">Jul 10 (Fri)</span></span>
           </div>
-          <h2 class="card-title">ポケモンカードの購入予約をしておらず、発売前には購入できないことも知りながらコンビニで嘘を言ってカード10箱分を騙し取ったとして逮捕された男性を不起訴処分 松江地検（日本海テレビ）</h2>
-          <p class="summary">ポケモンカード購入詐欺事件が不起訴処分。コンビニで商品を騙し取った容疑。犯罪ニュース。</p>
+          <h2 class="card-title"><span class="ja">ポケモンカードの購入予約をしておらず、発売前には購入できないことも知りながらコンビニで嘘を言ってカード10箱分を騙し取ったとして逮捕された男性を不起訴処分 松江地検（日本海テレビ）</span><span class="en">ポケモンカードの購入予約をしておらず、発売前には購入できないことも知りながらコンビニで嘘を言ってカード10箱分を騙し取ったとして逮捕された男性を不起訴処分 松江地検（日本海テレビ）</span></h2>
+          <p class="summary"><span class="ja">ポケモンカード購入詐欺事件が不起訴処分。コンビニで商品を騙し取った容疑。犯罪ニュース。</span><span class="en">ポケモンカード購入詐欺事件が不起訴処分。コンビニで商品を騙し取った容疑。犯罪ニュース。</span></p>
           <div class="card-footer"><span class="source">Yahoo!ニュース</span></div>
         </div>
       </a>
@@ -465,12 +512,12 @@ footer a { color: inherit; }
         <div class="thumb thumb-fallback">🌏</div>
         <div class="card-body">
           <div class="card-meta">
-            <span class="badge" style="background:#d0642a">海外ニュース</span>
+            <span class="badge" style="background:#d0642a"><span class="ja">海外ニュース</span><span class="en">International</span></span>
             
-            <span class="date">7月10日(金)</span>
+            <span class="date"><span class="ja">7月10日(金)</span><span class="en">Jul 10 (Fri)</span></span>
           </div>
-          <h2 class="card-title">Funny Slowking — A Deck That Can Dominate Major Tournaments</h2>
-          <p class="summary">ユニークなスローキングデッキが大会で活躍する可能性を解説。デッキ構築の参考になります。</p>
+          <h2 class="card-title"><span class="ja">Funny Slowking — A Deck That Can Dominate Major Tournaments</span><span class="en">Funny Slowking — A Deck That Can Dominate Major Tournaments</span></h2>
+          <p class="summary"><span class="ja">ユニークなスローキングデッキが大会で活躍する可能性を解説。デッキ構築の参考になります。</span><span class="en">ユニークなスローキングデッキが大会で活躍する可能性を解説。デッキ構築の参考になります。</span></p>
           <div class="card-footer"><span class="source">PokeBeach</span></div>
         </div>
       </a>
@@ -478,12 +525,12 @@ footer a { color: inherit; }
         <img class="thumb" src="https://www.inside-games.jp/imgs/ogp_f/1753001.jpg" alt="" loading="lazy" onerror="this.outerHTML='<div class=&quot;thumb thumb-fallback&quot;>🎁</div>'">
         <div class="card-body">
           <div class="card-meta">
-            <span class="badge" style="background:#2a7fc9">新弾・予約</span>
+            <span class="badge" style="background:#2a7fc9"><span class="ja">新弾・予約</span><span class="en">New Sets &amp; Preorders</span></span>
             
-            <span class="date">7月10日(金)</span>
+            <span class="date"><span class="ja">7月10日(金)</span><span class="en">Jul 10 (Fri)</span></span>
           </div>
-          <h2 class="card-title">『ポケカ』拡張パック「ストームエメラルダ」収録カード追加公開！「メガグソクムシャex」や、2枚1組で使うスタジアムがさらに登場</h2>
-          <p class="summary">ストームエメラルダの追加収録カード公開。メガグソクムシャexや2枚1組スタジアム登場。</p>
+          <h2 class="card-title"><span class="ja">『ポケカ』拡張パック「ストームエメラルダ」収録カード追加公開！「メガグソクムシャex」や、2枚1組で使うスタジアムがさらに登場</span><span class="en">『ポケカ』拡張パック「ストームエメラルダ」収録カード追加公開！「メガグソクムシャex」や、2枚1組で使うスタジアムがさらに登場</span></h2>
+          <p class="summary"><span class="ja">ストームエメラルダの追加収録カード公開。メガグソクムシャexや2枚1組スタジアム登場。</span><span class="en">ストームエメラルダの追加収録カード公開。メガグソクムシャexや2枚1組スタジアム登場。</span></p>
           <div class="card-footer"><span class="source">インサイド</span></div>
         </div>
       </a>
@@ -491,12 +538,12 @@ footer a { color: inherit; }
         <div class="thumb thumb-fallback">🌏</div>
         <div class="card-body">
           <div class="card-meta">
-            <span class="badge" style="background:#d0642a">海外ニュース</span>
+            <span class="badge" style="background:#d0642a"><span class="ja">海外ニュース</span><span class="en">International</span></span>
             
-            <span class="date">7月10日(金)</span>
+            <span class="date"><span class="ja">7月10日(金)</span><span class="en">Jul 10 (Fri)</span></span>
           </div>
-          <h2 class="card-title">Mega Golisopod ex, Wishiwashi ex, and Another Split Stadium from &quot;Storm Emeralda&quot; Revealed!</h2>
-          <p class="summary">「ストームエメラルダ」から複数の新exカードが公開。新弾の性能・レアリティ情報の確認に。</p>
+          <h2 class="card-title"><span class="ja">Mega Golisopod ex, Wishiwashi ex, and Another Split Stadium from &quot;Storm Emeralda&quot; Revealed!</span><span class="en">Mega Golisopod ex, Wishiwashi ex, and Another Split Stadium from &quot;Storm Emeralda&quot; Revealed!</span></h2>
+          <p class="summary"><span class="ja">「ストームエメラルダ」から複数の新exカードが公開。新弾の性能・レアリティ情報の確認に。</span><span class="en">「ストームエメラルダ」から複数の新exカードが公開。新弾の性能・レアリティ情報の確認に。</span></p>
           <div class="card-footer"><span class="source">PokeBeach</span></div>
         </div>
       </a>
@@ -504,12 +551,12 @@ footer a { color: inherit; }
         <img class="thumb" src="https://shop.pokemon.co.jp/ja/shop/common/images/pctr_dummy_1920x1080.webp" alt="" loading="lazy" onerror="this.outerHTML='<div class=&quot;thumb thumb-fallback&quot;>🎁</div>'">
         <div class="card-body">
           <div class="card-meta">
-            <span class="badge" style="background:#2a7fc9">新弾・予約</span>
+            <span class="badge" style="background:#2a7fc9"><span class="ja">新弾・予約</span><span class="en">New Sets &amp; Preorders</span></span>
             
-            <span class="date">7月10日(金)</span>
+            <span class="date"><span class="ja">7月10日(金)</span><span class="en">Jul 10 (Fri)</span></span>
           </div>
-          <h2 class="card-title">7月31日（金）発売 ポケモンカードゲーム関連商品の事前抽選について</h2>
-          <p class="summary">ポケモン公式の7月31日発売商品事前抽選案内。詳細情報は公式サイトで確認可能。</p>
+          <h2 class="card-title"><span class="ja">7月31日（金）発売 ポケモンカードゲーム関連商品の事前抽選について</span><span class="en">7月31日（金）発売 ポケモンカードゲーム関連商品の事前抽選について</span></h2>
+          <p class="summary"><span class="ja">ポケモン公式の7月31日発売商品事前抽選案内。詳細情報は公式サイトで確認可能。</span><span class="en">ポケモン公式の7月31日発売商品事前抽選案内。詳細情報は公式サイトで確認可能。</span></p>
           <div class="card-footer"><span class="source">ポケットモンスターオフィシャルサイト</span></div>
         </div>
       </a>
@@ -517,12 +564,12 @@ footer a { color: inherit; }
         <img class="thumb" src="https://cdn.snkrdunk.com/uploads/media/3e319f51-f2c1-4e13-90a4-e3e496f3e3f4.jpeg" alt="" loading="lazy" onerror="this.outerHTML='<div class=&quot;thumb thumb-fallback&quot;>📈</div>'">
         <div class="card-body">
           <div class="card-meta">
-            <span class="badge" style="background:#2e9e5b">相場・高騰</span>
+            <span class="badge" style="background:#2e9e5b"><span class="ja">相場・高騰</span><span class="en">Market &amp; Prices</span></span>
             
-            <span class="date">7月9日(木)</span>
+            <span class="date"><span class="ja">7月9日(木)</span><span class="en">Jul 9 (Thu)</span></span>
           </div>
-          <h2 class="card-title">【ポケカ】ニンジャスピナーの当たりランキングTOP20/買取相場/封入率/レア別相場/値段まとめ【7/9更新】</h2>
-          <p class="summary">ニンジャスピナーの当たりランキング・買取相場・封入率をまとめた記事。相場情報確認向け。</p>
+          <h2 class="card-title"><span class="ja">【ポケカ】ニンジャスピナーの当たりランキングTOP20/買取相場/封入率/レア別相場/値段まとめ【7/9更新】</span><span class="en">【ポケカ】ニンジャスピナーの当たりランキングTOP20/買取相場/封入率/レア別相場/値段まとめ【7/9更新】</span></h2>
+          <p class="summary"><span class="ja">ニンジャスピナーの当たりランキング・買取相場・封入率をまとめた記事。相場情報確認向け。</span><span class="en">ニンジャスピナーの当たりランキング・買取相場・封入率をまとめた記事。相場情報確認向け。</span></p>
           <div class="card-footer"><span class="source">SNKRDUNK</span></div>
         </div>
       </a>
@@ -530,12 +577,12 @@ footer a { color: inherit; }
         <div class="thumb thumb-fallback">🌏</div>
         <div class="card-body">
           <div class="card-meta">
-            <span class="badge" style="background:#d0642a">海外ニュース</span>
+            <span class="badge" style="background:#d0642a"><span class="ja">海外ニュース</span><span class="en">International</span></span>
             
-            <span class="date">7月8日(水)</span>
+            <span class="date"><span class="ja">7月8日(水)</span><span class="en">Jul 8 (Wed)</span></span>
           </div>
-          <h2 class="card-title">Drill Baby Drill — Metal Maker’s Evolution in Pitch Black</h2>
-          <p class="summary">「ピッチブラック」弾でのメタルメイカーカードの進化を解説。デッキ戦略の参考になります。</p>
+          <h2 class="card-title"><span class="ja">Drill Baby Drill — Metal Maker’s Evolution in Pitch Black</span><span class="en">Drill Baby Drill — Metal Maker’s Evolution in Pitch Black</span></h2>
+          <p class="summary"><span class="ja">「ピッチブラック」弾でのメタルメイカーカードの進化を解説。デッキ戦略の参考になります。</span><span class="en">「ピッチブラック」弾でのメタルメイカーカードの進化を解説。デッキ戦略の参考になります。</span></p>
           <div class="card-footer"><span class="source">PokeBeach</span></div>
         </div>
       </a>
@@ -543,12 +590,12 @@ footer a { color: inherit; }
         <div class="thumb thumb-fallback">🌏</div>
         <div class="card-body">
           <div class="card-meta">
-            <span class="badge" style="background:#d0642a">海外ニュース</span>
+            <span class="badge" style="background:#d0642a"><span class="ja">海外ニュース</span><span class="en">International</span></span>
             
-            <span class="date">7月8日(水)</span>
+            <span class="date"><span class="ja">7月8日(水)</span><span class="en">Jul 8 (Wed)</span></span>
           </div>
-          <h2 class="card-title">&quot;Mewtwo &amp; Mew DNA Premium&quot; TCG Accessories Released at the Pokemon Center!</h2>
-          <p class="summary">ポケモンセンターでミュウツー&amp;ミュウDNAプレミアムのアクセサリー製品が発売。カード以外の関連グッズ情報。</p>
+          <h2 class="card-title"><span class="ja">&quot;Mewtwo &amp; Mew DNA Premium&quot; TCG Accessories Released at the Pokemon Center!</span><span class="en">&quot;Mewtwo &amp; Mew DNA Premium&quot; TCG Accessories Released at the Pokemon Center!</span></h2>
+          <p class="summary"><span class="ja">ポケモンセンターでミュウツー&amp;ミュウDNAプレミアムのアクセサリー製品が発売。カード以外の関連グッズ情報。</span><span class="en">ポケモンセンターでミュウツー&amp;ミュウDNAプレミアムのアクセサリー製品が発売。カード以外の関連グッズ情報。</span></p>
           <div class="card-footer"><span class="source">PokeBeach</span></div>
         </div>
       </a>
@@ -556,12 +603,12 @@ footer a { color: inherit; }
         <div class="thumb thumb-fallback">🌏</div>
         <div class="card-body">
           <div class="card-meta">
-            <span class="badge" style="background:#d0642a">海外ニュース</span>
+            <span class="badge" style="background:#d0642a"><span class="ja">海外ニュース</span><span class="en">International</span></span>
             
-            <span class="date">7月8日(水)</span>
+            <span class="date"><span class="ja">7月8日(水)</span><span class="en">Jul 8 (Wed)</span></span>
           </div>
-          <h2 class="card-title">McDonald’s Japan Teases Next Pokemon x Happy Meal Promotion!</h2>
-          <p class="summary">日本マクドナルドでポケモン×ハッピーセットの次期プロモーション予告。プロモカード入手機会の情報。</p>
+          <h2 class="card-title"><span class="ja">McDonald’s Japan Teases Next Pokemon x Happy Meal Promotion!</span><span class="en">McDonald’s Japan Teases Next Pokemon x Happy Meal Promotion!</span></h2>
+          <p class="summary"><span class="ja">日本マクドナルドでポケモン×ハッピーセットの次期プロモーション予告。プロモカード入手機会の情報。</span><span class="en">日本マクドナルドでポケモン×ハッピーセットの次期プロモーション予告。プロモカード入手機会の情報。</span></p>
           <div class="card-footer"><span class="source">PokeBeach</span></div>
         </div>
       </a>
@@ -569,12 +616,12 @@ footer a { color: inherit; }
         <img class="thumb" src="https://cdn.snkrdunk.com/uploads/media/8c0ad5ea-f297-4abf-84c6-179569582280.jpeg" alt="" loading="lazy" onerror="this.outerHTML='<div class=&quot;thumb thumb-fallback&quot;>🎁</div>'">
         <div class="card-body">
           <div class="card-meta">
-            <span class="badge" style="background:#2a7fc9">新弾・予約</span>
+            <span class="badge" style="background:#2a7fc9"><span class="ja">新弾・予約</span><span class="en">New Sets &amp; Preorders</span></span>
             
-            <span class="date">7月7日(火)</span>
+            <span class="date"><span class="ja">7月7日(火)</span><span class="en">Jul 7 (Tue)</span></span>
           </div>
-          <h2 class="card-title">【ポケカ】30th CELEBRATION(30th セレブレーション)の収録カードリスト一覧/最新情報【2026年9月16日発売】</h2>
-          <p class="summary">30周年記念商品「30th CELEBRATION」の全収録カードリストと最新情報。9月16日発売予定。</p>
+          <h2 class="card-title"><span class="ja">【ポケカ】30th CELEBRATION(30th セレブレーション)の収録カードリスト一覧/最新情報【2026年9月16日発売】</span><span class="en">【ポケカ】30th CELEBRATION(30th セレブレーション)の収録カードリスト一覧/最新情報【2026年9月16日発売】</span></h2>
+          <p class="summary"><span class="ja">30周年記念商品「30th CELEBRATION」の全収録カードリストと最新情報。9月16日発売予定。</span><span class="en">30周年記念商品「30th CELEBRATION」の全収録カードリストと最新情報。9月16日発売予定。</span></p>
           <div class="card-footer"><span class="source">SNKRDUNK</span></div>
         </div>
       </a>
@@ -582,12 +629,12 @@ footer a { color: inherit; }
         <div class="thumb thumb-fallback">🌏</div>
         <div class="card-body">
           <div class="card-meta">
-            <span class="badge" style="background:#d0642a">海外ニュース</span>
+            <span class="badge" style="background:#d0642a"><span class="ja">海外ニュース</span><span class="en">International</span></span>
             
-            <span class="date">7月7日(火)</span>
+            <span class="date"><span class="ja">7月7日(火)</span><span class="en">Jul 7 (Tue)</span></span>
           </div>
-          <h2 class="card-title">&quot;Pitch Black&quot; Set Guide: Full Set List, Product Lineup, Store Promos, and More!</h2>
-          <p class="summary">「ピッチブラック」弾の完全なセットガイド。新弾の全体像・製品ラインナップを把握したい方向け。</p>
+          <h2 class="card-title"><span class="ja">&quot;Pitch Black&quot; Set Guide: Full Set List, Product Lineup, Store Promos, and More!</span><span class="en">&quot;Pitch Black&quot; Set Guide: Full Set List, Product Lineup, Store Promos, and More!</span></h2>
+          <p class="summary"><span class="ja">「ピッチブラック」弾の完全なセットガイド。新弾の全体像・製品ラインナップを把握したい方向け。</span><span class="en">「ピッチブラック」弾の完全なセットガイド。新弾の全体像・製品ラインナップを把握したい方向け。</span></p>
           <div class="card-footer"><span class="source">PokeBeach</span></div>
         </div>
       </a>
@@ -595,12 +642,12 @@ footer a { color: inherit; }
         <div class="thumb thumb-fallback">🌏</div>
         <div class="card-body">
           <div class="card-meta">
-            <span class="badge" style="background:#d0642a">海外ニュース</span>
+            <span class="badge" style="background:#d0642a"><span class="ja">海外ニュース</span><span class="en">International</span></span>
             
-            <span class="date">7月7日(火)</span>
+            <span class="date"><span class="ja">7月7日(火)</span><span class="en">Jul 7 (Tue)</span></span>
           </div>
-          <h2 class="card-title">Jirachi ex from &quot;30th Celebration&quot; Revealed!</h2>
-          <p class="summary">「30周年セレブレーション」からジラーチexが公開。新セットの新規カード情報の確認に。</p>
+          <h2 class="card-title"><span class="ja">Jirachi ex from &quot;30th Celebration&quot; Revealed!</span><span class="en">Jirachi ex from &quot;30th Celebration&quot; Revealed!</span></h2>
+          <p class="summary"><span class="ja">「30周年セレブレーション」からジラーチexが公開。新セットの新規カード情報の確認に。</span><span class="en">「30周年セレブレーション」からジラーチexが公開。新セットの新規カード情報の確認に。</span></p>
           <div class="card-footer"><span class="source">PokeBeach</span></div>
         </div>
       </a>
@@ -608,12 +655,12 @@ footer a { color: inherit; }
         <img class="thumb" src="https://prtimes.jp/img/135668/69/resize/d135668-69-d4a2de2e8a4e60e0fc28-1.jpg" alt="" loading="lazy" onerror="this.outerHTML='<div class=&quot;thumb thumb-fallback&quot;>🔍</div>'">
         <div class="card-body">
           <div class="card-meta">
-            <span class="badge" style="background:#7c5cbf">鑑定・PSA</span>
+            <span class="badge" style="background:#7c5cbf"><span class="ja">鑑定・PSA</span><span class="en">Grading &amp; PSA</span></span>
             
-            <span class="date">7月7日(火)</span>
+            <span class="date"><span class="ja">7月7日(火)</span><span class="en">Jul 7 (Tue)</span></span>
           </div>
-          <h2 class="card-title">第三者鑑定で最高評価の初期ポケモンカード全102枚セットが121万米ドル（約1億9,955万円）で落札。公開販売における最高額を記録</h2>
-          <p class="summary">初期ポケモンカード全102枚セットが約1億9,955万円で落札。史上最高落札額を記録した高額取引。</p>
+          <h2 class="card-title"><span class="ja">第三者鑑定で最高評価の初期ポケモンカード全102枚セットが121万米ドル（約1億9,955万円）で落札。公開販売における最高額を記録</span><span class="en">第三者鑑定で最高評価の初期ポケモンカード全102枚セットが121万米ドル（約1億9,955万円）で落札。公開販売における最高額を記録</span></h2>
+          <p class="summary"><span class="ja">初期ポケモンカード全102枚セットが約1億9,955万円で落札。史上最高落札額を記録した高額取引。</span><span class="en">初期ポケモンカード全102枚セットが約1億9,955万円で落札。史上最高落札額を記録した高額取引。</span></p>
           <div class="card-footer"><span class="source">Mantan Web</span></div>
         </div>
       </a>
@@ -621,12 +668,12 @@ footer a { color: inherit; }
         <div class="thumb thumb-fallback">🎁</div>
         <div class="card-body">
           <div class="card-meta">
-            <span class="badge" style="background:#2a7fc9">新弾・予約</span>
+            <span class="badge" style="background:#2a7fc9"><span class="ja">新弾・予約</span><span class="en">New Sets &amp; Preorders</span></span>
             
-            <span class="date">7月6日(月)</span>
+            <span class="date"><span class="ja">7月6日(月)</span><span class="en">Jul 6 (Mon)</span></span>
           </div>
-          <h2 class="card-title">ポケカ 連 撃 ポケモン 最新情報 一撃マスター 連撃マスター発売 いちげき・れんげき のポケモンカードまとめ カードの強さについて解説 ポケカ解説 -</h2>
-          <p class="summary">連撃ポケモン関連の情報記事。一撃マスター・連撃マスターの解説とカード強さについて。</p>
+          <h2 class="card-title"><span class="ja">ポケカ 連 撃 ポケモン 最新情報 一撃マスター 連撃マスター発売 いちげき・れんげき のポケモンカードまとめ カードの強さについて解説 ポケカ解説 -</span><span class="en">ポケカ 連 撃 ポケモン 最新情報 一撃マスター 連撃マスター発売 いちげき・れんげき のポケモンカードまとめ カードの強さについて解説 ポケカ解説 -</span></h2>
+          <p class="summary"><span class="ja">連撃ポケモン関連の情報記事。一撃マスター・連撃マスターの解説とカード強さについて。</span><span class="en">連撃ポケモン関連の情報記事。一撃マスター・連撃マスターの解説とカード強さについて。</span></p>
           <div class="card-footer"><span class="source">richardajkeys.com</span></div>
         </div>
       </a>
@@ -634,12 +681,12 @@ footer a { color: inherit; }
         <img class="thumb" src="https://www.inside-games.jp/imgs/ogp_f/1739636.jpg" alt="" loading="lazy" onerror="this.outerHTML='<div class=&quot;thumb thumb-fallback&quot;>🎁</div>'">
         <div class="card-body">
           <div class="card-meta">
-            <span class="badge" style="background:#2a7fc9">新弾・予約</span>
+            <span class="badge" style="background:#2a7fc9"><span class="ja">新弾・予約</span><span class="en">New Sets &amp; Preorders</span></span>
             
-            <span class="date">7月6日(月)</span>
+            <span class="date"><span class="ja">7月6日(月)</span><span class="en">Jul 6 (Mon)</span></span>
           </div>
-          <h2 class="card-title">『ポケカ』30周年記念パック「30th CELEBRATION」がAmazonで抽選販売中！1BOX（20パック入り）</h2>
-          <p class="summary">Amazonで30周年記念パック「30th CELEBRATION」（20パック入りBOX）の抽選販売実施中。</p>
+          <h2 class="card-title"><span class="ja">『ポケカ』30周年記念パック「30th CELEBRATION」がAmazonで抽選販売中！1BOX（20パック入り）</span><span class="en">『ポケカ』30周年記念パック「30th CELEBRATION」がAmazonで抽選販売中！1BOX（20パック入り）</span></h2>
+          <p class="summary"><span class="ja">Amazonで30周年記念パック「30th CELEBRATION」（20パック入りBOX）の抽選販売実施中。</span><span class="en">Amazonで30周年記念パック「30th CELEBRATION」（20パック入りBOX）の抽選販売実施中。</span></p>
           <div class="card-footer"><span class="source">インサイド</span></div>
         </div>
       </a>
@@ -647,12 +694,12 @@ footer a { color: inherit; }
         <img class="thumb" src="https://www.inside-games.jp/imgs/ogp_f/1741034.jpg" alt="" loading="lazy" onerror="this.outerHTML='<div class=&quot;thumb thumb-fallback&quot;>🎁</div>'">
         <div class="card-body">
           <div class="card-meta">
-            <span class="badge" style="background:#2a7fc9">新弾・予約</span>
+            <span class="badge" style="background:#2a7fc9"><span class="ja">新弾・予約</span><span class="en">New Sets &amp; Preorders</span></span>
             
-            <span class="date">7月5日(日)</span>
+            <span class="date"><span class="ja">7月5日(日)</span><span class="en">Jul 5 (Sun)</span></span>
           </div>
-          <h2 class="card-title">激レアな『ポケカ』30周年記念商品「30th CELEBRATION カードセット」がAmazonで抽選販売中！御三家の特別カードを地方ごとに収録 5枚目の写真・画像</h2>
-          <p class="summary">Amazon抽選販売で激レアな「30th CELEBRATION カードセット」。地方ごとに異なる御三家特別カード収録。</p>
+          <h2 class="card-title"><span class="ja">激レアな『ポケカ』30周年記念商品「30th CELEBRATION カードセット」がAmazonで抽選販売中！御三家の特別カードを地方ごとに収録 5枚目の写真・画像</span><span class="en">激レアな『ポケカ』30周年記念商品「30th CELEBRATION カードセット」がAmazonで抽選販売中！御三家の特別カードを地方ごとに収録 5枚目の写真・画像</span></h2>
+          <p class="summary"><span class="ja">Amazon抽選販売で激レアな「30th CELEBRATION カードセット」。地方ごとに異なる御三家特別カード収録。</span><span class="en">Amazon抽選販売で激レアな「30th CELEBRATION カードセット」。地方ごとに異なる御三家特別カード収録。</span></p>
           <div class="card-footer"><span class="source">インサイド</span></div>
         </div>
       </a>
@@ -660,12 +707,12 @@ footer a { color: inherit; }
         <img class="thumb" src="https://www.inside-games.jp/imgs/ogp_f/1740957.jpg" alt="" loading="lazy" onerror="this.outerHTML='<div class=&quot;thumb thumb-fallback&quot;>🎁</div>'">
         <div class="card-body">
           <div class="card-meta">
-            <span class="badge" style="background:#2a7fc9">新弾・予約</span>
+            <span class="badge" style="background:#2a7fc9"><span class="ja">新弾・予約</span><span class="en">New Sets &amp; Preorders</span></span>
             
-            <span class="date">7月5日(日)</span>
+            <span class="date"><span class="ja">7月5日(日)</span><span class="en">Jul 5 (Sun)</span></span>
           </div>
-          <h2 class="card-title">大注目の『ポケカ』30周年記念商品「30th CELEBRATION エーフィ・ブラッキーセット」がAmazonで抽選販売！2匹のデッキや特別カードを収録</h2>
-          <p class="summary">Amazon抽選販売で「30th CELEBRATION エーフィ・ブラッキーセット」。2匹デッキと特別カード収録。</p>
+          <h2 class="card-title"><span class="ja">大注目の『ポケカ』30周年記念商品「30th CELEBRATION エーフィ・ブラッキーセット」がAmazonで抽選販売！2匹のデッキや特別カードを収録</span><span class="en">大注目の『ポケカ』30周年記念商品「30th CELEBRATION エーフィ・ブラッキーセット」がAmazonで抽選販売！2匹のデッキや特別カードを収録</span></h2>
+          <p class="summary"><span class="ja">Amazon抽選販売で「30th CELEBRATION エーフィ・ブラッキーセット」。2匹デッキと特別カード収録。</span><span class="en">Amazon抽選販売で「30th CELEBRATION エーフィ・ブラッキーセット」。2匹デッキと特別カード収録。</span></p>
           <div class="card-footer"><span class="source">インサイド</span></div>
         </div>
       </a>
@@ -673,12 +720,12 @@ footer a { color: inherit; }
         <img class="thumb" src="https://www.inside-games.jp/imgs/ogp_f/1750460.jpg" alt="" loading="lazy" onerror="this.outerHTML='<div class=&quot;thumb thumb-fallback&quot;>🎁</div>'">
         <div class="card-body">
           <div class="card-meta">
-            <span class="badge" style="background:#2a7fc9">新弾・予約</span>
+            <span class="badge" style="background:#2a7fc9"><span class="ja">新弾・予約</span><span class="en">New Sets &amp; Preorders</span></span>
             
-            <span class="date">7月3日(金)</span>
+            <span class="date"><span class="ja">7月3日(金)</span><span class="en">Jul 3 (Fri)</span></span>
           </div>
-          <h2 class="card-title">まだ間に合う！『ポケカ』新弾「ストームエメラルダ」がAmazonで抽選販売 1枚目の写真・画像</h2>
-          <p class="summary">Amazonで新弾「ストームエメラルダ」の抽選販売実施中。応募期限についての確認を推奨。</p>
+          <h2 class="card-title"><span class="ja">まだ間に合う！『ポケカ』新弾「ストームエメラルダ」がAmazonで抽選販売 1枚目の写真・画像</span><span class="en">まだ間に合う！『ポケカ』新弾「ストームエメラルダ」がAmazonで抽選販売 1枚目の写真・画像</span></h2>
+          <p class="summary"><span class="ja">Amazonで新弾「ストームエメラルダ」の抽選販売実施中。応募期限についての確認を推奨。</span><span class="en">Amazonで新弾「ストームエメラルダ」の抽選販売実施中。応募期限についての確認を推奨。</span></p>
           <div class="card-footer"><span class="source">インサイド</span></div>
         </div>
       </a>
@@ -686,12 +733,12 @@ footer a { color: inherit; }
         <div class="thumb thumb-fallback">🎁</div>
         <div class="card-body">
           <div class="card-meta">
-            <span class="badge" style="background:#2a7fc9">新弾・予約</span>
+            <span class="badge" style="background:#2a7fc9"><span class="ja">新弾・予約</span><span class="en">New Sets &amp; Preorders</span></span>
             
-            <span class="date">7月3日(金)</span>
+            <span class="date"><span class="ja">7月3日(金)</span><span class="en">Jul 3 (Fri)</span></span>
           </div>
-          <h2 class="card-title">【2026.07.03】※応募は終了しました「当選者代金前払い必要 ポケモンカードゲームMEGA 拡張パック ストームエメラルダ」</h2>
-          <p class="summary">ホビーステーション抽選販売ストームエメラルダ。応募は既に終了しているため参考資料のみ。</p>
+          <h2 class="card-title"><span class="ja">【2026.07.03】※応募は終了しました「当選者代金前払い必要 ポケモンカードゲームMEGA 拡張パック ストームエメラルダ」</span><span class="en">【2026.07.03】※応募は終了しました「当選者代金前払い必要 ポケモンカードゲームMEGA 拡張パック ストームエメラルダ」</span></h2>
+          <p class="summary"><span class="ja">ホビーステーション抽選販売ストームエメラルダ。応募は既に終了しているため参考資料のみ。</span><span class="en">ホビーステーション抽選販売ストームエメラルダ。応募は既に終了しているため参考資料のみ。</span></p>
           <div class="card-footer"><span class="source">ホビーステーション</span></div>
         </div>
       </a>
@@ -699,12 +746,12 @@ footer a { color: inherit; }
         <div class="thumb thumb-fallback">🎁</div>
         <div class="card-body">
           <div class="card-meta">
-            <span class="badge" style="background:#2a7fc9">新弾・予約</span>
+            <span class="badge" style="background:#2a7fc9"><span class="ja">新弾・予約</span><span class="en">New Sets &amp; Preorders</span></span>
             
-            <span class="date">7月3日(金)</span>
+            <span class="date"><span class="ja">7月3日(金)</span><span class="en">Jul 3 (Fri)</span></span>
           </div>
-          <h2 class="card-title">【2026.07.03】※応募は終了しました「ポケモンカードゲームMEGA スタートデッキ100 バトルコレクション（再販）」</h2>
-          <p class="summary">ホビーステーション抽選のスタートデッキ100バトルコレクション再販。応募は既に終了。</p>
+          <h2 class="card-title"><span class="ja">【2026.07.03】※応募は終了しました「ポケモンカードゲームMEGA スタートデッキ100 バトルコレクション（再販）」</span><span class="en">【2026.07.03】※応募は終了しました「ポケモンカードゲームMEGA スタートデッキ100 バトルコレクション（再販）」</span></h2>
+          <p class="summary"><span class="ja">ホビーステーション抽選のスタートデッキ100バトルコレクション再販。応募は既に終了。</span><span class="en">ホビーステーション抽選のスタートデッキ100バトルコレクション再販。応募は既に終了。</span></p>
           <div class="card-footer"><span class="source">ホビーステーション</span></div>
         </div>
       </a>
@@ -712,12 +759,12 @@ footer a { color: inherit; }
         <div class="thumb thumb-fallback">🌏</div>
         <div class="card-body">
           <div class="card-meta">
-            <span class="badge" style="background:#d0642a">海外ニュース</span>
+            <span class="badge" style="background:#d0642a"><span class="ja">海外ニュース</span><span class="en">International</span></span>
             
-            <span class="date">7月3日(金)</span>
+            <span class="date"><span class="ja">7月3日(金)</span><span class="en">Jul 3 (Fri)</span></span>
           </div>
-          <h2 class="card-title">&quot;Pitch Black&quot; Store Promos Revealed with Special 30th Anniversary Stamps!</h2>
-          <p class="summary">「ピッチブラック」弾のストアプロモカードが30周年記念スタンプ付きで公開。限定プロモの情報確認に。</p>
+          <h2 class="card-title"><span class="ja">&quot;Pitch Black&quot; Store Promos Revealed with Special 30th Anniversary Stamps!</span><span class="en">&quot;Pitch Black&quot; Store Promos Revealed with Special 30th Anniversary Stamps!</span></h2>
+          <p class="summary"><span class="ja">「ピッチブラック」弾のストアプロモカードが30周年記念スタンプ付きで公開。限定プロモの情報確認に。</span><span class="en">「ピッチブラック」弾のストアプロモカードが30周年記念スタンプ付きで公開。限定プロモの情報確認に。</span></p>
           <div class="card-footer"><span class="source">PokeBeach</span></div>
         </div>
       </a>
@@ -725,12 +772,12 @@ footer a { color: inherit; }
         <div class="thumb thumb-fallback">🌏</div>
         <div class="card-body">
           <div class="card-meta">
-            <span class="badge" style="background:#d0642a">海外ニュース</span>
+            <span class="badge" style="background:#d0642a"><span class="ja">海外ニュース</span><span class="en">International</span></span>
             
-            <span class="date">7月3日(金)</span>
+            <span class="date"><span class="ja">7月3日(金)</span><span class="en">Jul 3 (Fri)</span></span>
           </div>
-          <h2 class="card-title">Mega Malamar ex and Sableye from &quot;Storm Emeralda&quot; Revealed!</h2>
-          <p class="summary">「ストームエメラルダ」からメガマラマーexなどが公開。新弾の新規カードラインナップ確認に。</p>
+          <h2 class="card-title"><span class="ja">Mega Malamar ex and Sableye from &quot;Storm Emeralda&quot; Revealed!</span><span class="en">Mega Malamar ex and Sableye from &quot;Storm Emeralda&quot; Revealed!</span></h2>
+          <p class="summary"><span class="ja">「ストームエメラルダ」からメガマラマーexなどが公開。新弾の新規カードラインナップ確認に。</span><span class="en">「ストームエメラルダ」からメガマラマーexなどが公開。新弾の新規カードラインナップ確認に。</span></p>
           <div class="card-footer"><span class="source">PokeBeach</span></div>
         </div>
       </a>
@@ -738,12 +785,12 @@ footer a { color: inherit; }
         <img class="thumb" src="https://newsatcl-pctr.c.yimg.jp/t/amd-img/20260422-00121017-toushin-000-2-view.jpg?exp=10800" alt="" loading="lazy" onerror="this.outerHTML='<div class=&quot;thumb thumb-fallback&quot;>📈</div>'">
         <div class="card-body">
           <div class="card-meta">
-            <span class="badge" style="background:#2e9e5b">相場・高騰</span>
+            <span class="badge" style="background:#2e9e5b"><span class="ja">相場・高騰</span><span class="en">Market &amp; Prices</span></span>
             
-            <span class="date">7月2日(木)</span>
+            <span class="date"><span class="ja">7月2日(木)</span><span class="en">Jul 2 (Thu)</span></span>
           </div>
-          <h2 class="card-title">定価5800円の「ポケモンカード」12箱を買取に出した結果… 「とんでもない買取金額」に驚きの声（LIMO）</h2>
-          <p class="summary">定価5800円のポケカ12箱の買取額について報道。具体的な相場動向参考になる記事。</p>
+          <h2 class="card-title"><span class="ja">定価5800円の「ポケモンカード」12箱を買取に出した結果… 「とんでもない買取金額」に驚きの声（LIMO）</span><span class="en">定価5800円の「ポケモンカード」12箱を買取に出した結果… 「とんでもない買取金額」に驚きの声（LIMO）</span></h2>
+          <p class="summary"><span class="ja">定価5800円のポケカ12箱の買取額について報道。具体的な相場動向参考になる記事。</span><span class="en">定価5800円のポケカ12箱の買取額について報道。具体的な相場動向参考になる記事。</span></p>
           <div class="card-footer"><span class="source">Yahoo!ニュース</span></div>
         </div>
       </a>
@@ -751,12 +798,12 @@ footer a { color: inherit; }
         <img class="thumb" src="https://cdn.snkrdunk.com/uploads/media/20250926063800-0.jpeg" alt="" loading="lazy" onerror="this.outerHTML='<div class=&quot;thumb thumb-fallback&quot;>📈</div>'">
         <div class="card-body">
           <div class="card-meta">
-            <span class="badge" style="background:#2e9e5b">相場・高騰</span>
+            <span class="badge" style="background:#2e9e5b"><span class="ja">相場・高騰</span><span class="en">Market &amp; Prices</span></span>
             
-            <span class="date">7月1日(水)</span>
+            <span class="date"><span class="ja">7月1日(水)</span><span class="en">Jul 1 (Wed)</span></span>
           </div>
-          <h2 class="card-title">【ポケカ】インフェルノXの当たりランキング/買取相場/封入率/レア別相場/値段まとめ【7/1更新】</h2>
-          <p class="summary">インフェルノXの当たりランキング・買取相場・封入率をまとめた記事。相場情報確認向け。</p>
+          <h2 class="card-title"><span class="ja">【ポケカ】インフェルノXの当たりランキング/買取相場/封入率/レア別相場/値段まとめ【7/1更新】</span><span class="en">【ポケカ】インフェルノXの当たりランキング/買取相場/封入率/レア別相場/値段まとめ【7/1更新】</span></h2>
+          <p class="summary"><span class="ja">インフェルノXの当たりランキング・買取相場・封入率をまとめた記事。相場情報確認向け。</span><span class="en">インフェルノXの当たりランキング・買取相場・封入率をまとめた記事。相場情報確認向け。</span></p>
           <div class="card-footer"><span class="source">SNKRDUNK</span></div>
         </div>
       </a>
@@ -764,12 +811,12 @@ footer a { color: inherit; }
         <div class="thumb thumb-fallback">🌏</div>
         <div class="card-body">
           <div class="card-meta">
-            <span class="badge" style="background:#d0642a">海外ニュース</span>
+            <span class="badge" style="background:#d0642a"><span class="ja">海外ニュース</span><span class="en">International</span></span>
             
-            <span class="date">6月30日(火)</span>
+            <span class="date"><span class="ja">6月30日(火)</span><span class="en">Jun 30 (Tue)</span></span>
           </div>
-          <h2 class="card-title">&quot;30th Celebration&quot; Full English Product Lineup Revealed!</h2>
-          <p class="summary">「30周年セレブレーション」の英語版全製品ラインナップが発表。新セットの入手方法・種類を知りたい方向け。</p>
+          <h2 class="card-title"><span class="ja">&quot;30th Celebration&quot; Full English Product Lineup Revealed!</span><span class="en">&quot;30th Celebration&quot; Full English Product Lineup Revealed!</span></h2>
+          <p class="summary"><span class="ja">「30周年セレブレーション」の英語版全製品ラインナップが発表。新セットの入手方法・種類を知りたい方向け。</span><span class="en">「30周年セレブレーション」の英語版全製品ラインナップが発表。新セットの入手方法・種類を知りたい方向け。</span></p>
           <div class="card-footer"><span class="source">PokeBeach</span></div>
         </div>
       </a>
@@ -777,12 +824,12 @@ footer a { color: inherit; }
         <div class="thumb thumb-fallback">🌏</div>
         <div class="card-body">
           <div class="card-meta">
-            <span class="badge" style="background:#d0642a">海外ニュース</span>
+            <span class="badge" style="background:#d0642a"><span class="ja">海外ニュース</span><span class="en">International</span></span>
             
-            <span class="date">6月30日(火)</span>
+            <span class="date"><span class="ja">6月30日(火)</span><span class="en">Jun 30 (Tue)</span></span>
           </div>
-          <h2 class="card-title">Nidorina Illustration Rare Promo for &quot;30th Celebration&quot; Elite Trainer Box Revealed!</h2>
-          <p class="summary">「30周年セレブレーション」エリートトレーナーボックス用イラスト版ニドリーナプロモが公開。限定カード情報。</p>
+          <h2 class="card-title"><span class="ja">Nidorina Illustration Rare Promo for &quot;30th Celebration&quot; Elite Trainer Box Revealed!</span><span class="en">Nidorina Illustration Rare Promo for &quot;30th Celebration&quot; Elite Trainer Box Revealed!</span></h2>
+          <p class="summary"><span class="ja">「30周年セレブレーション」エリートトレーナーボックス用イラスト版ニドリーナプロモが公開。限定カード情報。</span><span class="en">「30周年セレブレーション」エリートトレーナーボックス用イラスト版ニドリーナプロモが公開。限定カード情報。</span></p>
           <div class="card-footer"><span class="source">PokeBeach</span></div>
         </div>
       </a>
@@ -790,12 +837,12 @@ footer a { color: inherit; }
         <img class="thumb" src="https://d.player.one/en/full/229004/eevee.jpg" alt="" loading="lazy" onerror="this.outerHTML='<div class=&quot;thumb thumb-fallback&quot;>🌏</div>'">
         <div class="card-body">
           <div class="card-meta">
-            <span class="badge" style="background:#d0642a">海外ニュース</span>
+            <span class="badge" style="background:#d0642a"><span class="ja">海外ニュース</span><span class="en">International</span></span>
             
-            <span class="date">6月30日(火)</span>
+            <span class="date"><span class="ja">6月30日(火)</span><span class="en">Jun 30 (Tue)</span></span>
           </div>
-          <h2 class="card-title">&#x27;Pokemon TCG&#x27;: Extremely Rare ETB Is Now Back In Stock, Available For Below Market Price</h2>
-          <p class="summary">レアなETBが市場価格以下で再入荷。掘り出し物の入手機会に関心がある方向け。</p>
+          <h2 class="card-title"><span class="ja">&#x27;Pokemon TCG&#x27;: Extremely Rare ETB Is Now Back In Stock, Available For Below Market Price</span><span class="en">&#x27;Pokemon TCG&#x27;: Extremely Rare ETB Is Now Back In Stock, Available For Below Market Price</span></h2>
+          <p class="summary"><span class="ja">レアなETBが市場価格以下で再入荷。掘り出し物の入手機会に関心がある方向け。</span><span class="en">レアなETBが市場価格以下で再入荷。掘り出し物の入手機会に関心がある方向け。</span></p>
           <div class="card-footer"><span class="source">player.one</span></div>
         </div>
       </a>
@@ -803,12 +850,12 @@ footer a { color: inherit; }
         <div class="thumb thumb-fallback">🌏</div>
         <div class="card-body">
           <div class="card-meta">
-            <span class="badge" style="background:#d0642a">海外ニュース</span>
+            <span class="badge" style="background:#d0642a"><span class="ja">海外ニュース</span><span class="en">International</span></span>
             
-            <span class="date">6月29日(月)</span>
+            <span class="date"><span class="ja">6月29日(月)</span><span class="en">Jun 29 (Mon)</span></span>
           </div>
-          <h2 class="card-title">“Ascended Heroes Focused Fighters Premium Collection” Releasing at Sam’s Club!</h2>
-          <p class="summary">サムズクラブで発売予定の「昇進の英雄集中ファイターズプレミアムコレクション」が発表。限定販売製品情報。</p>
+          <h2 class="card-title"><span class="ja">“Ascended Heroes Focused Fighters Premium Collection” Releasing at Sam’s Club!</span><span class="en">“Ascended Heroes Focused Fighters Premium Collection” Releasing at Sam’s Club!</span></h2>
+          <p class="summary"><span class="ja">サムズクラブで発売予定の「昇進の英雄集中ファイターズプレミアムコレクション」が発表。限定販売製品情報。</span><span class="en">サムズクラブで発売予定の「昇進の英雄集中ファイターズプレミアムコレクション」が発表。限定販売製品情報。</span></p>
           <div class="card-footer"><span class="source">PokeBeach</span></div>
         </div>
       </a>
@@ -816,12 +863,12 @@ footer a { color: inherit; }
         <div class="thumb thumb-fallback">🌏</div>
         <div class="card-body">
           <div class="card-meta">
-            <span class="badge" style="background:#d0642a">海外ニュース</span>
+            <span class="badge" style="background:#d0642a"><span class="ja">海外ニュース</span><span class="en">International</span></span>
             
-            <span class="date">6月29日(月)</span>
+            <span class="date"><span class="ja">6月29日(月)</span><span class="en">Jun 29 (Mon)</span></span>
           </div>
-          <h2 class="card-title">Team Rocket Special Gift Box Briefcase, Lillie Box, and N Box to Release in China!</h2>
-          <p class="summary">中国でチームロケット特別ギフトボックス等が発売予定。海外限定製品の存在確認に。</p>
+          <h2 class="card-title"><span class="ja">Team Rocket Special Gift Box Briefcase, Lillie Box, and N Box to Release in China!</span><span class="en">Team Rocket Special Gift Box Briefcase, Lillie Box, and N Box to Release in China!</span></h2>
+          <p class="summary"><span class="ja">中国でチームロケット特別ギフトボックス等が発売予定。海外限定製品の存在確認に。</span><span class="en">中国でチームロケット特別ギフトボックス等が発売予定。海外限定製品の存在確認に。</span></p>
           <div class="card-footer"><span class="source">PokeBeach</span></div>
         </div>
       </a>
@@ -829,12 +876,12 @@ footer a { color: inherit; }
         <div class="thumb thumb-fallback">🌏</div>
         <div class="card-body">
           <div class="card-meta">
-            <span class="badge" style="background:#d0642a">海外ニュース</span>
+            <span class="badge" style="background:#d0642a"><span class="ja">海外ニュース</span><span class="en">International</span></span>
             
-            <span class="date">6月29日(月)</span>
+            <span class="date"><span class="ja">6月29日(月)</span><span class="en">Jun 29 (Mon)</span></span>
           </div>
-          <h2 class="card-title">All 106 &quot;Everyday Wonders&quot; Cards Revealed for &quot;Pocket!&quot;</h2>
-          <p class="summary">ポケモンPocketの「Everyday Wonders」全106カードが公開。モバイルゲーム連動の実物カード情報。</p>
+          <h2 class="card-title"><span class="ja">All 106 &quot;Everyday Wonders&quot; Cards Revealed for &quot;Pocket!&quot;</span><span class="en">All 106 &quot;Everyday Wonders&quot; Cards Revealed for &quot;Pocket!&quot;</span></h2>
+          <p class="summary"><span class="ja">ポケモンPocketの「Everyday Wonders」全106カードが公開。モバイルゲーム連動の実物カード情報。</span><span class="en">ポケモンPocketの「Everyday Wonders」全106カードが公開。モバイルゲーム連動の実物カード情報。</span></p>
           <div class="card-footer"><span class="source">PokeBeach</span></div>
         </div>
       </a>
@@ -842,12 +889,12 @@ footer a { color: inherit; }
         <img class="thumb" src="https://www.inside-games.jp/imgs/ogp_f/1746267.jpg" alt="" loading="lazy" onerror="this.outerHTML='<div class=&quot;thumb thumb-fallback&quot;>🎁</div>'">
         <div class="card-body">
           <div class="card-meta">
-            <span class="badge" style="background:#2a7fc9">新弾・予約</span>
+            <span class="badge" style="background:#2a7fc9"><span class="ja">新弾・予約</span><span class="en">New Sets &amp; Preorders</span></span>
             
-            <span class="date">6月28日(日)</span>
+            <span class="date"><span class="ja">6月28日(日)</span><span class="en">Jun 28 (Sun)</span></span>
           </div>
-          <h2 class="card-title">しまむらの『ポケカ』抽選販売が締切間近！拡張パック「アビスアイ」「インフェルノX」各1BOXをラインナップ</h2>
-          <p class="summary">しまむらのポケカ抽選販売が締切間近。アビスアイ・インフェルノX各1BOXをラインナップ。</p>
+          <h2 class="card-title"><span class="ja">しまむらの『ポケカ』抽選販売が締切間近！拡張パック「アビスアイ」「インフェルノX」各1BOXをラインナップ</span><span class="en">しまむらの『ポケカ』抽選販売が締切間近！拡張パック「アビスアイ」「インフェルノX」各1BOXをラインナップ</span></h2>
+          <p class="summary"><span class="ja">しまむらのポケカ抽選販売が締切間近。アビスアイ・インフェルノX各1BOXをラインナップ。</span><span class="en">しまむらのポケカ抽選販売が締切間近。アビスアイ・インフェルノX各1BOXをラインナップ。</span></p>
           <div class="card-footer"><span class="source">インサイド</span></div>
         </div>
       </a>
@@ -855,12 +902,12 @@ footer a { color: inherit; }
         <img class="thumb" src="https://pokeca-pocket.dbfw-days.com/wp-content/uploads/2026/06/IMG_4321.jpg" alt="" loading="lazy" onerror="this.outerHTML='<div class=&quot;thumb thumb-fallback&quot;>🎁</div>'">
         <div class="card-body">
           <div class="card-meta">
-            <span class="badge" style="background:#2a7fc9">新弾・予約</span>
+            <span class="badge" style="background:#2a7fc9"><span class="ja">新弾・予約</span><span class="en">New Sets &amp; Preorders</span></span>
             
-            <span class="date">6月27日(土)</span>
+            <span class="date"><span class="ja">6月27日(土)</span><span class="en">Jun 27 (Sat)</span></span>
           </div>
-          <h2 class="card-title">【ポケカ】拡張パック『ストームエメラルダ』カードリスト＆商品紹介【メガレックウザex】</h2>
-          <p class="summary">ストームエメラルダのカードリスト・商品紹介記事。メガレックウザex等の主要カード掲載。</p>
+          <h2 class="card-title"><span class="ja">【ポケカ】拡張パック『ストームエメラルダ』カードリスト＆商品紹介【メガレックウザex】</span><span class="en">【ポケカ】拡張パック『ストームエメラルダ』カードリスト＆商品紹介【メガレックウザex】</span></h2>
+          <p class="summary"><span class="ja">ストームエメラルダのカードリスト・商品紹介記事。メガレックウザex等の主要カード掲載。</span><span class="en">ストームエメラルダのカードリスト・商品紹介記事。メガレックウザex等の主要カード掲載。</span></p>
           <div class="card-footer"><span class="source">ポケカポケット開封日記</span></div>
         </div>
       </a>
@@ -868,12 +915,12 @@ footer a { color: inherit; }
         <div class="thumb thumb-fallback">🌏</div>
         <div class="card-body">
           <div class="card-meta">
-            <span class="badge" style="background:#d0642a">海外ニュース</span>
+            <span class="badge" style="background:#d0642a"><span class="ja">海外ニュース</span><span class="en">International</span></span>
             
-            <span class="date">6月27日(土)</span>
+            <span class="date"><span class="ja">6月27日(土)</span><span class="en">Jun 27 (Sat)</span></span>
           </div>
-          <h2 class="card-title">&quot;Chasing Glory Together&quot; Coin Sets and Reverse Holos Revealed!</h2>
-          <p class="summary">「Chasing Glory Together」のコインセットとリバースホロが公開。新弾の製品展開確認に。</p>
+          <h2 class="card-title"><span class="ja">&quot;Chasing Glory Together&quot; Coin Sets and Reverse Holos Revealed!</span><span class="en">&quot;Chasing Glory Together&quot; Coin Sets and Reverse Holos Revealed!</span></h2>
+          <p class="summary"><span class="ja">「Chasing Glory Together」のコインセットとリバースホロが公開。新弾の製品展開確認に。</span><span class="en">「Chasing Glory Together」のコインセットとリバースホロが公開。新弾の製品展開確認に。</span></p>
           <div class="card-footer"><span class="source">PokeBeach</span></div>
         </div>
       </a>
@@ -881,12 +928,12 @@ footer a { color: inherit; }
         <div class="thumb thumb-fallback">🌏</div>
         <div class="card-body">
           <div class="card-meta">
-            <span class="badge" style="background:#d0642a">海外ニュース</span>
+            <span class="badge" style="background:#d0642a"><span class="ja">海外ニュース</span><span class="en">International</span></span>
             
-            <span class="date">6月27日(土)</span>
+            <span class="date"><span class="ja">6月27日(土)</span><span class="en">Jun 27 (Sat)</span></span>
           </div>
-          <h2 class="card-title">Jolteon, Darkrai, Zarude, and More Cards Revealed from &quot;MEGA Starter Decks!&quot;</h2>
-          <p class="summary">「MEGAスターターデッキ」に収録されるカード複数が公開。入門用製品の内容確認に。</p>
+          <h2 class="card-title"><span class="ja">Jolteon, Darkrai, Zarude, and More Cards Revealed from &quot;MEGA Starter Decks!&quot;</span><span class="en">Jolteon, Darkrai, Zarude, and More Cards Revealed from &quot;MEGA Starter Decks!&quot;</span></h2>
+          <p class="summary"><span class="ja">「MEGAスターターデッキ」に収録されるカード複数が公開。入門用製品の内容確認に。</span><span class="en">「MEGAスターターデッキ」に収録されるカード複数が公開。入門用製品の内容確認に。</span></p>
           <div class="card-footer"><span class="source">PokeBeach</span></div>
         </div>
       </a>
@@ -894,12 +941,12 @@ footer a { color: inherit; }
         <img class="thumb" src="https://www.sankei.com/resizer/v2/M2GXMSOEDRPPJHPEJSHQWGI4ME.jpg?auth=a65dee0b94ff44a1ca1cdffd453d37af8b17d95d4567c6b2ea9e4d379a889b10&amp;amp;quality=50&amp;amp;smart=true&amp;amp;width=1200&amp;amp;height=675" alt="" loading="lazy" onerror="this.outerHTML='<div class=&quot;thumb thumb-fallback&quot;>🎁</div>'">
         <div class="card-body">
           <div class="card-meta">
-            <span class="badge" style="background:#2a7fc9">新弾・予約</span>
+            <span class="badge" style="background:#2a7fc9"><span class="ja">新弾・予約</span><span class="en">New Sets &amp; Preorders</span></span>
             
-            <span class="date">6月26日(金)</span>
+            <span class="date"><span class="ja">6月26日(金)</span><span class="en">Jun 26 (Fri)</span></span>
           </div>
-          <h2 class="card-title">ポケモンカード新パック「ストームエメラルダ」収録カード発表</h2>
-          <p class="summary">ポケモンカード新パック「ストームエメラルダ」の収録カード発表。産経ニュースによる報道。</p>
+          <h2 class="card-title"><span class="ja">ポケモンカード新パック「ストームエメラルダ」収録カード発表</span><span class="en">ポケモンカード新パック「ストームエメラルダ」収録カード発表</span></h2>
+          <p class="summary"><span class="ja">ポケモンカード新パック「ストームエメラルダ」の収録カード発表。産経ニュースによる報道。</span><span class="en">ポケモンカード新パック「ストームエメラルダ」の収録カード発表。産経ニュースによる報道。</span></p>
           <div class="card-footer"><span class="source">産経ニュース</span></div>
         </div>
       </a>
@@ -907,12 +954,12 @@ footer a { color: inherit; }
         <img class="thumb" src="https://contents.oricon.co.jp/upimg/news/2464000/2463930/20260626_142735_p_o_18183226.jpg" alt="" loading="lazy" onerror="this.outerHTML='<div class=&quot;thumb thumb-fallback&quot;>🎁</div>'">
         <div class="card-body">
           <div class="card-meta">
-            <span class="badge" style="background:#2a7fc9">新弾・予約</span>
+            <span class="badge" style="background:#2a7fc9"><span class="ja">新弾・予約</span><span class="en">New Sets &amp; Preorders</span></span>
             
-            <span class="date">6月26日(金)</span>
+            <span class="date"><span class="ja">6月26日(金)</span><span class="en">Jun 26 (Fri)</span></span>
           </div>
-          <h2 class="card-title">ポケモンカード新パック「ストームエメラルダ」収録カード発表 メガレックウザex・ファイアローex・ぼうけんのランタンなど詳細説明</h2>
-          <p class="summary">ストームエメラルダ収録カード詳細説明。メガレックウザex・ファイアローex等の仕様記載。</p>
+          <h2 class="card-title"><span class="ja">ポケモンカード新パック「ストームエメラルダ」収録カード発表 メガレックウザex・ファイアローex・ぼうけんのランタンなど詳細説明</span><span class="en">ポケモンカード新パック「ストームエメラルダ」収録カード発表 メガレックウザex・ファイアローex・ぼうけんのランタンなど詳細説明</span></h2>
+          <p class="summary"><span class="ja">ストームエメラルダ収録カード詳細説明。メガレックウザex・ファイアローex等の仕様記載。</span><span class="en">ストームエメラルダ収録カード詳細説明。メガレックウザex・ファイアローex等の仕様記載。</span></p>
           <div class="card-footer"><span class="source">オリコンニュース</span></div>
         </div>
       </a>
@@ -920,12 +967,12 @@ footer a { color: inherit; }
         <img class="thumb" src="https://www.inside-games.jp/imgs/ogp_f/1747661.jpg" alt="" loading="lazy" onerror="this.outerHTML='<div class=&quot;thumb thumb-fallback&quot;>🎁</div>'">
         <div class="card-body">
           <div class="card-meta">
-            <span class="badge" style="background:#2a7fc9">新弾・予約</span>
+            <span class="badge" style="background:#2a7fc9"><span class="ja">新弾・予約</span><span class="en">New Sets &amp; Preorders</span></span>
             
-            <span class="date">6月26日(金)</span>
+            <span class="date"><span class="ja">6月26日(金)</span><span class="en">Jun 26 (Fri)</span></span>
           </div>
-          <h2 class="card-title">『ポケカ』拡張パック「ストームエメラルダ」収録カード初公開！目玉の「メガレックウザex」や、2枚1組で使う強力なスタジアムも登場</h2>
-          <p class="summary">ストームエメラルダの初公開情報。メガレックウザexと2枚1組スタジアムが目玉。</p>
+          <h2 class="card-title"><span class="ja">『ポケカ』拡張パック「ストームエメラルダ」収録カード初公開！目玉の「メガレックウザex」や、2枚1組で使う強力なスタジアムも登場</span><span class="en">『ポケカ』拡張パック「ストームエメラルダ」収録カード初公開！目玉の「メガレックウザex」や、2枚1組で使う強力なスタジアムも登場</span></h2>
+          <p class="summary"><span class="ja">ストームエメラルダの初公開情報。メガレックウザexと2枚1組スタジアムが目玉。</span><span class="en">ストームエメラルダの初公開情報。メガレックウザexと2枚1組スタジアムが目玉。</span></p>
           <div class="card-footer"><span class="source">インサイド</span></div>
         </div>
       </a>
@@ -933,12 +980,12 @@ footer a { color: inherit; }
         <img class="thumb" src="https://www.inside-games.jp/imgs/ogp_f/1747717.jpg" alt="" loading="lazy" onerror="this.outerHTML='<div class=&quot;thumb thumb-fallback&quot;>🎁</div>'">
         <div class="card-body">
           <div class="card-meta">
-            <span class="badge" style="background:#2a7fc9">新弾・予約</span>
+            <span class="badge" style="background:#2a7fc9"><span class="ja">新弾・予約</span><span class="en">New Sets &amp; Preorders</span></span>
             
-            <span class="date">6月26日(金)</span>
+            <span class="date"><span class="ja">6月26日(金)</span><span class="en">Jun 26 (Fri)</span></span>
           </div>
-          <h2 class="card-title">『ポケカ』構築済みデッキ「スターターセットex」が7月31日発売！「イーブイ」「ゾロア＆ゾロアーク」「ニャオハ＆マスカーニャ」の3種類</h2>
-          <p class="summary">7月31日発売「スターターセットex」の3種類（イーブイ、ゾロア&amp;ゾロアーク、ニャオハ&amp;マスカーニャ）紹介。</p>
+          <h2 class="card-title"><span class="ja">『ポケカ』構築済みデッキ「スターターセットex」が7月31日発売！「イーブイ」「ゾロア＆ゾロアーク」「ニャオハ＆マスカーニャ」の3種類</span><span class="en">『ポケカ』構築済みデッキ「スターターセットex」が7月31日発売！「イーブイ」「ゾロア＆ゾロアーク」「ニャオハ＆マスカーニャ」の3種類</span></h2>
+          <p class="summary"><span class="ja">7月31日発売「スターターセットex」の3種類（イーブイ、ゾロア&amp;ゾロアーク、ニャオハ&amp;マスカーニャ）紹介。</span><span class="en">7月31日発売「スターターセットex」の3種類（イーブイ、ゾロア&amp;ゾロアーク、ニャオハ&amp;マスカーニャ）紹介。</span></p>
           <div class="card-footer"><span class="source">インサイド</span></div>
         </div>
       </a>
@@ -946,12 +993,12 @@ footer a { color: inherit; }
         <div class="thumb thumb-fallback">🌏</div>
         <div class="card-body">
           <div class="card-meta">
-            <span class="badge" style="background:#d0642a">海外ニュース</span>
+            <span class="badge" style="background:#d0642a"><span class="ja">海外ニュース</span><span class="en">International</span></span>
             
-            <span class="date">6月26日(金)</span>
+            <span class="date"><span class="ja">6月26日(金)</span><span class="en">Jun 26 (Fri)</span></span>
           </div>
-          <h2 class="card-title">“Chasing Glory Together” Set Revealed for China Featuring Exclusive Brock’s Scouting!</h2>
-          <p class="summary">中国専売の「Chasing Glory Together」が限定ブロックスカウティングカード付きで発表。海外地域限定製品情報。</p>
+          <h2 class="card-title"><span class="ja">“Chasing Glory Together” Set Revealed for China Featuring Exclusive Brock’s Scouting!</span><span class="en">“Chasing Glory Together” Set Revealed for China Featuring Exclusive Brock’s Scouting!</span></h2>
+          <p class="summary"><span class="ja">中国専売の「Chasing Glory Together」が限定ブロックスカウティングカード付きで発表。海外地域限定製品情報。</span><span class="en">中国専売の「Chasing Glory Together」が限定ブロックスカウティングカード付きで発表。海外地域限定製品情報。</span></p>
           <div class="card-footer"><span class="source">PokeBeach</span></div>
         </div>
       </a>
@@ -959,12 +1006,12 @@ footer a { color: inherit; }
         <div class="thumb thumb-fallback">🌏</div>
         <div class="card-body">
           <div class="card-meta">
-            <span class="badge" style="background:#d0642a">海外ニュース</span>
+            <span class="badge" style="background:#d0642a"><span class="ja">海外ニュース</span><span class="en">International</span></span>
             
-            <span class="date">6月25日(木)</span>
+            <span class="date"><span class="ja">6月25日(木)</span><span class="en">Jun 25 (Thu)</span></span>
           </div>
-          <h2 class="card-title">&quot;Storm Emeralda&quot; Set Starring Mega Rayquaza ex Officially Revealed, Introduces a Split Stadium Card!</h2>
-          <p class="summary">メガレックウザexを中心とした「ストームエメラルダ」が正式発表。スタジアムカード分割導入も。新弾の全体像確認に。</p>
+          <h2 class="card-title"><span class="ja">&quot;Storm Emeralda&quot; Set Starring Mega Rayquaza ex Officially Revealed, Introduces a Split Stadium Card!</span><span class="en">&quot;Storm Emeralda&quot; Set Starring Mega Rayquaza ex Officially Revealed, Introduces a Split Stadium Card!</span></h2>
+          <p class="summary"><span class="ja">メガレックウザexを中心とした「ストームエメラルダ」が正式発表。スタジアムカード分割導入も。新弾の全体像確認に。</span><span class="en">メガレックウザexを中心とした「ストームエメラルダ」が正式発表。スタジアムカード分割導入も。新弾の全体像確認に。</span></p>
           <div class="card-footer"><span class="source">PokeBeach</span></div>
         </div>
       </a>
@@ -972,12 +1019,12 @@ footer a { color: inherit; }
         <img class="thumb" src="https://pokeca-pocket.dbfw-days.com/wp-content/uploads/2026/06/IMG_3627.jpeg" alt="" loading="lazy" onerror="this.outerHTML='<div class=&quot;thumb thumb-fallback&quot;>📈</div>'">
         <div class="card-body">
           <div class="card-meta">
-            <span class="badge" style="background:#2e9e5b">相場・高騰</span>
+            <span class="badge" style="background:#2e9e5b"><span class="ja">相場・高騰</span><span class="en">Market &amp; Prices</span></span>
             
-            <span class="date">6月24日(水)</span>
+            <span class="date"><span class="ja">6月24日(水)</span><span class="en">Jun 24 (Wed)</span></span>
           </div>
-          <h2 class="card-title">【ポケカ】高騰必須!?ジムイベント配布プロモカード『ピカチュウ』入手方法完全解説【2026年】</h2>
-          <p class="summary">2026年ジムイベント配布プロモカード「ピカチュウ」の入手方法と高騰予想について解説。</p>
+          <h2 class="card-title"><span class="ja">【ポケカ】高騰必須!?ジムイベント配布プロモカード『ピカチュウ』入手方法完全解説【2026年】</span><span class="en">【ポケカ】高騰必須!?ジムイベント配布プロモカード『ピカチュウ』入手方法完全解説【2026年】</span></h2>
+          <p class="summary"><span class="ja">2026年ジムイベント配布プロモカード「ピカチュウ」の入手方法と高騰予想について解説。</span><span class="en">2026年ジムイベント配布プロモカード「ピカチュウ」の入手方法と高騰予想について解説。</span></p>
           <div class="card-footer"><span class="source">ポケカポケット開封日記</span></div>
         </div>
       </a>
@@ -985,12 +1032,12 @@ footer a { color: inherit; }
         <img class="thumb" src="https://prcdn.freetls.fastly.net/release_image/183006/3/183006-3-a5de59b57c3f0dd93ad8f6a4b8f17c10-2000x1132.png?format=jpeg&amp;amp;auto=webp&amp;amp;fit=bounds&amp;amp;width=2400&amp;amp;height=1260" alt="" loading="lazy" onerror="this.outerHTML='<div class=&quot;thumb thumb-fallback&quot;>📈</div>'">
         <div class="card-body">
           <div class="card-meta">
-            <span class="badge" style="background:#2e9e5b">相場・高騰</span>
+            <span class="badge" style="background:#2e9e5b"><span class="ja">相場・高騰</span><span class="en">Market &amp; Prices</span></span>
             
-            <span class="date">6月24日(水)</span>
+            <span class="date"><span class="ja">6月24日(水)</span><span class="en">Jun 24 (Wed)</span></span>
           </div>
-          <h2 class="card-title">ポケモンカード写真を送るだけで最高額の買取業者がわかる。「トレカプロ買取一括査定」を提供開始</h2>
-          <p class="summary">トレカ買取一括査定サービス提供開始。複数買取業者の査定額を写真で比較可能。</p>
+          <h2 class="card-title"><span class="ja">ポケモンカード写真を送るだけで最高額の買取業者がわかる。「トレカプロ買取一括査定」を提供開始</span><span class="en">ポケモンカード写真を送るだけで最高額の買取業者がわかる。「トレカプロ買取一括査定」を提供開始</span></h2>
+          <p class="summary"><span class="ja">トレカ買取一括査定サービス提供開始。複数買取業者の査定額を写真で比較可能。</span><span class="en">トレカ買取一括査定サービス提供開始。複数買取業者の査定額を写真で比較可能。</span></p>
           <div class="card-footer"><span class="source">PR TIMES</span></div>
         </div>
       </a>
@@ -998,12 +1045,12 @@ footer a { color: inherit; }
         <img class="thumb" src="https://hobby.dengeki.com/ss/hobby/2026/06/card_O9Z6trmdCFxf_W5_hdeKu1SEnTk5fH9t_12KqL_CbaKp4ScaECn8y5aZUtpKMTdHD.jpg" alt="" loading="lazy" onerror="this.outerHTML='<div class=&quot;thumb thumb-fallback&quot;>🎁</div>'">
         <div class="card-body">
           <div class="card-meta">
-            <span class="badge" style="background:#2a7fc9">新弾・予約</span>
+            <span class="badge" style="background:#2a7fc9"><span class="ja">新弾・予約</span><span class="en">New Sets &amp; Preorders</span></span>
             
-            <span class="date">6月24日(水)</span>
+            <span class="date"><span class="ja">6月24日(水)</span><span class="en">Jun 24 (Wed)</span></span>
           </div>
-          <h2 class="card-title">ポケカ拡張パックが招待販売！強力な戦略を楽しむカードを多数収録した「ポケモンカードゲーム MEGA 拡張パック ストームエメラルダ」がAmazonで招待販売リクエストを受付中！</h2>
-          <p class="summary">Amazonでストームエメラルダの招待販売リクエスト受付中。強力なカードを多数収録。</p>
+          <h2 class="card-title"><span class="ja">ポケカ拡張パックが招待販売！強力な戦略を楽しむカードを多数収録した「ポケモンカードゲーム MEGA 拡張パック ストームエメラルダ」がAmazonで招待販売リクエストを受付中！</span><span class="en">ポケカ拡張パックが招待販売！強力な戦略を楽しむカードを多数収録した「ポケモンカードゲーム MEGA 拡張パック ストームエメラルダ」がAmazonで招待販売リクエストを受付中！</span></h2>
+          <p class="summary"><span class="ja">Amazonでストームエメラルダの招待販売リクエスト受付中。強力なカードを多数収録。</span><span class="en">Amazonでストームエメラルダの招待販売リクエスト受付中。強力なカードを多数収録。</span></p>
           <div class="card-footer"><span class="source">電撃ホビーウェブ</span></div>
         </div>
       </a>
@@ -1011,12 +1058,12 @@ footer a { color: inherit; }
         <img class="thumb" src="https://cdn.snkrdunk.com/uploads/media/20260122103018-0.jpeg" alt="" loading="lazy" onerror="this.outerHTML='<div class=&quot;thumb thumb-fallback&quot;>📈</div>'">
         <div class="card-body">
           <div class="card-meta">
-            <span class="badge" style="background:#2e9e5b">相場・高騰</span>
+            <span class="badge" style="background:#2e9e5b"><span class="ja">相場・高騰</span><span class="en">Market &amp; Prices</span></span>
             
-            <span class="date">6月23日(火)</span>
+            <span class="date"><span class="ja">6月23日(火)</span><span class="en">Jun 23 (Tue)</span></span>
           </div>
-          <h2 class="card-title">【ポケカ】ムニキスゼロの当たりランキング/買取相場/封入率/予約抽選/値段まとめ</h2>
-          <p class="summary">ムニキスゼロの当たりランキング・買取相場・封入率をまとめた記事。相場情報確認向け。</p>
+          <h2 class="card-title"><span class="ja">【ポケカ】ムニキスゼロの当たりランキング/買取相場/封入率/予約抽選/値段まとめ</span><span class="en">【ポケカ】ムニキスゼロの当たりランキング/買取相場/封入率/予約抽選/値段まとめ</span></h2>
+          <p class="summary"><span class="ja">ムニキスゼロの当たりランキング・買取相場・封入率をまとめた記事。相場情報確認向け。</span><span class="en">ムニキスゼロの当たりランキング・買取相場・封入率をまとめた記事。相場情報確認向け。</span></p>
           <div class="card-footer"><span class="source">SNKRDUNK</span></div>
         </div>
       </a>
@@ -1024,12 +1071,12 @@ footer a { color: inherit; }
         <img class="thumb" src="https://cdn.snkrdunk.com/uploads/media/ad5c37ea-d291-488c-a7c7-be2c68547e06.jpeg" alt="" loading="lazy" onerror="this.outerHTML='<div class=&quot;thumb thumb-fallback&quot;>📈</div>'">
         <div class="card-body">
           <div class="card-meta">
-            <span class="badge" style="background:#2e9e5b">相場・高騰</span>
+            <span class="badge" style="background:#2e9e5b"><span class="ja">相場・高騰</span><span class="en">Market &amp; Prices</span></span>
             
-            <span class="date">6月23日(火)</span>
+            <span class="date"><span class="ja">6月23日(火)</span><span class="en">Jun 23 (Tue)</span></span>
           </div>
-          <h2 class="card-title">【ポケカ】ブラッキーex SAR仕様の買取相場予想や発売後の高騰考察｜30th CELEBRATION プレミアムデッキセット エーフィ・ブラッキー</h2>
-          <p class="summary">30周年プレミアムデッキセット エーフィ・ブラッキーのブラッキーex SARの買取相場予想と高騰考察。</p>
+          <h2 class="card-title"><span class="ja">【ポケカ】ブラッキーex SAR仕様の買取相場予想や発売後の高騰考察｜30th CELEBRATION プレミアムデッキセット エーフィ・ブラッキー</span><span class="en">【ポケカ】ブラッキーex SAR仕様の買取相場予想や発売後の高騰考察｜30th CELEBRATION プレミアムデッキセット エーフィ・ブラッキー</span></h2>
+          <p class="summary"><span class="ja">30周年プレミアムデッキセット エーフィ・ブラッキーのブラッキーex SARの買取相場予想と高騰考察。</span><span class="en">30周年プレミアムデッキセット エーフィ・ブラッキーのブラッキーex SARの買取相場予想と高騰考察。</span></p>
           <div class="card-footer"><span class="source">SNKRDUNK</span></div>
         </div>
       </a>
@@ -1037,12 +1084,12 @@ footer a { color: inherit; }
         <img class="thumb" src="https://www.inside-games.jp/imgs/ogp_f/1746223.jpg" alt="" loading="lazy" onerror="this.outerHTML='<div class=&quot;thumb thumb-fallback&quot;>🎁</div>'">
         <div class="card-body">
           <div class="card-meta">
-            <span class="badge" style="background:#2a7fc9">新弾・予約</span>
+            <span class="badge" style="background:#2a7fc9"><span class="ja">新弾・予約</span><span class="en">New Sets &amp; Preorders</span></span>
             
-            <span class="date">6月23日(火)</span>
+            <span class="date"><span class="ja">6月23日(火)</span><span class="en">Jun 23 (Tue)</span></span>
           </div>
-          <h2 class="card-title">『ポケカ』新拡張パック「ストームエメラルダ」があみあみ通販で抽選販売！あわせて「メガブレイブ」「メガシンフォニア」も極少数用意</h2>
-          <p class="summary">あみあみ通販でストームエメラルダの抽選販売。メガブレイブ・メガシンフォニアも極少数用意。</p>
+          <h2 class="card-title"><span class="ja">『ポケカ』新拡張パック「ストームエメラルダ」があみあみ通販で抽選販売！あわせて「メガブレイブ」「メガシンフォニア」も極少数用意</span><span class="en">『ポケカ』新拡張パック「ストームエメラルダ」があみあみ通販で抽選販売！あわせて「メガブレイブ」「メガシンフォニア」も極少数用意</span></h2>
+          <p class="summary"><span class="ja">あみあみ通販でストームエメラルダの抽選販売。メガブレイブ・メガシンフォニアも極少数用意。</span><span class="en">あみあみ通販でストームエメラルダの抽選販売。メガブレイブ・メガシンフォニアも極少数用意。</span></p>
           <div class="card-footer"><span class="source">インサイド</span></div>
         </div>
       </a>
@@ -1050,12 +1097,12 @@ footer a { color: inherit; }
         <div class="thumb thumb-fallback">🎁</div>
         <div class="card-body">
           <div class="card-meta">
-            <span class="badge" style="background:#2a7fc9">新弾・予約</span>
+            <span class="badge" style="background:#2a7fc9"><span class="ja">新弾・予約</span><span class="en">New Sets &amp; Preorders</span></span>
             
-            <span class="date">6月23日(火)</span>
+            <span class="date"><span class="ja">6月23日(火)</span><span class="en">Jun 23 (Tue)</span></span>
           </div>
-          <h2 class="card-title">【2026.06.23】※応募は終了しました抽選販売「ポケモンカードゲームMEGA 拡張パック アビスアイ（再販）」</h2>
-          <p class="summary">ホビーステーション抽選販売アビスアイ再販。応募は既に終了しているため参考資料のみ。</p>
+          <h2 class="card-title"><span class="ja">【2026.06.23】※応募は終了しました抽選販売「ポケモンカードゲームMEGA 拡張パック アビスアイ（再販）」</span><span class="en">【2026.06.23】※応募は終了しました抽選販売「ポケモンカードゲームMEGA 拡張パック アビスアイ（再販）」</span></h2>
+          <p class="summary"><span class="ja">ホビーステーション抽選販売アビスアイ再販。応募は既に終了しているため参考資料のみ。</span><span class="en">ホビーステーション抽選販売アビスアイ再販。応募は既に終了しているため参考資料のみ。</span></p>
           <div class="card-footer"><span class="source">ホビーステーション</span></div>
         </div>
       </a>
@@ -1063,12 +1110,12 @@ footer a { color: inherit; }
         <img class="thumb" src="https://www.lawson.co.jp/lab/entertainment/art/__icsFiles/afieldfile/2026/06/22/20260623_gift_pokemon_g_2.jpg" alt="" loading="lazy" onerror="this.outerHTML='<div class=&quot;thumb thumb-fallback&quot;>🎁</div>'">
         <div class="card-body">
           <div class="card-meta">
-            <span class="badge" style="background:#2a7fc9">新弾・予約</span>
+            <span class="badge" style="background:#2a7fc9"><span class="ja">新弾・予約</span><span class="en">New Sets &amp; Preorders</span></span>
             
-            <span class="date">6月23日(火)</span>
+            <span class="date"><span class="ja">6月23日(火)</span><span class="en">Jun 23 (Tue)</span></span>
           </div>
-          <h2 class="card-title">Loppi・ローソンオンラインにて、「ポケモンカードゲーム MEGA 30th CELEBRATION プレミアムデッキセット エーフィ・ブラッキー」の予約販売を6月23日(火)～開始します。｜ローソン公式サイト</h2>
-          <p class="summary">ローソンでプレミアムデッキセット エーフィ・ブラッキーの予約販売開始。6月23日から受付。</p>
+          <h2 class="card-title"><span class="ja">Loppi・ローソンオンラインにて、「ポケモンカードゲーム MEGA 30th CELEBRATION プレミアムデッキセット エーフィ・ブラッキー」の予約販売を6月23日(火)～開始します。｜ローソン公式サイト</span><span class="en">Loppi・ローソンオンラインにて、「ポケモンカードゲーム MEGA 30th CELEBRATION プレミアムデッキセット エーフィ・ブラッキー」の予約販売を6月23日(火)～開始します。｜ローソン公式サイト</span></h2>
+          <p class="summary"><span class="ja">ローソンでプレミアムデッキセット エーフィ・ブラッキーの予約販売開始。6月23日から受付。</span><span class="en">ローソンでプレミアムデッキセット エーフィ・ブラッキーの予約販売開始。6月23日から受付。</span></p>
           <div class="card-footer"><span class="source">LAWSON</span></div>
         </div>
       </a>
@@ -1076,12 +1123,12 @@ footer a { color: inherit; }
         <img class="thumb" src="https://hobby.watch.impress.co.jp/img/hbw/list/2119/328/01.jpg" alt="" loading="lazy" onerror="this.outerHTML='<div class=&quot;thumb thumb-fallback&quot;>🎁</div>'">
         <div class="card-body">
           <div class="card-meta">
-            <span class="badge" style="background:#2a7fc9">新弾・予約</span>
+            <span class="badge" style="background:#2a7fc9"><span class="ja">新弾・予約</span><span class="en">New Sets &amp; Preorders</span></span>
             
-            <span class="date">6月23日(火)</span>
+            <span class="date"><span class="ja">6月23日(火)</span><span class="en">Jun 23 (Tue)</span></span>
           </div>
-          <h2 class="card-title">ローソンでポケカ「プレミアムデッキセット エーフィ・ブラッキー」予約受付開始。Loppiのみ店頭予約も</h2>
-          <p class="summary">ローソンでプレミアムデッキセット エーフィ・ブラッキーの予約受付。Loppi店頭予約も対応。</p>
+          <h2 class="card-title"><span class="ja">ローソンでポケカ「プレミアムデッキセット エーフィ・ブラッキー」予約受付開始。Loppiのみ店頭予約も</span><span class="en">ローソンでポケカ「プレミアムデッキセット エーフィ・ブラッキー」予約受付開始。Loppiのみ店頭予約も</span></h2>
+          <p class="summary"><span class="ja">ローソンでプレミアムデッキセット エーフィ・ブラッキーの予約受付。Loppi店頭予約も対応。</span><span class="en">ローソンでプレミアムデッキセット エーフィ・ブラッキーの予約受付。Loppi店頭予約も対応。</span></p>
           <div class="card-footer"><span class="source">hobby Watch</span></div>
         </div>
       </a>
@@ -1089,12 +1136,12 @@ footer a { color: inherit; }
         <img class="thumb" src="https://cdn.snkrdunk.com/uploads/media/2b8e3a68-8a0a-4398-b262-5f9bb8872275.jpeg" alt="" loading="lazy" onerror="this.outerHTML='<div class=&quot;thumb thumb-fallback&quot;>📈</div>'">
         <div class="card-body">
           <div class="card-meta">
-            <span class="badge" style="background:#2e9e5b">相場・高騰</span>
+            <span class="badge" style="background:#2e9e5b"><span class="ja">相場・高騰</span><span class="en">Market &amp; Prices</span></span>
             
-            <span class="date">6月22日(月)</span>
+            <span class="date"><span class="ja">6月22日(月)</span><span class="en">Jun 22 (Mon)</span></span>
           </div>
-          <h2 class="card-title">【ポケカ】ムク SARの買取・相場価格と値段推移｜アビスアイ</h2>
-          <p class="summary">アビスアイ収録「ムク SAR」の買取・相場価格と値段推移。相場動向確認向け。</p>
+          <h2 class="card-title"><span class="ja">【ポケカ】ムク SARの買取・相場価格と値段推移｜アビスアイ</span><span class="en">【ポケカ】ムク SARの買取・相場価格と値段推移｜アビスアイ</span></h2>
+          <p class="summary"><span class="ja">アビスアイ収録「ムク SAR」の買取・相場価格と値段推移。相場動向確認向け。</span><span class="en">アビスアイ収録「ムク SAR」の買取・相場価格と値段推移。相場動向確認向け。</span></p>
           <div class="card-footer"><span class="source">SNKRDUNK</span></div>
         </div>
       </a>
@@ -1102,12 +1149,12 @@ footer a { color: inherit; }
         <img class="thumb" src="https://cimg.kgl-systems.io/camion/files/79131/ogp_koHY.jpg?x=1280" alt="" loading="lazy" onerror="this.outerHTML='<div class=&quot;thumb thumb-fallback&quot;>🎁</div>'">
         <div class="card-body">
           <div class="card-meta">
-            <span class="badge" style="background:#2a7fc9">新弾・予約</span>
+            <span class="badge" style="background:#2a7fc9"><span class="ja">新弾・予約</span><span class="en">New Sets &amp; Preorders</span></span>
             
-            <span class="date">6月22日(月)</span>
+            <span class="date"><span class="ja">6月22日(月)</span><span class="en">Jun 22 (Mon)</span></span>
           </div>
-          <h2 class="card-title">【ポケカ】ストームエメラルダ招待販売リクエストがAmazon受付中【ポケモンカードゲーム】</h2>
-          <p class="summary">Amazonでストームエメラルダ招待販売リクエスト受付。応募方法の詳細情報掲載。</p>
+          <h2 class="card-title"><span class="ja">【ポケカ】ストームエメラルダ招待販売リクエストがAmazon受付中【ポケモンカードゲーム】</span><span class="en">【ポケカ】ストームエメラルダ招待販売リクエストがAmazon受付中【ポケモンカードゲーム】</span></h2>
+          <p class="summary"><span class="ja">Amazonでストームエメラルダ招待販売リクエスト受付。応募方法の詳細情報掲載。</span><span class="en">Amazonでストームエメラルダ招待販売リクエスト受付。応募方法の詳細情報掲載。</span></p>
           <div class="card-footer"><span class="source">電撃オンライン</span></div>
         </div>
       </a>
@@ -1115,12 +1162,12 @@ footer a { color: inherit; }
         <img class="thumb" src="https://newsatcl-pctr.c.yimg.jp/t/iwiz-yn/rpr/tanekiyoshi/02648123/title-1781858523512.jpeg?exp=10800" alt="" loading="lazy" onerror="this.outerHTML='<div class=&quot;thumb thumb-fallback&quot;>🔍</div>'">
         <div class="card-body">
           <div class="card-meta">
-            <span class="badge" style="background:#7c5cbf">鑑定・PSA</span>
+            <span class="badge" style="background:#7c5cbf"><span class="ja">鑑定・PSA</span><span class="en">Grading &amp; PSA</span></span>
             
-            <span class="date">6月20日(土)</span>
+            <span class="date"><span class="ja">6月20日(土)</span><span class="en">Jun 20 (Sat)</span></span>
           </div>
-          <h2 class="card-title">ポケモンカードの転売と投機が止まらない理由 カード鑑定が加速させたマネーゲーム #エキスパートトピ</h2>
-          <p class="summary">ポケモンカード転売・投機とPSA鑑定の関係性についての分析記事。市場の仕組みを理解したい方向け。</p>
+          <h2 class="card-title"><span class="ja">ポケモンカードの転売と投機が止まらない理由 カード鑑定が加速させたマネーゲーム #エキスパートトピ</span><span class="en">ポケモンカードの転売と投機が止まらない理由 カード鑑定が加速させたマネーゲーム #エキスパートトピ</span></h2>
+          <p class="summary"><span class="ja">ポケモンカード転売・投機とPSA鑑定の関係性についての分析記事。市場の仕組みを理解したい方向け。</span><span class="en">ポケモンカード転売・投機とPSA鑑定の関係性についての分析記事。市場の仕組みを理解したい方向け。</span></p>
           <div class="card-footer"><span class="source">Yahoo!ニュース</span></div>
         </div>
       </a>
@@ -1128,12 +1175,12 @@ footer a { color: inherit; }
         <div class="thumb thumb-fallback">🌏</div>
         <div class="card-body">
           <div class="card-meta">
-            <span class="badge" style="background:#d0642a">海外ニュース</span>
+            <span class="badge" style="background:#d0642a"><span class="ja">海外ニュース</span><span class="en">International</span></span>
             
-            <span class="date">6月20日(土)</span>
+            <span class="date"><span class="ja">6月20日(土)</span><span class="en">Jun 20 (Sat)</span></span>
           </div>
-          <h2 class="card-title">NAIC on Fraud Watch? Looking At the Surprises From NAIC</h2>
-          <p class="summary">北米インビテーショナル大会の予期せぬ展開を分析。競技環境の動向に関心がある方向け。</p>
+          <h2 class="card-title"><span class="ja">NAIC on Fraud Watch? Looking At the Surprises From NAIC</span><span class="en">NAIC on Fraud Watch? Looking At the Surprises From NAIC</span></h2>
+          <p class="summary"><span class="ja">北米インビテーショナル大会の予期せぬ展開を分析。競技環境の動向に関心がある方向け。</span><span class="en">北米インビテーショナル大会の予期せぬ展開を分析。競技環境の動向に関心がある方向け。</span></p>
           <div class="card-footer"><span class="source">PokeBeach</span></div>
         </div>
       </a>
@@ -1141,12 +1188,12 @@ footer a { color: inherit; }
         <div class="thumb thumb-fallback">📈</div>
         <div class="card-body">
           <div class="card-meta">
-            <span class="badge" style="background:#2e9e5b">相場・高騰</span>
+            <span class="badge" style="background:#2e9e5b"><span class="ja">相場・高騰</span><span class="en">Market &amp; Prices</span></span>
             
-            <span class="date">6月19日(金)</span>
+            <span class="date"><span class="ja">6月19日(金)</span><span class="en">Jun 19 (Fri)</span></span>
           </div>
-          <h2 class="card-title">ポケモンカード高騰の光と影、巨大な成長市場に群がる犯罪者たち</h2>
-          <p class="summary">ポケモンカード高騰に伴う犯罪増加と市場課題についての報道。市場の社会的影響を知りたい方向け。</p>
+          <h2 class="card-title"><span class="ja">ポケモンカード高騰の光と影、巨大な成長市場に群がる犯罪者たち</span><span class="en">ポケモンカード高騰の光と影、巨大な成長市場に群がる犯罪者たち</span></h2>
+          <p class="summary"><span class="ja">ポケモンカード高騰に伴う犯罪増加と市場課題についての報道。市場の社会的影響を知りたい方向け。</span><span class="en">ポケモンカード高騰に伴う犯罪増加と市場課題についての報道。市場の社会的影響を知りたい方向け。</span></p>
           <div class="card-footer"><span class="source">Bloomberg.com</span></div>
         </div>
       </a>
@@ -1154,12 +1201,12 @@ footer a { color: inherit; }
         <img class="thumb" src="https://www.inside-games.jp/imgs/ogp_f/1744766.jpg" alt="" loading="lazy" onerror="this.outerHTML='<div class=&quot;thumb thumb-fallback&quot;>🎁</div>'">
         <div class="card-body">
           <div class="card-meta">
-            <span class="badge" style="background:#2a7fc9">新弾・予約</span>
+            <span class="badge" style="background:#2a7fc9"><span class="ja">新弾・予約</span><span class="en">New Sets &amp; Preorders</span></span>
             
-            <span class="date">6月19日(金)</span>
+            <span class="date"><span class="ja">6月19日(金)</span><span class="en">Jun 19 (Fri)</span></span>
           </div>
-          <h2 class="card-title">『ポケカ』新拡張パック「ストームエメラルダ」がAmazonで抽選販売！1BOX（30パック入り）が対象</h2>
-          <p class="summary">Amazonで「ストームエメラルダ」1BOX（30パック）の抽選販売が開始。新弾の入手機会情報。</p>
+          <h2 class="card-title"><span class="ja">『ポケカ』新拡張パック「ストームエメラルダ」がAmazonで抽選販売！1BOX（30パック入り）が対象</span><span class="en">『ポケカ』新拡張パック「ストームエメラルダ」がAmazonで抽選販売！1BOX（30パック入り）が対象</span></h2>
+          <p class="summary"><span class="ja">Amazonで「ストームエメラルダ」1BOX（30パック）の抽選販売が開始。新弾の入手機会情報。</span><span class="en">Amazonで「ストームエメラルダ」1BOX（30パック）の抽選販売が開始。新弾の入手機会情報。</span></p>
           <div class="card-footer"><span class="source">インサイド</span></div>
         </div>
       </a>
@@ -1167,12 +1214,12 @@ footer a { color: inherit; }
         <div class="thumb thumb-fallback">🌏</div>
         <div class="card-body">
           <div class="card-meta">
-            <span class="badge" style="background:#d0642a">海外ニュース</span>
+            <span class="badge" style="background:#d0642a"><span class="ja">海外ニュース</span><span class="en">International</span></span>
             
-            <span class="date">6月19日(金)</span>
+            <span class="date"><span class="ja">6月19日(金)</span><span class="en">Jun 19 (Fri)</span></span>
           </div>
-          <h2 class="card-title">&quot;Are You Perhaps with Team Rocket?&quot; Trademark Filed!</h2>
-          <p class="summary">「Are You Perhaps with Team Rocket?」のトレードマーク出願が確認。今後の製品企画の予兆。</p>
+          <h2 class="card-title"><span class="ja">&quot;Are You Perhaps with Team Rocket?&quot; Trademark Filed!</span><span class="en">&quot;Are You Perhaps with Team Rocket?&quot; Trademark Filed!</span></h2>
+          <p class="summary"><span class="ja">「Are You Perhaps with Team Rocket?」のトレードマーク出願が確認。今後の製品企画の予兆。</span><span class="en">「Are You Perhaps with Team Rocket?」のトレードマーク出願が確認。今後の製品企画の予兆。</span></p>
           <div class="card-footer"><span class="source">PokeBeach</span></div>
         </div>
       </a>
@@ -1180,12 +1227,12 @@ footer a { color: inherit; }
         <img class="thumb" src="https://cdn.snkrdunk.com/uploads/media/2989b9e7-e8f4-4557-bee3-ff9f7db28e77.jpeg" alt="" loading="lazy" onerror="this.outerHTML='<div class=&quot;thumb thumb-fallback&quot;>🎁</div>'">
         <div class="card-body">
           <div class="card-meta">
-            <span class="badge" style="background:#2a7fc9">新弾・予約</span>
+            <span class="badge" style="background:#2a7fc9"><span class="ja">新弾・予約</span><span class="en">New Sets &amp; Preorders</span></span>
             
-            <span class="date">6月18日(木)</span>
+            <span class="date"><span class="ja">6月18日(木)</span><span class="en">Jun 18 (Thu)</span></span>
           </div>
-          <h2 class="card-title">【ポケカ】ストームエメラルダの予約・抽選情報まとめ【7/16更新】</h2>
-          <p class="summary">「ストームエメラルダ」の予約・抽選販売情報を一覧化。新弾入手方法を網羅的に確認したい方向け。</p>
+          <h2 class="card-title"><span class="ja">【ポケカ】ストームエメラルダの予約・抽選情報まとめ【7/16更新】</span><span class="en">【ポケカ】ストームエメラルダの予約・抽選情報まとめ【7/16更新】</span></h2>
+          <p class="summary"><span class="ja">「ストームエメラルダ」の予約・抽選販売情報を一覧化。新弾入手方法を網羅的に確認したい方向け。</span><span class="en">「ストームエメラルダ」の予約・抽選販売情報を一覧化。新弾入手方法を網羅的に確認したい方向け。</span></p>
           <div class="card-footer"><span class="source">SNKRDUNK</span></div>
         </div>
       </a>
@@ -1193,12 +1240,12 @@ footer a { color: inherit; }
         <img class="thumb" src="https://pokeca-pocket.dbfw-days.com/wp-content/uploads/2026/05/IMG_2815.jpeg" alt="" loading="lazy" onerror="this.outerHTML='<div class=&quot;thumb thumb-fallback&quot;>📈</div>'">
         <div class="card-body">
           <div class="card-meta">
-            <span class="badge" style="background:#2e9e5b">相場・高騰</span>
+            <span class="badge" style="background:#2e9e5b"><span class="ja">相場・高騰</span><span class="en">Market &amp; Prices</span></span>
             
-            <span class="date">6月18日(木)</span>
+            <span class="date"><span class="ja">6月18日(木)</span><span class="en">Jun 18 (Thu)</span></span>
           </div>
-          <h2 class="card-title">【ポケカ】アビスアイ/買取価格ランキング＆相場推移【M5】</h2>
-          <p class="summary">「アビスアイ」の買取価格ランキングと相場推移。保有カードの価値確認に。</p>
+          <h2 class="card-title"><span class="ja">【ポケカ】アビスアイ/買取価格ランキング＆相場推移【M5】</span><span class="en">【ポケカ】アビスアイ/買取価格ランキング＆相場推移【M5】</span></h2>
+          <p class="summary"><span class="ja">「アビスアイ」の買取価格ランキングと相場推移。保有カードの価値確認に。</span><span class="en">「アビスアイ」の買取価格ランキングと相場推移。保有カードの価値確認に。</span></p>
           <div class="card-footer"><span class="source">ポケカポケット開封日記</span></div>
         </div>
       </a>
@@ -1206,12 +1253,12 @@ footer a { color: inherit; }
         <img class="thumb" src="https://www.pokebeach.com/news/2026/06/Pokemon-TCG-Mega-Evolution—Ascended-Heroes-Tin-Mega-Feraligatr_EN-1206x1500-3d8f6f2-1.jpg" alt="" loading="lazy" onerror="this.outerHTML='<div class=&quot;thumb thumb-fallback&quot;>🌏</div>'">
         <div class="card-body">
           <div class="card-meta">
-            <span class="badge" style="background:#d0642a">海外ニュース</span>
+            <span class="badge" style="background:#d0642a"><span class="ja">海外ニュース</span><span class="en">International</span></span>
             
-            <span class="date">6月18日(木)</span>
+            <span class="date"><span class="ja">6月18日(木)</span><span class="en">Jun 18 (Thu)</span></span>
           </div>
-          <h2 class="card-title">&quot;Ascended Heroes Tins&quot; Revealed for August!</h2>
-          <p class="summary">8月発売予定の「昇進の英雄ティン」が公開。新製品の仕様・内容確認に。</p>
+          <h2 class="card-title"><span class="ja">&quot;Ascended Heroes Tins&quot; Revealed for August!</span><span class="en">&quot;Ascended Heroes Tins&quot; Revealed for August!</span></h2>
+          <p class="summary"><span class="ja">8月発売予定の「昇進の英雄ティン」が公開。新製品の仕様・内容確認に。</span><span class="en">8月発売予定の「昇進の英雄ティン」が公開。新製品の仕様・内容確認に。</span></p>
           <div class="card-footer"><span class="source">PokeBeach</span></div>
         </div>
       </a>
@@ -1219,12 +1266,12 @@ footer a { color: inherit; }
         <img class="thumb" src="https://www.pokebeach.com/news/2026/06/pokebeach-20260618-08200530-129360269360266.jpg" alt="" loading="lazy" onerror="this.outerHTML='<div class=&quot;thumb thumb-fallback&quot;>🌏</div>'">
         <div class="card-body">
           <div class="card-meta">
-            <span class="badge" style="background:#d0642a">海外ニュース</span>
+            <span class="badge" style="background:#d0642a"><span class="ja">海外ニュース</span><span class="en">International</span></span>
             
-            <span class="date">6月18日(木)</span>
+            <span class="date"><span class="ja">6月18日(木)</span><span class="en">Jun 18 (Thu)</span></span>
           </div>
-          <h2 class="card-title">&quot;Storm Emeralda&quot; and &quot;Delta Reign&quot; TCG Sets Officially Teased Along with Pocket&#x27;s &quot;Ruler of the Skies!&quot;</h2>
-          <p class="summary">「ストームエメラルダ」「デルタレイン」と関連ゲーム情報が同時予告。関連メディア展開の確認に。</p>
+          <h2 class="card-title"><span class="ja">&quot;Storm Emeralda&quot; and &quot;Delta Reign&quot; TCG Sets Officially Teased Along with Pocket&#x27;s &quot;Ruler of the Skies!&quot;</span><span class="en">&quot;Storm Emeralda&quot; and &quot;Delta Reign&quot; TCG Sets Officially Teased Along with Pocket&#x27;s &quot;Ruler of the Skies!&quot;</span></h2>
+          <p class="summary"><span class="ja">「ストームエメラルダ」「デルタレイン」と関連ゲーム情報が同時予告。関連メディア展開の確認に。</span><span class="en">「ストームエメラルダ」「デルタレイン」と関連ゲーム情報が同時予告。関連メディア展開の確認に。</span></p>
           <div class="card-footer"><span class="source">PokeBeach</span></div>
         </div>
       </a>
@@ -1232,12 +1279,12 @@ footer a { color: inherit; }
         <img class="thumb" src="https://img.biggo.com/sQQ0tnvqU_D7bYzh245sxwQCOWF1ZPHfX44oODhGT28/fit/1720/0/sm/0/aHR0cHM6Ly9pbWcuYmdvLm9uZS9uZXdzLWltYWdlL2FpX2dlbmVyYXRlZC8yMDI2LTA2L2U5MWQ1NzQ2NDBjZjM1NWNfMTc4MTcwMzg2NV9jb3Zlci5qcGc.webp" alt="" loading="lazy" onerror="this.outerHTML='<div class=&quot;thumb thumb-fallback&quot;>🔍</div>'">
         <div class="card-body">
           <div class="card-meta">
-            <span class="badge" style="background:#7c5cbf">鑑定・PSA</span>
+            <span class="badge" style="background:#7c5cbf"><span class="ja">鑑定・PSA</span><span class="en">Grading &amp; PSA</span></span>
             
-            <span class="date">6月17日(水)</span>
+            <span class="date"><span class="ja">6月17日(水)</span><span class="en">Jun 17 (Wed)</span></span>
           </div>
-          <h2 class="card-title">【MNSTR創業者Andy8052氏】ポケモンカード鑑定は「完全なぼったくり」、ガチャ系プラットフォームが月間数億ドルを投じる構造的歪み</h2>
-          <p class="summary">鑑定業界の構造的問題を創業者が指摘。PSA鑑定の相場・仕組みについて批判的観点から学べます。</p>
+          <h2 class="card-title"><span class="ja">【MNSTR創業者Andy8052氏】ポケモンカード鑑定は「完全なぼったくり」、ガチャ系プラットフォームが月間数億ドルを投じる構造的歪み</span><span class="en">【MNSTR創業者Andy8052氏】ポケモンカード鑑定は「完全なぼったくり」、ガチャ系プラットフォームが月間数億ドルを投じる構造的歪み</span></h2>
+          <p class="summary"><span class="ja">鑑定業界の構造的問題を創業者が指摘。PSA鑑定の相場・仕組みについて批判的観点から学べます。</span><span class="en">鑑定業界の構造的問題を創業者が指摘。PSA鑑定の相場・仕組みについて批判的観点から学べます。</span></p>
           <div class="card-footer"><span class="source">BigGo ファイナンス</span></div>
         </div>
       </a>
@@ -1245,12 +1292,12 @@ footer a { color: inherit; }
         <img class="thumb" src="https://cimg.kgl-systems.io/camion/files/78553/thumbnail_qyXv.jpg?x=1280" alt="" loading="lazy" onerror="this.outerHTML='<div class=&quot;thumb thumb-fallback&quot;>🎁</div>'">
         <div class="card-body">
           <div class="card-meta">
-            <span class="badge" style="background:#2a7fc9">新弾・予約</span>
+            <span class="badge" style="background:#2a7fc9"><span class="ja">新弾・予約</span><span class="en">New Sets &amp; Preorders</span></span>
             
-            <span class="date">6月17日(水)</span>
+            <span class="date"><span class="ja">6月17日(水)</span><span class="en">Jun 17 (Wed)</span></span>
           </div>
-          <h2 class="card-title">ポケカが楽天で抽選販売中『スタートデッキ100 バトルコレクション』『アビスアイ』『MEGAドリームex』など。応募期間は6月18日まで</h2>
-          <p class="summary">楽天で複数タイトル（スタートデッキ100他）の抽選販売実施中（応募期限6月18日）。販売情報確認に。</p>
+          <h2 class="card-title"><span class="ja">ポケカが楽天で抽選販売中『スタートデッキ100 バトルコレクション』『アビスアイ』『MEGAドリームex』など。応募期間は6月18日まで</span><span class="en">ポケカが楽天で抽選販売中『スタートデッキ100 バトルコレクション』『アビスアイ』『MEGAドリームex』など。応募期間は6月18日まで</span></h2>
+          <p class="summary"><span class="ja">楽天で複数タイトル（スタートデッキ100他）の抽選販売実施中（応募期限6月18日）。販売情報確認に。</span><span class="en">楽天で複数タイトル（スタートデッキ100他）の抽選販売実施中（応募期限6月18日）。販売情報確認に。</span></p>
           <div class="card-footer"><span class="source">ファミ通</span></div>
         </div>
       </a>
@@ -1258,12 +1305,12 @@ footer a { color: inherit; }
         <img class="thumb" src="https://pokeca-pocket.dbfw-days.com/wp-content/uploads/2026/04/IMG_1020.jpeg" alt="" loading="lazy" onerror="this.outerHTML='<div class=&quot;thumb thumb-fallback&quot;>📈</div>'">
         <div class="card-body">
           <div class="card-meta">
-            <span class="badge" style="background:#2e9e5b">相場・高騰</span>
+            <span class="badge" style="background:#2e9e5b"><span class="ja">相場・高騰</span><span class="en">Market &amp; Prices</span></span>
             
-            <span class="date">6月16日(火)</span>
+            <span class="date"><span class="ja">6月16日(火)</span><span class="en">Jun 16 (Tue)</span></span>
           </div>
-          <h2 class="card-title">ポケモンカードMEGA編/プロモパック4弾カードリスト【ポケカ】</h2>
-          <p class="summary">MEGAドリームex4弾プロモパックの全カード一覧公開。プロモパックの内容確認に。</p>
+          <h2 class="card-title"><span class="ja">ポケモンカードMEGA編/プロモパック4弾カードリスト【ポケカ】</span><span class="en">ポケモンカードMEGA編/プロモパック4弾カードリスト【ポケカ】</span></h2>
+          <p class="summary"><span class="ja">MEGAドリームex4弾プロモパックの全カード一覧公開。プロモパックの内容確認に。</span><span class="en">MEGAドリームex4弾プロモパックの全カード一覧公開。プロモパックの内容確認に。</span></p>
           <div class="card-footer"><span class="source">ポケカポケット開封日記</span></div>
         </div>
       </a>
@@ -1271,12 +1318,12 @@ footer a { color: inherit; }
         <img class="thumb" src="https://cdn.snkrdunk.com/uploads/media/bdb8b955-05c2-46f0-b6a1-f3bbeb9a374d.png" alt="" loading="lazy" onerror="this.outerHTML='<div class=&quot;thumb thumb-fallback&quot;>🔍</div>'">
         <div class="card-body">
           <div class="card-meta">
-            <span class="badge" style="background:#7c5cbf">鑑定・PSA</span>
+            <span class="badge" style="background:#7c5cbf"><span class="ja">鑑定・PSA</span><span class="en">Grading &amp; PSA</span></span>
             
-            <span class="date">6月12日(金)</span>
+            <span class="date"><span class="ja">6月12日(金)</span><span class="en">Jun 12 (Fri)</span></span>
           </div>
-          <h2 class="card-title">【ポケカ】PSAバリュープラン停止で注目度上昇中のポケカ特集！いまだからこそ狙うべきカードは？</h2>
-          <p class="summary">PSAバリュープラン廃止に伴うポケカの買い方・狙うべきカードを特集。鑑定環境変化への対応情報。</p>
+          <h2 class="card-title"><span class="ja">【ポケカ】PSAバリュープラン停止で注目度上昇中のポケカ特集！いまだからこそ狙うべきカードは？</span><span class="en">【ポケカ】PSAバリュープラン停止で注目度上昇中のポケカ特集！いまだからこそ狙うべきカードは？</span></h2>
+          <p class="summary"><span class="ja">PSAバリュープラン廃止に伴うポケカの買い方・狙うべきカードを特集。鑑定環境変化への対応情報。</span><span class="en">PSAバリュープラン廃止に伴うポケカの買い方・狙うべきカードを特集。鑑定環境変化への対応情報。</span></p>
           <div class="card-footer"><span class="source">SNKRDUNK</span></div>
         </div>
       </a>
@@ -1284,12 +1331,12 @@ footer a { color: inherit; }
         <img class="thumb" src="https://cimg.kgl-systems.io/camion/files/78040/thumbnail_hXsX.jpg?x=1280" alt="" loading="lazy" onerror="this.outerHTML='<div class=&quot;thumb thumb-fallback&quot;>🎁</div>'">
         <div class="card-body">
           <div class="card-meta">
-            <span class="badge" style="background:#2a7fc9">新弾・予約</span>
+            <span class="badge" style="background:#2a7fc9"><span class="ja">新弾・予約</span><span class="en">New Sets &amp; Preorders</span></span>
             
-            <span class="date">6月12日(金)</span>
+            <span class="date"><span class="ja">6月12日(金)</span><span class="en">Jun 12 (Fri)</span></span>
           </div>
-          <h2 class="card-title">【ポケカ】30周年記念セットがAmazonで招待販売。歴代パートナーポケモンのプロモカード&amp;拡張パックを同梱した全9種</h2>
-          <p class="summary">Amazonで30周年記念セット招待販売実施。全9種の歴代パートナーポケモンプロモ同梱製品。</p>
+          <h2 class="card-title"><span class="ja">【ポケカ】30周年記念セットがAmazonで招待販売。歴代パートナーポケモンのプロモカード&amp;拡張パックを同梱した全9種</span><span class="en">【ポケカ】30周年記念セットがAmazonで招待販売。歴代パートナーポケモンのプロモカード&amp;拡張パックを同梱した全9種</span></h2>
+          <p class="summary"><span class="ja">Amazonで30周年記念セット招待販売実施。全9種の歴代パートナーポケモンプロモ同梱製品。</span><span class="en">Amazonで30周年記念セット招待販売実施。全9種の歴代パートナーポケモンプロモ同梱製品。</span></p>
           <div class="card-footer"><span class="source">ファミ通</span></div>
         </div>
       </a>
@@ -1297,12 +1344,12 @@ footer a { color: inherit; }
         <img class="thumb" src="https://s.yimg.jp/images/news-web/versions/20260716-8d0fa2f/all/images/ogp_default.png" alt="" loading="lazy" onerror="this.outerHTML='<div class=&quot;thumb thumb-fallback&quot;>📈</div>'">
         <div class="card-body">
           <div class="card-meta">
-            <span class="badge" style="background:#2e9e5b">相場・高騰</span>
+            <span class="badge" style="background:#2e9e5b"><span class="ja">相場・高騰</span><span class="en">Market &amp; Prices</span></span>
             
-            <span class="date">6月11日(木)</span>
+            <span class="date"><span class="ja">6月11日(木)</span><span class="en">Jun 11 (Thu)</span></span>
           </div>
-          <h2 class="card-title">メルカリで100万円超えも…9月からポケモンカード購入制限の裏で転売ヤーが蠢く7月発売の高騰必至カードとは</h2>
-          <p class="summary">9月購入制限前の7月発売カード高騰予測と転売動向を報道。相場変動要因の先読み情報。</p>
+          <h2 class="card-title"><span class="ja">メルカリで100万円超えも…9月からポケモンカード購入制限の裏で転売ヤーが蠢く7月発売の高騰必至カードとは</span><span class="en">メルカリで100万円超えも…9月からポケモンカード購入制限の裏で転売ヤーが蠢く7月発売の高騰必至カードとは</span></h2>
+          <p class="summary"><span class="ja">9月購入制限前の7月発売カード高騰予測と転売動向を報道。相場変動要因の先読み情報。</span><span class="en">9月購入制限前の7月発売カード高騰予測と転売動向を報道。相場変動要因の先読み情報。</span></p>
           <div class="card-footer"><span class="source">Yahoo!ニュース</span></div>
         </div>
       </a>
@@ -1310,12 +1357,12 @@ footer a { color: inherit; }
         <img class="thumb" src="https://pinzuba.ismcdn.jp/mwimgs/e/8/1200wm/img_e83dfb1bfa47af63878f9b20bfa5049b4289753.png" alt="" loading="lazy" onerror="this.outerHTML='<div class=&quot;thumb thumb-fallback&quot;>📈</div>'">
         <div class="card-body">
           <div class="card-meta">
-            <span class="badge" style="background:#2e9e5b">相場・高騰</span>
+            <span class="badge" style="background:#2e9e5b"><span class="ja">相場・高騰</span><span class="en">Market &amp; Prices</span></span>
             
-            <span class="date">6月11日(木)</span>
+            <span class="date"><span class="ja">6月11日(木)</span><span class="en">Jun 11 (Thu)</span></span>
           </div>
-          <h2 class="card-title">9月からポケモンカード購入制限の裏で転売ヤーが狙う7月発売の高騰必至カードとは 過去メルカリで100万円超えも｜ニュース</h2>
-          <p class="summary">同様に7月発売カードの高騰予測と転売状況を解説。将来の相場変動を見込みたい方向け。</p>
+          <h2 class="card-title"><span class="ja">9月からポケモンカード購入制限の裏で転売ヤーが狙う7月発売の高騰必至カードとは 過去メルカリで100万円超えも｜ニュース</span><span class="en">9月からポケモンカード購入制限の裏で転売ヤーが狙う7月発売の高騰必至カードとは 過去メルカリで100万円超えも｜ニュース</span></h2>
+          <p class="summary"><span class="ja">同様に7月発売カードの高騰予測と転売状況を解説。将来の相場変動を見込みたい方向け。</span><span class="en">同様に7月発売カードの高騰予測と転売状況を解説。将来の相場変動を見込みたい方向け。</span></p>
           <div class="card-footer"><span class="source">ピンズバNEWS</span></div>
         </div>
       </a>
@@ -1323,12 +1370,12 @@ footer a { color: inherit; }
         <img class="thumb" src="https://cimg.kgl-systems.io/camion/files/77986/thumbnail_aKfx.jpg?x=1280" alt="" loading="lazy" onerror="this.outerHTML='<div class=&quot;thumb thumb-fallback&quot;>🎁</div>'">
         <div class="card-body">
           <div class="card-meta">
-            <span class="badge" style="background:#2a7fc9">新弾・予約</span>
+            <span class="badge" style="background:#2a7fc9"><span class="ja">新弾・予約</span><span class="en">New Sets &amp; Preorders</span></span>
             
-            <span class="date">6月11日(木)</span>
+            <span class="date"><span class="ja">6月11日(木)</span><span class="en">Jun 11 (Thu)</span></span>
           </div>
-          <h2 class="card-title">【ポケカ】30周年パックがAmazonで招待販売リクエスト受付中。MEGA 拡張パック 30th CELEBRATION BOXはピカチュウのキラカードが必ず1枚封入</h2>
-          <p class="summary">Amazonで30周年パック招待販売リクエスト受付中。メガ拡張パック30周年ボックスに必ずピカチュウキラ1枚封入。</p>
+          <h2 class="card-title"><span class="ja">【ポケカ】30周年パックがAmazonで招待販売リクエスト受付中。MEGA 拡張パック 30th CELEBRATION BOXはピカチュウのキラカードが必ず1枚封入</span><span class="en">【ポケカ】30周年パックがAmazonで招待販売リクエスト受付中。MEGA 拡張パック 30th CELEBRATION BOXはピカチュウのキラカードが必ず1枚封入</span></h2>
+          <p class="summary"><span class="ja">Amazonで30周年パック招待販売リクエスト受付中。メガ拡張パック30周年ボックスに必ずピカチュウキラ1枚封入。</span><span class="en">Amazonで30周年パック招待販売リクエスト受付中。メガ拡張パック30周年ボックスに必ずピカチュウキラ1枚封入。</span></p>
           <div class="card-footer"><span class="source">ファミ通</span></div>
         </div>
       </a>
@@ -1336,12 +1383,12 @@ footer a { color: inherit; }
         <img class="thumb" src="https://img.toy-people.com/member/177721219767.jpg" alt="" loading="lazy" onerror="this.outerHTML='<div class=&quot;thumb thumb-fallback&quot;>📈</div>'">
         <div class="card-body">
           <div class="card-meta">
-            <span class="badge" style="background:#2e9e5b">相場・高騰</span>
+            <span class="badge" style="background:#2e9e5b"><span class="ja">相場・高騰</span><span class="en">Market &amp; Prices</span></span>
             
-            <span class="date">6月10日(水)</span>
+            <span class="date"><span class="ja">6月10日(水)</span><span class="en">Jun 10 (Wed)</span></span>
           </div>
-          <h2 class="card-title">『ポケモンカード』高騰で窃盗被害が世界中で急増！ コロナ禍以降、狙われるカードショップやYouTuberも</h2>
-          <p class="summary">カードショップやYouTuber狙いの窃盗被害が世界中で急増。市場の社会的課題を報道。</p>
+          <h2 class="card-title"><span class="ja">『ポケモンカード』高騰で窃盗被害が世界中で急増！ コロナ禍以降、狙われるカードショップやYouTuberも</span><span class="en">『ポケモンカード』高騰で窃盗被害が世界中で急増！ コロナ禍以降、狙われるカードショップやYouTuberも</span></h2>
+          <p class="summary"><span class="ja">カードショップやYouTuber狙いの窃盗被害が世界中で急増。市場の社会的課題を報道。</span><span class="en">カードショップやYouTuber狙いの窃盗被害が世界中で急増。市場の社会的課題を報道。</span></p>
           <div class="card-footer"><span class="source">玩具人 TOY PEOPLE</span></div>
         </div>
       </a>
@@ -1349,12 +1396,12 @@ footer a { color: inherit; }
         <img class="thumb" src="https://cdn.snkrdunk.com/uploads/media/fc00351e-3b4e-4880-b1f9-52bddecdfec2.jpeg" alt="" loading="lazy" onerror="this.outerHTML='<div class=&quot;thumb thumb-fallback&quot;>📈</div>'">
         <div class="card-body">
           <div class="card-meta">
-            <span class="badge" style="background:#2e9e5b">相場・高騰</span>
+            <span class="badge" style="background:#2e9e5b"><span class="ja">相場・高騰</span><span class="en">Market &amp; Prices</span></span>
             
-            <span class="date">6月8日(月)</span>
+            <span class="date"><span class="ja">6月8日(月)</span><span class="en">Jun 8 (Mon)</span></span>
           </div>
-          <h2 class="card-title">【ポケカ】ピカチュウex FUR仕様 [131/M-P]の買取相場予想や発売後の高騰考察｜30th CELEBRATION FUTURISTIC BOX</h2>
-          <p class="summary">30周年セレブレーション収録のピカチュウexFUR仕様の買取相場予想と高騰考察。新規カードの相場見通し。</p>
+          <h2 class="card-title"><span class="ja">【ポケカ】ピカチュウex FUR仕様 [131/M-P]の買取相場予想や発売後の高騰考察｜30th CELEBRATION FUTURISTIC BOX</span><span class="en">【ポケカ】ピカチュウex FUR仕様 [131/M-P]の買取相場予想や発売後の高騰考察｜30th CELEBRATION FUTURISTIC BOX</span></h2>
+          <p class="summary"><span class="ja">30周年セレブレーション収録のピカチュウexFUR仕様の買取相場予想と高騰考察。新規カードの相場見通し。</span><span class="en">30周年セレブレーション収録のピカチュウexFUR仕様の買取相場予想と高騰考察。新規カードの相場見通し。</span></p>
           <div class="card-footer"><span class="source">SNKRDUNK</span></div>
         </div>
       </a>
@@ -1362,12 +1409,12 @@ footer a { color: inherit; }
         <img class="thumb" src="https://cdn.snkrdunk.com/uploads/media/20231129100103-0.jpeg" alt="" loading="lazy" onerror="this.outerHTML='<div class=&quot;thumb thumb-fallback&quot;>📈</div>'">
         <div class="card-body">
           <div class="card-meta">
-            <span class="badge" style="background:#2e9e5b">相場・高騰</span>
+            <span class="badge" style="background:#2e9e5b"><span class="ja">相場・高騰</span><span class="en">Market &amp; Prices</span></span>
             
-            <span class="date">6月7日(日)</span>
+            <span class="date"><span class="ja">6月7日(日)</span><span class="en">Jun 7 (Sun)</span></span>
           </div>
-          <h2 class="card-title">【ポケカ】レア度がひと目でわかる！早見表とレアリティの見分け方</h2>
-          <p class="summary">ポケモンカードのレア度判定方法と早見表を解説。カード分類の基礎知識習得に。</p>
+          <h2 class="card-title"><span class="ja">【ポケカ】レア度がひと目でわかる！早見表とレアリティの見分け方</span><span class="en">【ポケカ】レア度がひと目でわかる！早見表とレアリティの見分け方</span></h2>
+          <p class="summary"><span class="ja">ポケモンカードのレア度判定方法と早見表を解説。カード分類の基礎知識習得に。</span><span class="en">ポケモンカードのレア度判定方法と早見表を解説。カード分類の基礎知識習得に。</span></p>
           <div class="card-footer"><span class="source">SNKRDUNK</span></div>
         </div>
       </a>
@@ -1375,12 +1422,12 @@ footer a { color: inherit; }
         <img class="thumb" src="https://www.pokebeach.com/news/2026/06/mf_044_6r7dmqt2.jpg" alt="" loading="lazy" onerror="this.outerHTML='<div class=&quot;thumb thumb-fallback&quot;>🌏</div>'">
         <div class="card-body">
           <div class="card-meta">
-            <span class="badge" style="background:#d0642a">海外ニュース</span>
+            <span class="badge" style="background:#d0642a"><span class="ja">海外ニュース</span><span class="en">International</span></span>
             
-            <span class="date">6月6日(土)</span>
+            <span class="date"><span class="ja">6月6日(土)</span><span class="en">Jun 6 (Sat)</span></span>
           </div>
-          <h2 class="card-title">&quot;30th Celebration&quot; Boxes Featuring Espeon ex, Umbreon ex, and Pikachu ex Revealed!</h2>
-          <p class="summary">「30周年セレブレーション」のエスパーexやアンブレオンex、ピカチュウexボックスが公開。新製品内容確認に。</p>
+          <h2 class="card-title"><span class="ja">&quot;30th Celebration&quot; Boxes Featuring Espeon ex, Umbreon ex, and Pikachu ex Revealed!</span><span class="en">&quot;30th Celebration&quot; Boxes Featuring Espeon ex, Umbreon ex, and Pikachu ex Revealed!</span></h2>
+          <p class="summary"><span class="ja">「30周年セレブレーション」のエスパーexやアンブレオンex、ピカチュウexボックスが公開。新製品内容確認に。</span><span class="en">「30周年セレブレーション」のエスパーexやアンブレオンex、ピカチュウexボックスが公開。新製品内容確認に。</span></p>
           <div class="card-footer"><span class="source">PokeBeach</span></div>
         </div>
       </a>
@@ -1388,12 +1435,12 @@ footer a { color: inherit; }
         <div class="thumb thumb-fallback">📈</div>
         <div class="card-body">
           <div class="card-meta">
-            <span class="badge" style="background:#2e9e5b">相場・高騰</span>
+            <span class="badge" style="background:#2e9e5b"><span class="ja">相場・高騰</span><span class="en">Market &amp; Prices</span></span>
             
-            <span class="date">6月4日(木)</span>
+            <span class="date"><span class="ja">6月4日(木)</span><span class="en">Jun 4 (Thu)</span></span>
           </div>
-          <h2 class="card-title">30th CELEBRATION （30周年 セレブレーション）の最新情報 | 当たりカード | 公開カード一覧 | 封入率</h2>
-          <p class="summary">30周年セレブレーション（30周年記念セット）の最新情報・当たりカード・封入率等を一覧。新セット情報網羅。</p>
+          <h2 class="card-title"><span class="ja">30th CELEBRATION （30周年 セレブレーション）の最新情報 | 当たりカード | 公開カード一覧 | 封入率</span><span class="en">30th CELEBRATION （30周年 セレブレーション）の最新情報 | 当たりカード | 公開カード一覧 | 封入率</span></h2>
+          <p class="summary"><span class="ja">30周年セレブレーション（30周年記念セット）の最新情報・当たりカード・封入率等を一覧。新セット情報網羅。</span><span class="en">30周年セレブレーション（30周年記念セット）の最新情報・当たりカード・封入率等を一覧。新セット情報網羅。</span></p>
           <div class="card-footer"><span class="source">VSS 鑑定</span></div>
         </div>
       </a>
@@ -1401,23 +1448,36 @@ footer a { color: inherit; }
         <img class="thumb" src="https://contents.oricon.co.jp/upimg/news/2459000/2458615/20260601_220830_p_o_40287118.jpg" alt="" loading="lazy" onerror="this.outerHTML='<div class=&quot;thumb thumb-fallback&quot;>🎁</div>'">
         <div class="card-body">
           <div class="card-meta">
-            <span class="badge" style="background:#2a7fc9">新弾・予約</span>
+            <span class="badge" style="background:#2a7fc9"><span class="ja">新弾・予約</span><span class="en">New Sets &amp; Preorders</span></span>
             
-            <span class="date">6月2日(火)</span>
+            <span class="date"><span class="ja">6月2日(火)</span><span class="en">Jun 2 (Tue)</span></span>
           </div>
-          <h2 class="card-title">画像・写真 | ポケモンカード新パック収録カード発表で大反響「手に入るのかな？」「このピカチュウ可愛い」 1枚目</h2>
-          <p class="summary">新パック収録カード発表に対するSNS反応。ユーザーの関心度・カード評価を確認できます。</p>
+          <h2 class="card-title"><span class="ja">画像・写真 | ポケモンカード新パック収録カード発表で大反響「手に入るのかな？」「このピカチュウ可愛い」 1枚目</span><span class="en">画像・写真 | ポケモンカード新パック収録カード発表で大反響「手に入るのかな？」「このピカチュウ可愛い」 1枚目</span></h2>
+          <p class="summary"><span class="ja">新パック収録カード発表に対するSNS反応。ユーザーの関心度・カード評価を確認できます。</span><span class="en">新パック収録カード発表に対するSNS反応。ユーザーの関心度・カード評価を確認できます。</span></p>
           <div class="card-footer"><span class="source">オリコンニュース</span></div>
         </div>
       </a>
   </main>
   <footer>
-    <span>最終更新: 2026-07-17 17:28 JST</span>
-    <span>掲載 99 件（直近45日）</span>
-    <a href="https://github.com/amon-jpn/pokemon_aggregator" target="_blank" rel="noopener">ソースコード</a>
+    <span><span class="ja">最終更新</span><span class="en">Last updated</span>: 2026-07-17 17:39 JST</span>
+    <span><span class="ja">掲載 99 件（直近45日）</span><span class="en">99 articles (last 45 days)</span></span>
+    <a href="https://pockettcg.app/?utm_source=pokeka_news" target="_blank" rel="noopener">Pocket!</a>
+    <a href="https://github.com/amon-jpn/pokemon_aggregator" target="_blank" rel="noopener"><span class="ja">ソースコード</span><span class="en">Source code</span></a>
   </footer>
 </div>
 <script>
+function setLang(lang) {
+  document.body.classList.toggle('lang-en', lang === 'en');
+  document.documentElement.lang = lang;
+  localStorage.setItem('lang', lang);
+  document.querySelectorAll('.lang-btn').forEach(b =>
+    b.classList.toggle('active', b.dataset.lang === lang));
+}
+document.querySelectorAll('.lang-btn').forEach(b =>
+  b.addEventListener('click', () => setLang(b.dataset.lang)));
+setLang(localStorage.getItem('lang') ||
+  ((navigator.language || '').startsWith('ja') ? 'ja' : 'en'));
+
 document.querySelectorAll('.tab').forEach(tab => {
   tab.addEventListener('click', () => {
     document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
