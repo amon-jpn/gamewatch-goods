@@ -134,7 +134,6 @@ header .tagline { font-size: .8rem; color: var(--text-sub); }
 .grid {
   display: grid; gap: 18px;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  align-items: start;  /* 画像なしカードを縦に引き伸ばさず自然な高さにする */
 }
 .card {
   display: flex; flex-direction: column; overflow: hidden;
@@ -144,6 +143,14 @@ header .tagline { font-size: .8rem; color: var(--text-sub); }
 }
 .card:hover { transform: translateY(-3px); box-shadow: var(--shadow-hover); }
 .thumb { width: 100%; aspect-ratio: 16/9; object-fit: cover; display: block; }
+.thumb-fallback {
+  display: flex; align-items: center; justify-content: center; font-size: 2.6rem;
+  background: linear-gradient(135deg, var(--border), var(--bg));
+}
+/* モバイル: 画像がない記事はプレースホルダを出さずコンパクトに */
+@media (max-width: 640px) {
+  .thumb-fallback { display: none; }
+}
 .card-body { display: flex; flex-direction: column; gap: 8px; padding: 15px 17px 17px; flex: 1; }
 .card-meta { display: flex; align-items: center; gap: 8px; }
 .badge {
@@ -226,7 +233,7 @@ footer {
   </nav>
   <main class="grid" id="grid">
       <a class="card" href="https://www.pokebeach.com/2026/07/mega-tatsugiri-ex-lida-and-other-gym-promos-revealed-for-august" target="_blank" rel="noopener" data-cat="海外ニュース">
-        
+        <div class="thumb thumb-fallback">🌏</div>
         <div class="card-body">
           <div class="card-meta">
             <span class="badge" style="background:rgba(208,100,42,0.13);color:#d0642a">海外ニュース</span>
@@ -239,7 +246,7 @@ footer {
         </div>
       </a>
       <a class="card" href="https://www.pokebeach.com/2026/07/new-gengar-enhanced-2-pack-blister-and-mega-greninja-mini-portfolio-to-release-in-october" target="_blank" rel="noopener" data-cat="海外ニュース">
-        
+        <div class="thumb thumb-fallback">🌏</div>
         <div class="card-body">
           <div class="card-meta">
             <span class="badge" style="background:rgba(208,100,42,0.13);color:#d0642a">海外ニュース</span>
@@ -252,7 +259,7 @@ footer {
         </div>
       </a>
       <a class="card" href="https://snkrdunk.com/articles/15950/" target="_blank" rel="noopener" data-cat="新弾・予約">
-        <img class="thumb" src="https://cdn.snkrdunk.com/uploads/media/20251222061410-0.jpeg" alt="" loading="lazy" onerror="this.remove()">
+        <img class="thumb" src="https://cdn.snkrdunk.com/uploads/media/20251222061410-0.jpeg" alt="" loading="lazy" onerror="this.outerHTML='<div class=&quot;thumb thumb-fallback&quot;>🎁</div>'">
         <div class="card-body">
           <div class="card-meta">
             <span class="badge" style="background:rgba(42,127,201,0.13);color:#2a7fc9">新弾・予約</span>
@@ -265,7 +272,7 @@ footer {
         </div>
       </a>
       <a class="card" href="https://prtimes.jp/main/html/rd/p/000000004.000183006.html" target="_blank" rel="noopener" data-cat="新弾・予約">
-        <img class="thumb" src="https://prcdn.freetls.fastly.net/release_image/183006/4/183006-4-5100f75534b20e7c92ce63cbedca4917-2400x1260.png?format=jpeg&amp;amp;auto=webp&amp;amp;fit=bounds&amp;amp;width=2400&amp;amp;height=1260" alt="" loading="lazy" onerror="this.remove()">
+        <img class="thumb" src="https://prcdn.freetls.fastly.net/release_image/183006/4/183006-4-5100f75534b20e7c92ce63cbedca4917-2400x1260.png?format=jpeg&amp;amp;auto=webp&amp;amp;fit=bounds&amp;amp;width=2400&amp;amp;height=1260" alt="" loading="lazy" onerror="this.outerHTML='<div class=&quot;thumb thumb-fallback&quot;>🎁</div>'">
         <div class="card-body">
           <div class="card-meta">
             <span class="badge" style="background:rgba(42,127,201,0.13);color:#2a7fc9">新弾・予約</span>
@@ -278,7 +285,7 @@ footer {
         </div>
       </a>
       <a class="card" href="https://snkrdunk.com/articles/29152/" target="_blank" rel="noopener" data-cat="相場・高騰">
-        <img class="thumb" src="https://cdn.snkrdunk.com/uploads/media/20251127061052-0.jpeg" alt="" loading="lazy" onerror="this.remove()">
+        <img class="thumb" src="https://cdn.snkrdunk.com/uploads/media/20251127061052-0.jpeg" alt="" loading="lazy" onerror="this.outerHTML='<div class=&quot;thumb thumb-fallback&quot;>📈</div>'">
         <div class="card-body">
           <div class="card-meta">
             <span class="badge" style="background:rgba(46,158,91,0.13);color:#2e9e5b">相場・高騰</span>
@@ -291,7 +298,7 @@ footer {
         </div>
       </a>
       <a class="card" href="https://snkrdunk.com/articles/30971/" target="_blank" rel="noopener" data-cat="相場・高騰">
-        <img class="thumb" src="https://cdn.snkrdunk.com/uploads/media/51d7ef96-0e44-4737-9001-406a90e4373d.jpeg" alt="" loading="lazy" onerror="this.remove()">
+        <img class="thumb" src="https://cdn.snkrdunk.com/uploads/media/51d7ef96-0e44-4737-9001-406a90e4373d.jpeg" alt="" loading="lazy" onerror="this.outerHTML='<div class=&quot;thumb thumb-fallback&quot;>📈</div>'">
         <div class="card-body">
           <div class="card-meta">
             <span class="badge" style="background:rgba(46,158,91,0.13);color:#2e9e5b">相場・高騰</span>
@@ -304,7 +311,7 @@ footer {
         </div>
       </a>
       <a class="card" href="https://snkrdunk.com/articles/16466/" target="_blank" rel="noopener" data-cat="相場・高騰">
-        <img class="thumb" src="https://cdn.snkrdunk.com/uploads/media/6ea1ef47-3013-4b51-9383-82543e43db12.jpeg" alt="" loading="lazy" onerror="this.remove()">
+        <img class="thumb" src="https://cdn.snkrdunk.com/uploads/media/6ea1ef47-3013-4b51-9383-82543e43db12.jpeg" alt="" loading="lazy" onerror="this.outerHTML='<div class=&quot;thumb thumb-fallback&quot;>📈</div>'">
         <div class="card-body">
           <div class="card-meta">
             <span class="badge" style="background:rgba(46,158,91,0.13);color:#2e9e5b">相場・高騰</span>
@@ -317,7 +324,7 @@ footer {
         </div>
       </a>
       <a class="card" href="https://convenicheck.com/news/news_famima/129693/" target="_blank" rel="noopener" data-cat="新弾・予約">
-        <img class="thumb" src="https://convenicheck.com/wp-content/uploads/2026/07/famimaonline_pokekapreseteb26062.jpg" alt="" loading="lazy" onerror="this.remove()">
+        <img class="thumb" src="https://convenicheck.com/wp-content/uploads/2026/07/famimaonline_pokekapreseteb26062.jpg" alt="" loading="lazy" onerror="this.outerHTML='<div class=&quot;thumb thumb-fallback&quot;>🎁</div>'">
         <div class="card-body">
           <div class="card-meta">
             <span class="badge" style="background:rgba(42,127,201,0.13);color:#2a7fc9">新弾・予約</span>
@@ -330,7 +337,7 @@ footer {
         </div>
       </a>
       <a class="card" href="https://snkrdunk.com/articles/32658/" target="_blank" rel="noopener" data-cat="新弾・予約">
-        <img class="thumb" src="https://cdn.snkrdunk.com/uploads/media/481c237c-2202-4390-9642-c405ebd48b9c.jpeg" alt="" loading="lazy" onerror="this.remove()">
+        <img class="thumb" src="https://cdn.snkrdunk.com/uploads/media/481c237c-2202-4390-9642-c405ebd48b9c.jpeg" alt="" loading="lazy" onerror="this.outerHTML='<div class=&quot;thumb thumb-fallback&quot;>🎁</div>'">
         <div class="card-body">
           <div class="card-meta">
             <span class="badge" style="background:rgba(42,127,201,0.13);color:#2a7fc9">新弾・予約</span>
@@ -343,7 +350,7 @@ footer {
         </div>
       </a>
       <a class="card" href="https://snkrdunk.com/articles/32425/" target="_blank" rel="noopener" data-cat="新弾・予約">
-        <img class="thumb" src="https://cdn.snkrdunk.com/uploads/media/f6fbd3a3-a36f-47a9-93ea-8c16b48ac4f3.jpeg" alt="" loading="lazy" onerror="this.remove()">
+        <img class="thumb" src="https://cdn.snkrdunk.com/uploads/media/f6fbd3a3-a36f-47a9-93ea-8c16b48ac4f3.jpeg" alt="" loading="lazy" onerror="this.outerHTML='<div class=&quot;thumb thumb-fallback&quot;>🎁</div>'">
         <div class="card-body">
           <div class="card-meta">
             <span class="badge" style="background:rgba(42,127,201,0.13);color:#2a7fc9">新弾・予約</span>
@@ -356,7 +363,7 @@ footer {
         </div>
       </a>
       <a class="card" href="https://www.pokebeach.com/2026/07/30th-celebration-preorders-now-live-on-pokemon-center" target="_blank" rel="noopener" data-cat="海外ニュース">
-        
+        <div class="thumb thumb-fallback">🌏</div>
         <div class="card-body">
           <div class="card-meta">
             <span class="badge" style="background:rgba(208,100,42,0.13);color:#d0642a">海外ニュース</span>
@@ -369,7 +376,7 @@ footer {
         </div>
       </a>
       <a class="card" href="https://www.pokebeach.com/2026/07/2027-pokemon-championship-series-event-schedule-and-changes-announced" target="_blank" rel="noopener" data-cat="海外ニュース">
-        
+        <div class="thumb thumb-fallback">🌏</div>
         <div class="card-body">
           <div class="card-meta">
             <span class="badge" style="background:rgba(208,100,42,0.13);color:#d0642a">海外ニュース</span>
@@ -382,7 +389,7 @@ footer {
         </div>
       </a>
       <a class="card" href="https://shop.pokemon.co.jp/ja/shop/pokemoncenter-tokyodx/news/202607/000415.html" target="_blank" rel="noopener" data-cat="新弾・予約">
-        <img class="thumb" src="https://shop.pokemon.co.jp/ja/shop/pokemoncenter-tokyodx/images/0b97d9fc29843c5644dbf044ec39f62de0cc6ec1.png" alt="" loading="lazy" onerror="this.remove()">
+        <img class="thumb" src="https://shop.pokemon.co.jp/ja/shop/pokemoncenter-tokyodx/images/0b97d9fc29843c5644dbf044ec39f62de0cc6ec1.png" alt="" loading="lazy" onerror="this.outerHTML='<div class=&quot;thumb thumb-fallback&quot;>🎁</div>'">
         <div class="card-body">
           <div class="card-meta">
             <span class="badge" style="background:rgba(42,127,201,0.13);color:#2a7fc9">新弾・予約</span>
@@ -395,7 +402,7 @@ footer {
         </div>
       </a>
       <a class="card" href="https://www.msn.com/ja-jp/money/other/%E4%BA%BA%E6%B0%97%E3%81%AE-%E3%83%9D%E3%82%B1%E3%82%AB-%E6%8A%BD%E9%81%B8%E8%B2%A9%E5%A3%B2%E3%81%8C%E3%82%B2%E3%82%AA%E3%81%A7%E5%AE%9F%E6%96%BD%E4%B8%AD-%E3%82%B9%E3%83%88%E3%83%BC%E3%83%A0%E3%82%A8%E3%83%A1%E3%83%A9%E3%83%AB%E3%83%80-mega-%E3%82%B9%E3%82%BF%E3%83%BC%E3%82%BF%E3%83%BC%E3%82%BB%E3%83%83%E3%83%88ex-%E5%90%84%E7%A8%AE%E3%81%AE%E5%85%A84%E5%95%86%E5%93%81/ar-AA27RMSw" target="_blank" rel="noopener" data-cat="新弾・予約">
-        
+        <div class="thumb thumb-fallback">🎁</div>
         <div class="card-body">
           <div class="card-meta">
             <span class="badge" style="background:rgba(42,127,201,0.13);color:#2a7fc9">新弾・予約</span>
@@ -408,7 +415,7 @@ footer {
         </div>
       </a>
       <a class="card" href="https://www.msn.com/ja-jp/money/other/%E3%83%A1%E3%82%AC%E3%83%AC%E3%83%83%E3%82%AF%E3%82%A6%E3%82%B6ex-%E3%81%AE%E3%83%91%E3%83%83%E3%82%B1%E3%83%BC%E3%82%B8%E3%81%8C%E3%82%AB%E3%83%83%E3%82%B3%E3%81%84%E3%81%84-%E3%83%9D%E3%82%B1%E3%82%AB-%E6%96%B0%E5%BC%BE-%E3%82%B9%E3%83%88%E3%83%BC%E3%83%A0%E3%82%A8%E3%83%A1%E3%83%A9%E3%83%AB%E3%83%80-%E3%81%AE%E6%8A%BD%E9%81%B8%E8%B2%A9%E5%A3%B2%E3%81%8C%E3%83%A8%E3%83%89%E3%83%90%E3%82%B7%E3%81%A7%E5%AE%9F%E6%96%BD/ar-AA27MUsD" target="_blank" rel="noopener" data-cat="新弾・予約">
-        
+        <div class="thumb thumb-fallback">🎁</div>
         <div class="card-body">
           <div class="card-meta">
             <span class="badge" style="background:rgba(42,127,201,0.13);color:#2a7fc9">新弾・予約</span>
@@ -421,7 +428,7 @@ footer {
         </div>
       </a>
       <a class="card" href="https://dxmagazine.jp/news/2625ko345/" target="_blank" rel="noopener" data-cat="新弾・予約">
-        
+        <div class="thumb thumb-fallback">🎁</div>
         <div class="card-body">
           <div class="card-meta">
             <span class="badge" style="background:rgba(42,127,201,0.13);color:#2a7fc9">新弾・予約</span>
@@ -434,7 +441,7 @@ footer {
         </div>
       </a>
       <a class="card" href="https://www.pokebeach.com/2026/07/tornadus-thundurus-landorus-and-enamorus-from-storm-emeralda-revealed" target="_blank" rel="noopener" data-cat="海外ニュース">
-        
+        <div class="thumb thumb-fallback">🌏</div>
         <div class="card-body">
           <div class="card-meta">
             <span class="badge" style="background:rgba(208,100,42,0.13);color:#d0642a">海外ニュース</span>
@@ -447,7 +454,7 @@ footer {
         </div>
       </a>
       <a class="card" href="https://news.yahoo.co.jp/articles/e7bc6b525bf77d21d7976ddaafd0cc7a8feca12e" target="_blank" rel="noopener" data-cat="新弾・予約">
-        <img class="thumb" src="https://newsatcl-pctr.c.yimg.jp/t/amd-img/20260713-00000053-zdn_n-000-1-view.jpg?exp=10800" alt="" loading="lazy" onerror="this.remove()">
+        <img class="thumb" src="https://newsatcl-pctr.c.yimg.jp/t/amd-img/20260713-00000053-zdn_n-000-1-view.jpg?exp=10800" alt="" loading="lazy" onerror="this.outerHTML='<div class=&quot;thumb thumb-fallback&quot;>🎁</div>'">
         <div class="card-body">
           <div class="card-meta">
             <span class="badge" style="background:rgba(42,127,201,0.13);color:#2a7fc9">新弾・予約</span>
@@ -460,7 +467,7 @@ footer {
         </div>
       </a>
       <a class="card" href="https://news.yahoo.co.jp/articles/906c2c2cb64683652ef86834003de772a155d085" target="_blank" rel="noopener" data-cat="新弾・予約">
-        <img class="thumb" src="https://newsatcl-pctr.c.yimg.jp/t/amd-img/20260713-00000012-impgmw-000-1-view.jpg?exp=10800" alt="" loading="lazy" onerror="this.remove()">
+        <img class="thumb" src="https://newsatcl-pctr.c.yimg.jp/t/amd-img/20260713-00000012-impgmw-000-1-view.jpg?exp=10800" alt="" loading="lazy" onerror="this.outerHTML='<div class=&quot;thumb thumb-fallback&quot;>🎁</div>'">
         <div class="card-body">
           <div class="card-meta">
             <span class="badge" style="background:rgba(42,127,201,0.13);color:#2a7fc9">新弾・予約</span>
@@ -473,7 +480,7 @@ footer {
         </div>
       </a>
       <a class="card" href="https://news.yahoo.co.jp/articles/bc5d1f9b25c29ac5329ecd029fd55bf7006b8616" target="_blank" rel="noopener" data-cat="新弾・予約">
-        <img class="thumb" src="https://newsatcl-pctr.c.yimg.jp/t/amd-img/20260713-00000250-spnannex-000-18-view.jpg?exp=10800" alt="" loading="lazy" onerror="this.remove()">
+        <img class="thumb" src="https://newsatcl-pctr.c.yimg.jp/t/amd-img/20260713-00000250-spnannex-000-18-view.jpg?exp=10800" alt="" loading="lazy" onerror="this.outerHTML='<div class=&quot;thumb thumb-fallback&quot;>🎁</div>'">
         <div class="card-body">
           <div class="card-meta">
             <span class="badge" style="background:rgba(42,127,201,0.13);color:#2a7fc9">新弾・予約</span>
@@ -486,7 +493,7 @@ footer {
         </div>
       </a>
       <a class="card" href="https://www.pokebeach.com/?p=321981" target="_blank" rel="noopener" data-cat="海外ニュース">
-        
+        <div class="thumb thumb-fallback">🌏</div>
         <div class="card-body">
           <div class="card-meta">
             <span class="badge" style="background:rgba(208,100,42,0.13);color:#d0642a">海外ニュース</span>
@@ -499,7 +506,7 @@ footer {
         </div>
       </a>
       <a class="card" href="https://snkrdunk.com/articles/32464/" target="_blank" rel="noopener" data-cat="新弾・予約">
-        <img class="thumb" src="https://cdn.snkrdunk.com/uploads/media/7d2a3480-d3b8-4e0b-acf4-436a6b137e93.jpeg" alt="" loading="lazy" onerror="this.remove()">
+        <img class="thumb" src="https://cdn.snkrdunk.com/uploads/media/7d2a3480-d3b8-4e0b-acf4-436a6b137e93.jpeg" alt="" loading="lazy" onerror="this.outerHTML='<div class=&quot;thumb thumb-fallback&quot;>🎁</div>'">
         <div class="card-body">
           <div class="card-meta">
             <span class="badge" style="background:rgba(42,127,201,0.13);color:#2a7fc9">新弾・予約</span>
@@ -512,7 +519,7 @@ footer {
         </div>
       </a>
       <a class="card" href="https://www.pokebeach.com/?p=321803" target="_blank" rel="noopener" data-cat="海外ニュース">
-        
+        <div class="thumb thumb-fallback">🌏</div>
         <div class="card-body">
           <div class="card-meta">
             <span class="badge" style="background:rgba(208,100,42,0.13);color:#d0642a">海外ニュース</span>
@@ -525,7 +532,7 @@ footer {
         </div>
       </a>
       <a class="card" href="https://www.inside-games.jp/article/2026/07/11/184385.html" target="_blank" rel="noopener" data-cat="新弾・予約">
-        <img class="thumb" src="https://www.inside-games.jp/imgs/ogp_f/1739636.jpg" alt="" loading="lazy" onerror="this.remove()">
+        <img class="thumb" src="https://www.inside-games.jp/imgs/ogp_f/1739636.jpg" alt="" loading="lazy" onerror="this.outerHTML='<div class=&quot;thumb thumb-fallback&quot;>🎁</div>'">
         <div class="card-body">
           <div class="card-meta">
             <span class="badge" style="background:rgba(42,127,201,0.13);color:#2a7fc9">新弾・予約</span>
@@ -538,7 +545,7 @@ footer {
         </div>
       </a>
       <a class="card" href="https://news.yahoo.co.jp/articles/feb2362655ea145f2fd266a94aac3858938ab3f2" target="_blank" rel="noopener" data-cat="新弾・予約">
-        <img class="thumb" src="https://newsatcl-pctr.c.yimg.jp/t/amd-img/20260711-01597754-nkt-000-2-view.jpg?exp=10800" alt="" loading="lazy" onerror="this.remove()">
+        <img class="thumb" src="https://newsatcl-pctr.c.yimg.jp/t/amd-img/20260711-01597754-nkt-000-2-view.jpg?exp=10800" alt="" loading="lazy" onerror="this.outerHTML='<div class=&quot;thumb thumb-fallback&quot;>🎁</div>'">
         <div class="card-body">
           <div class="card-meta">
             <span class="badge" style="background:rgba(42,127,201,0.13);color:#2a7fc9">新弾・予約</span>
@@ -551,7 +558,7 @@ footer {
         </div>
       </a>
       <a class="card" href="https://www.pokebeach.com/?p=321990" target="_blank" rel="noopener" data-cat="海外ニュース">
-        
+        <div class="thumb thumb-fallback">🌏</div>
         <div class="card-body">
           <div class="card-meta">
             <span class="badge" style="background:rgba(208,100,42,0.13);color:#d0642a">海外ニュース</span>
@@ -564,7 +571,7 @@ footer {
         </div>
       </a>
       <a class="card" href="https://s.inside-games.jp/article/2026/07/10/184339.html?from=image-page-back" target="_blank" rel="noopener" data-cat="新弾・予約">
-        <img class="thumb" src="https://www.inside-games.jp/imgs/ogp_f/1753001.jpg" alt="" loading="lazy" onerror="this.remove()">
+        <img class="thumb" src="https://www.inside-games.jp/imgs/ogp_f/1753001.jpg" alt="" loading="lazy" onerror="this.outerHTML='<div class=&quot;thumb thumb-fallback&quot;>🎁</div>'">
         <div class="card-body">
           <div class="card-meta">
             <span class="badge" style="background:rgba(42,127,201,0.13);color:#2a7fc9">新弾・予約</span>
@@ -577,7 +584,7 @@ footer {
         </div>
       </a>
       <a class="card" href="https://www.pokebeach.com/2026/07/golisopod-ex-wishiwashi-ex-and-another-split-stadium-from-storm-emeralda-revealed" target="_blank" rel="noopener" data-cat="海外ニュース">
-        
+        <div class="thumb thumb-fallback">🌏</div>
         <div class="card-body">
           <div class="card-meta">
             <span class="badge" style="background:rgba(208,100,42,0.13);color:#d0642a">海外ニュース</span>
@@ -590,7 +597,7 @@ footer {
         </div>
       </a>
       <a class="card" href="https://shop.pokemon.co.jp/ja/shop/common/news/202607/000393.html" target="_blank" rel="noopener" data-cat="新弾・予約">
-        <img class="thumb" src="https://shop.pokemon.co.jp/ja/shop/common/images/pctr_dummy_1920x1080.webp" alt="" loading="lazy" onerror="this.remove()">
+        <img class="thumb" src="https://shop.pokemon.co.jp/ja/shop/common/images/pctr_dummy_1920x1080.webp" alt="" loading="lazy" onerror="this.outerHTML='<div class=&quot;thumb thumb-fallback&quot;>🎁</div>'">
         <div class="card-body">
           <div class="card-meta">
             <span class="badge" style="background:rgba(42,127,201,0.13);color:#2a7fc9">新弾・予約</span>
@@ -603,7 +610,7 @@ footer {
         </div>
       </a>
       <a class="card" href="https://snkrdunk.com/articles/30625/" target="_blank" rel="noopener" data-cat="相場・高騰">
-        <img class="thumb" src="https://cdn.snkrdunk.com/uploads/media/3e319f51-f2c1-4e13-90a4-e3e496f3e3f4.jpeg" alt="" loading="lazy" onerror="this.remove()">
+        <img class="thumb" src="https://cdn.snkrdunk.com/uploads/media/3e319f51-f2c1-4e13-90a4-e3e496f3e3f4.jpeg" alt="" loading="lazy" onerror="this.outerHTML='<div class=&quot;thumb thumb-fallback&quot;>📈</div>'">
         <div class="card-body">
           <div class="card-meta">
             <span class="badge" style="background:rgba(46,158,91,0.13);color:#2e9e5b">相場・高騰</span>
@@ -616,7 +623,7 @@ footer {
         </div>
       </a>
       <a class="card" href="https://www.pokebeach.com/?p=321791" target="_blank" rel="noopener" data-cat="海外ニュース">
-        
+        <div class="thumb thumb-fallback">🌏</div>
         <div class="card-body">
           <div class="card-meta">
             <span class="badge" style="background:rgba(208,100,42,0.13);color:#d0642a">海外ニュース</span>
@@ -629,7 +636,7 @@ footer {
         </div>
       </a>
       <a class="card" href="https://www.pokebeach.com/2026/07/mewtwo-mew-dna-premium-tcg-accessories-released-at-the-pokemon-center" target="_blank" rel="noopener" data-cat="海外ニュース">
-        
+        <div class="thumb thumb-fallback">🌏</div>
         <div class="card-body">
           <div class="card-meta">
             <span class="badge" style="background:rgba(208,100,42,0.13);color:#d0642a">海外ニュース</span>
@@ -642,7 +649,7 @@ footer {
         </div>
       </a>
       <a class="card" href="https://www.pokebeach.com/2026/07/mcdonalds-japan-teases-next-pokemon-x-happy-meal-promotion" target="_blank" rel="noopener" data-cat="海外ニュース">
-        
+        <div class="thumb thumb-fallback">🌏</div>
         <div class="card-body">
           <div class="card-meta">
             <span class="badge" style="background:rgba(208,100,42,0.13);color:#d0642a">海外ニュース</span>
@@ -655,7 +662,7 @@ footer {
         </div>
       </a>
       <a class="card" href="https://snkrdunk.com/articles/32427/" target="_blank" rel="noopener" data-cat="新弾・予約">
-        <img class="thumb" src="https://cdn.snkrdunk.com/uploads/media/8c0ad5ea-f297-4abf-84c6-179569582280.jpeg" alt="" loading="lazy" onerror="this.remove()">
+        <img class="thumb" src="https://cdn.snkrdunk.com/uploads/media/8c0ad5ea-f297-4abf-84c6-179569582280.jpeg" alt="" loading="lazy" onerror="this.outerHTML='<div class=&quot;thumb thumb-fallback&quot;>🎁</div>'">
         <div class="card-body">
           <div class="card-meta">
             <span class="badge" style="background:rgba(42,127,201,0.13);color:#2a7fc9">新弾・予約</span>
@@ -668,7 +675,7 @@ footer {
         </div>
       </a>
       <a class="card" href="https://www.pokebeach.com/2026/07/pitch-black-set-guide-full-set-list-product-lineup-store-promos-and-more" target="_blank" rel="noopener" data-cat="海外ニュース">
-        
+        <div class="thumb thumb-fallback">🌏</div>
         <div class="card-body">
           <div class="card-meta">
             <span class="badge" style="background:rgba(208,100,42,0.13);color:#d0642a">海外ニュース</span>
@@ -681,7 +688,7 @@ footer {
         </div>
       </a>
       <a class="card" href="https://www.pokebeach.com/2026/07/jirachi-ex-from-30th-celebration-revealed" target="_blank" rel="noopener" data-cat="海外ニュース">
-        
+        <div class="thumb thumb-fallback">🌏</div>
         <div class="card-body">
           <div class="card-meta">
             <span class="badge" style="background:rgba(208,100,42,0.13);color:#d0642a">海外ニュース</span>
@@ -694,7 +701,7 @@ footer {
         </div>
       </a>
       <a class="card" href="https://mantan-web.jp/prtimes/article/20260706prt00m200000745a/photopage/001.html" target="_blank" rel="noopener" data-cat="鑑定・PSA">
-        <img class="thumb" src="https://prtimes.jp/img/135668/69/resize/d135668-69-d4a2de2e8a4e60e0fc28-1.jpg" alt="" loading="lazy" onerror="this.remove()">
+        <img class="thumb" src="https://prtimes.jp/img/135668/69/resize/d135668-69-d4a2de2e8a4e60e0fc28-1.jpg" alt="" loading="lazy" onerror="this.outerHTML='<div class=&quot;thumb thumb-fallback&quot;>🔍</div>'">
         <div class="card-body">
           <div class="card-meta">
             <span class="badge" style="background:rgba(124,92,191,0.13);color:#7c5cbf">鑑定・PSA</span>
@@ -707,7 +714,7 @@ footer {
         </div>
       </a>
       <a class="card" href="https://richardajkeys.com/dp/c990628340501" target="_blank" rel="noopener" data-cat="新弾・予約">
-        
+        <div class="thumb thumb-fallback">🎁</div>
         <div class="card-body">
           <div class="card-meta">
             <span class="badge" style="background:rgba(42,127,201,0.13);color:#2a7fc9">新弾・予約</span>
@@ -720,7 +727,7 @@ footer {
         </div>
       </a>
       <a class="card" href="https://s.inside-games.jp/article/2026/07/06/184144.html?pickup-text-list=1" target="_blank" rel="noopener" data-cat="新弾・予約">
-        <img class="thumb" src="https://www.inside-games.jp/imgs/ogp_f/1739636.jpg" alt="" loading="lazy" onerror="this.remove()">
+        <img class="thumb" src="https://www.inside-games.jp/imgs/ogp_f/1739636.jpg" alt="" loading="lazy" onerror="this.outerHTML='<div class=&quot;thumb thumb-fallback&quot;>🎁</div>'">
         <div class="card-body">
           <div class="card-meta">
             <span class="badge" style="background:rgba(42,127,201,0.13);color:#2a7fc9">新弾・予約</span>
@@ -733,7 +740,7 @@ footer {
         </div>
       </a>
       <a class="card" href="https://s.inside-games.jp/article/img/2026/07/05/184081/1741034.html" target="_blank" rel="noopener" data-cat="新弾・予約">
-        <img class="thumb" src="https://www.inside-games.jp/imgs/ogp_f/1741034.jpg" alt="" loading="lazy" onerror="this.remove()">
+        <img class="thumb" src="https://www.inside-games.jp/imgs/ogp_f/1741034.jpg" alt="" loading="lazy" onerror="this.outerHTML='<div class=&quot;thumb thumb-fallback&quot;>🎁</div>'">
         <div class="card-body">
           <div class="card-meta">
             <span class="badge" style="background:rgba(42,127,201,0.13);color:#2a7fc9">新弾・予約</span>
@@ -746,7 +753,7 @@ footer {
         </div>
       </a>
       <a class="card" href="https://www.inside-games.jp/article/2026/07/05/184078.html" target="_blank" rel="noopener" data-cat="新弾・予約">
-        <img class="thumb" src="https://www.inside-games.jp/imgs/ogp_f/1740957.jpg" alt="" loading="lazy" onerror="this.remove()">
+        <img class="thumb" src="https://www.inside-games.jp/imgs/ogp_f/1740957.jpg" alt="" loading="lazy" onerror="this.outerHTML='<div class=&quot;thumb thumb-fallback&quot;>🎁</div>'">
         <div class="card-body">
           <div class="card-meta">
             <span class="badge" style="background:rgba(42,127,201,0.13);color:#2a7fc9">新弾・予約</span>
@@ -759,7 +766,7 @@ footer {
         </div>
       </a>
       <a class="card" href="https://s.inside-games.jp/article/img/2026/07/03/183997/1750460.html" target="_blank" rel="noopener" data-cat="新弾・予約">
-        <img class="thumb" src="https://www.inside-games.jp/imgs/ogp_f/1750460.jpg" alt="" loading="lazy" onerror="this.remove()">
+        <img class="thumb" src="https://www.inside-games.jp/imgs/ogp_f/1750460.jpg" alt="" loading="lazy" onerror="this.outerHTML='<div class=&quot;thumb thumb-fallback&quot;>🎁</div>'">
         <div class="card-body">
           <div class="card-meta">
             <span class="badge" style="background:rgba(42,127,201,0.13);color:#2a7fc9">新弾・予約</span>
@@ -772,7 +779,7 @@ footer {
         </div>
       </a>
       <a class="card" href="https://www.hbst.net/?p=410275" target="_blank" rel="noopener" data-cat="新弾・予約">
-        
+        <div class="thumb thumb-fallback">🎁</div>
         <div class="card-body">
           <div class="card-meta">
             <span class="badge" style="background:rgba(42,127,201,0.13);color:#2a7fc9">新弾・予約</span>
@@ -785,7 +792,7 @@ footer {
         </div>
       </a>
       <a class="card" href="https://www.hbst.net/?p=410273" target="_blank" rel="noopener" data-cat="新弾・予約">
-        
+        <div class="thumb thumb-fallback">🎁</div>
         <div class="card-body">
           <div class="card-meta">
             <span class="badge" style="background:rgba(42,127,201,0.13);color:#2a7fc9">新弾・予約</span>
@@ -798,7 +805,7 @@ footer {
         </div>
       </a>
       <a class="card" href="https://www.pokebeach.com/2026/07/pitch-black-store-promos-revealed-with-special-30th-anniversary-stamps" target="_blank" rel="noopener" data-cat="海外ニュース">
-        
+        <div class="thumb thumb-fallback">🌏</div>
         <div class="card-body">
           <div class="card-meta">
             <span class="badge" style="background:rgba(208,100,42,0.13);color:#d0642a">海外ニュース</span>
@@ -811,7 +818,7 @@ footer {
         </div>
       </a>
       <a class="card" href="https://www.pokebeach.com/2026/07/sableye-and-mega-malamar-ex-from-storm-emeralda-revealed" target="_blank" rel="noopener" data-cat="海外ニュース">
-        
+        <div class="thumb thumb-fallback">🌏</div>
         <div class="card-body">
           <div class="card-meta">
             <span class="badge" style="background:rgba(208,100,42,0.13);color:#d0642a">海外ニュース</span>
@@ -824,7 +831,7 @@ footer {
         </div>
       </a>
       <a class="card" href="https://news.yahoo.co.jp/articles/3d3e7081f8aa542e3ac12fd57bcb926730d9f229?page=2" target="_blank" rel="noopener" data-cat="相場・高騰">
-        <img class="thumb" src="https://newsatcl-pctr.c.yimg.jp/t/amd-img/20260422-00121017-toushin-000-2-view.jpg?exp=10800" alt="" loading="lazy" onerror="this.remove()">
+        <img class="thumb" src="https://newsatcl-pctr.c.yimg.jp/t/amd-img/20260422-00121017-toushin-000-2-view.jpg?exp=10800" alt="" loading="lazy" onerror="this.outerHTML='<div class=&quot;thumb thumb-fallback&quot;>📈</div>'">
         <div class="card-body">
           <div class="card-meta">
             <span class="badge" style="background:rgba(46,158,91,0.13);color:#2e9e5b">相場・高騰</span>
@@ -837,7 +844,7 @@ footer {
         </div>
       </a>
       <a class="card" href="https://snkrdunk.com/articles/28386/" target="_blank" rel="noopener" data-cat="相場・高騰">
-        <img class="thumb" src="https://cdn.snkrdunk.com/uploads/media/20250926063800-0.jpeg" alt="" loading="lazy" onerror="this.remove()">
+        <img class="thumb" src="https://cdn.snkrdunk.com/uploads/media/20250926063800-0.jpeg" alt="" loading="lazy" onerror="this.outerHTML='<div class=&quot;thumb thumb-fallback&quot;>📈</div>'">
         <div class="card-body">
           <div class="card-meta">
             <span class="badge" style="background:rgba(46,158,91,0.13);color:#2e9e5b">相場・高騰</span>
@@ -850,7 +857,7 @@ footer {
         </div>
       </a>
       <a class="card" href="https://www.pokebeach.com/2026/06/30th-celebration-full-english-product-lineup-revealed" target="_blank" rel="noopener" data-cat="海外ニュース">
-        
+        <div class="thumb thumb-fallback">🌏</div>
         <div class="card-body">
           <div class="card-meta">
             <span class="badge" style="background:rgba(208,100,42,0.13);color:#d0642a">海外ニュース</span>
@@ -863,7 +870,7 @@ footer {
         </div>
       </a>
       <a class="card" href="https://www.pokebeach.com/2026/06/nidorina-illustration-rare-promo-and-set-card-revealed-from-30th-celebration" target="_blank" rel="noopener" data-cat="海外ニュース">
-        
+        <div class="thumb thumb-fallback">🌏</div>
         <div class="card-body">
           <div class="card-meta">
             <span class="badge" style="background:rgba(208,100,42,0.13);color:#d0642a">海外ニュース</span>
@@ -876,7 +883,7 @@ footer {
         </div>
       </a>
       <a class="card" href="https://www.player.one/pokemon-tcg-extremely-rare-etb-now-back-stock-available-below-market-price-163487" target="_blank" rel="noopener" data-cat="海外ニュース">
-        <img class="thumb" src="https://d.player.one/en/full/229004/eevee.jpg" alt="" loading="lazy" onerror="this.remove()">
+        <img class="thumb" src="https://d.player.one/en/full/229004/eevee.jpg" alt="" loading="lazy" onerror="this.outerHTML='<div class=&quot;thumb thumb-fallback&quot;>🌏</div>'">
         <div class="card-body">
           <div class="card-meta">
             <span class="badge" style="background:rgba(208,100,42,0.13);color:#d0642a">海外ニュース</span>
@@ -889,7 +896,7 @@ footer {
         </div>
       </a>
       <a class="card" href="https://www.pokebeach.com/2026/06/ascended-heroes-focused-fighters-premium-collection-releasing-at-sams-club" target="_blank" rel="noopener" data-cat="海外ニュース">
-        
+        <div class="thumb thumb-fallback">🌏</div>
         <div class="card-body">
           <div class="card-meta">
             <span class="badge" style="background:rgba(208,100,42,0.13);color:#d0642a">海外ニュース</span>
@@ -902,7 +909,7 @@ footer {
         </div>
       </a>
       <a class="card" href="https://www.pokebeach.com/2026/06/team-rocket-special-gift-box-briefcase-lillie-box-and-n-box-releasing-in-china" target="_blank" rel="noopener" data-cat="海外ニュース">
-        
+        <div class="thumb thumb-fallback">🌏</div>
         <div class="card-body">
           <div class="card-meta">
             <span class="badge" style="background:rgba(208,100,42,0.13);color:#d0642a">海外ニュース</span>
@@ -915,7 +922,7 @@ footer {
         </div>
       </a>
       <a class="card" href="https://www.pokebeach.com/2026/06/all-106-everyday-wonders-cards-revealed-for-pocket" target="_blank" rel="noopener" data-cat="海外ニュース">
-        
+        <div class="thumb thumb-fallback">🌏</div>
         <div class="card-body">
           <div class="card-meta">
             <span class="badge" style="background:rgba(208,100,42,0.13);color:#d0642a">海外ニュース</span>
@@ -928,7 +935,7 @@ footer {
         </div>
       </a>
       <a class="card" href="https://www.inside-games.jp/article/2026/06/28/183678.html" target="_blank" rel="noopener" data-cat="新弾・予約">
-        <img class="thumb" src="https://www.inside-games.jp/imgs/ogp_f/1746267.jpg" alt="" loading="lazy" onerror="this.remove()">
+        <img class="thumb" src="https://www.inside-games.jp/imgs/ogp_f/1746267.jpg" alt="" loading="lazy" onerror="this.outerHTML='<div class=&quot;thumb thumb-fallback&quot;>🎁</div>'">
         <div class="card-body">
           <div class="card-meta">
             <span class="badge" style="background:rgba(42,127,201,0.13);color:#2a7fc9">新弾・予約</span>
@@ -941,7 +948,7 @@ footer {
         </div>
       </a>
       <a class="card" href="https://pokeca-pocket.dbfw-days.com/pokeca-stormemeralda-cardlist/" target="_blank" rel="noopener" data-cat="新弾・予約">
-        <img class="thumb" src="https://pokeca-pocket.dbfw-days.com/wp-content/uploads/2026/06/IMG_4321.jpg" alt="" loading="lazy" onerror="this.remove()">
+        <img class="thumb" src="https://pokeca-pocket.dbfw-days.com/wp-content/uploads/2026/06/IMG_4321.jpg" alt="" loading="lazy" onerror="this.outerHTML='<div class=&quot;thumb thumb-fallback&quot;>🎁</div>'">
         <div class="card-body">
           <div class="card-meta">
             <span class="badge" style="background:rgba(42,127,201,0.13);color:#2a7fc9">新弾・予約</span>
@@ -954,7 +961,7 @@ footer {
         </div>
       </a>
       <a class="card" href="https://www.pokebeach.com/2026/06/chasing-glory-together-coin-sets-and-reverse-holos-revealed" target="_blank" rel="noopener" data-cat="海外ニュース">
-        
+        <div class="thumb thumb-fallback">🌏</div>
         <div class="card-body">
           <div class="card-meta">
             <span class="badge" style="background:rgba(208,100,42,0.13);color:#d0642a">海外ニュース</span>
@@ -967,7 +974,7 @@ footer {
         </div>
       </a>
       <a class="card" href="https://www.pokebeach.com/2026/06/jolteon-darkrai-zarude-and-more-cards-revealed-from-mega-starter-decks" target="_blank" rel="noopener" data-cat="海外ニュース">
-        
+        <div class="thumb thumb-fallback">🌏</div>
         <div class="card-body">
           <div class="card-meta">
             <span class="badge" style="background:rgba(208,100,42,0.13);color:#d0642a">海外ニュース</span>
@@ -980,7 +987,7 @@ footer {
         </div>
       </a>
       <a class="card" href="https://www.sankei.com/article/20260626-IYFAMNRHJ5PTNLSHW4BZVQCWVQ/photo/M2GXMSOEDRPPJHPEJSHQWGI4ME/" target="_blank" rel="noopener" data-cat="新弾・予約">
-        <img class="thumb" src="https://www.sankei.com/resizer/v2/M2GXMSOEDRPPJHPEJSHQWGI4ME.jpg?auth=a65dee0b94ff44a1ca1cdffd453d37af8b17d95d4567c6b2ea9e4d379a889b10&amp;amp;quality=50&amp;amp;smart=true&amp;amp;width=1200&amp;amp;height=675" alt="" loading="lazy" onerror="this.remove()">
+        <img class="thumb" src="https://www.sankei.com/resizer/v2/M2GXMSOEDRPPJHPEJSHQWGI4ME.jpg?auth=a65dee0b94ff44a1ca1cdffd453d37af8b17d95d4567c6b2ea9e4d379a889b10&amp;amp;quality=50&amp;amp;smart=true&amp;amp;width=1200&amp;amp;height=675" alt="" loading="lazy" onerror="this.outerHTML='<div class=&quot;thumb thumb-fallback&quot;>🎁</div>'">
         <div class="card-body">
           <div class="card-meta">
             <span class="badge" style="background:rgba(42,127,201,0.13);color:#2a7fc9">新弾・予約</span>
@@ -993,7 +1000,7 @@ footer {
         </div>
       </a>
       <a class="card" href="https://www.oricon.co.jp/news/2463930/photo/3/" target="_blank" rel="noopener" data-cat="新弾・予約">
-        <img class="thumb" src="https://contents.oricon.co.jp/upimg/news/2464000/2463930/20260626_142735_p_o_18183226.jpg" alt="" loading="lazy" onerror="this.remove()">
+        <img class="thumb" src="https://contents.oricon.co.jp/upimg/news/2464000/2463930/20260626_142735_p_o_18183226.jpg" alt="" loading="lazy" onerror="this.outerHTML='<div class=&quot;thumb thumb-fallback&quot;>🎁</div>'">
         <div class="card-body">
           <div class="card-meta">
             <span class="badge" style="background:rgba(42,127,201,0.13);color:#2a7fc9">新弾・予約</span>
@@ -1006,7 +1013,7 @@ footer {
         </div>
       </a>
       <a class="card" href="https://www.inside-games.jp/article/2026/06/26/183612.html" target="_blank" rel="noopener" data-cat="新弾・予約">
-        <img class="thumb" src="https://www.inside-games.jp/imgs/ogp_f/1747661.jpg" alt="" loading="lazy" onerror="this.remove()">
+        <img class="thumb" src="https://www.inside-games.jp/imgs/ogp_f/1747661.jpg" alt="" loading="lazy" onerror="this.outerHTML='<div class=&quot;thumb thumb-fallback&quot;>🎁</div>'">
         <div class="card-body">
           <div class="card-meta">
             <span class="badge" style="background:rgba(42,127,201,0.13);color:#2a7fc9">新弾・予約</span>
@@ -1019,7 +1026,7 @@ footer {
         </div>
       </a>
       <a class="card" href="https://www.inside-games.jp/article/2026/06/26/183617.html" target="_blank" rel="noopener" data-cat="新弾・予約">
-        <img class="thumb" src="https://www.inside-games.jp/imgs/ogp_f/1747717.jpg" alt="" loading="lazy" onerror="this.remove()">
+        <img class="thumb" src="https://www.inside-games.jp/imgs/ogp_f/1747717.jpg" alt="" loading="lazy" onerror="this.outerHTML='<div class=&quot;thumb thumb-fallback&quot;>🎁</div>'">
         <div class="card-body">
           <div class="card-meta">
             <span class="badge" style="background:rgba(42,127,201,0.13);color:#2a7fc9">新弾・予約</span>
@@ -1032,7 +1039,7 @@ footer {
         </div>
       </a>
       <a class="card" href="https://www.pokebeach.com/2026/06/chasing-glory-together-set-revealed-for-china-featuring-exclusive-brocks-scouting" target="_blank" rel="noopener" data-cat="海外ニュース">
-        
+        <div class="thumb thumb-fallback">🌏</div>
         <div class="card-body">
           <div class="card-meta">
             <span class="badge" style="background:rgba(208,100,42,0.13);color:#d0642a">海外ニュース</span>
@@ -1045,7 +1052,7 @@ footer {
         </div>
       </a>
       <a class="card" href="https://www.pokebeach.com/2026/06/storm-emeralda-set-starring-mega-rayquaza-ex-officially-revealed-introduces-paired-stadium-cards" target="_blank" rel="noopener" data-cat="海外ニュース">
-        
+        <div class="thumb thumb-fallback">🌏</div>
         <div class="card-body">
           <div class="card-meta">
             <span class="badge" style="background:rgba(208,100,42,0.13);color:#d0642a">海外ニュース</span>
@@ -1058,7 +1065,7 @@ footer {
         </div>
       </a>
       <a class="card" href="https://pokeca-pocket.dbfw-days.com/cs2026-prom-pikachu/" target="_blank" rel="noopener" data-cat="相場・高騰">
-        <img class="thumb" src="https://pokeca-pocket.dbfw-days.com/wp-content/uploads/2026/06/IMG_3627.jpeg" alt="" loading="lazy" onerror="this.remove()">
+        <img class="thumb" src="https://pokeca-pocket.dbfw-days.com/wp-content/uploads/2026/06/IMG_3627.jpeg" alt="" loading="lazy" onerror="this.outerHTML='<div class=&quot;thumb thumb-fallback&quot;>📈</div>'">
         <div class="card-body">
           <div class="card-meta">
             <span class="badge" style="background:rgba(46,158,91,0.13);color:#2e9e5b">相場・高騰</span>
@@ -1071,7 +1078,7 @@ footer {
         </div>
       </a>
       <a class="card" href="https://prtimes.jp/main/html/rd/p/000000003.000183006.html" target="_blank" rel="noopener" data-cat="相場・高騰">
-        <img class="thumb" src="https://prcdn.freetls.fastly.net/release_image/183006/3/183006-3-a5de59b57c3f0dd93ad8f6a4b8f17c10-2000x1132.png?format=jpeg&amp;amp;auto=webp&amp;amp;fit=bounds&amp;amp;width=2400&amp;amp;height=1260" alt="" loading="lazy" onerror="this.remove()">
+        <img class="thumb" src="https://prcdn.freetls.fastly.net/release_image/183006/3/183006-3-a5de59b57c3f0dd93ad8f6a4b8f17c10-2000x1132.png?format=jpeg&amp;amp;auto=webp&amp;amp;fit=bounds&amp;amp;width=2400&amp;amp;height=1260" alt="" loading="lazy" onerror="this.outerHTML='<div class=&quot;thumb thumb-fallback&quot;>📈</div>'">
         <div class="card-body">
           <div class="card-meta">
             <span class="badge" style="background:rgba(46,158,91,0.13);color:#2e9e5b">相場・高騰</span>
@@ -1084,7 +1091,7 @@ footer {
         </div>
       </a>
       <a class="card" href="https://hobby.dengeki.com/news/3057991/" target="_blank" rel="noopener" data-cat="新弾・予約">
-        <img class="thumb" src="https://hobby.dengeki.com/ss/hobby/2026/06/card_O9Z6trmdCFxf_W5_hdeKu1SEnTk5fH9t_12KqL_CbaKp4ScaECn8y5aZUtpKMTdHD.jpg" alt="" loading="lazy" onerror="this.remove()">
+        <img class="thumb" src="https://hobby.dengeki.com/ss/hobby/2026/06/card_O9Z6trmdCFxf_W5_hdeKu1SEnTk5fH9t_12KqL_CbaKp4ScaECn8y5aZUtpKMTdHD.jpg" alt="" loading="lazy" onerror="this.outerHTML='<div class=&quot;thumb thumb-fallback&quot;>🎁</div>'">
         <div class="card-body">
           <div class="card-meta">
             <span class="badge" style="background:rgba(42,127,201,0.13);color:#2a7fc9">新弾・予約</span>
@@ -1097,7 +1104,7 @@ footer {
         </div>
       </a>
       <a class="card" href="https://snkrdunk.com/articles/30520/" target="_blank" rel="noopener" data-cat="相場・高騰">
-        <img class="thumb" src="https://cdn.snkrdunk.com/uploads/media/20260122103018-0.jpeg" alt="" loading="lazy" onerror="this.remove()">
+        <img class="thumb" src="https://cdn.snkrdunk.com/uploads/media/20260122103018-0.jpeg" alt="" loading="lazy" onerror="this.outerHTML='<div class=&quot;thumb thumb-fallback&quot;>📈</div>'">
         <div class="card-body">
           <div class="card-meta">
             <span class="badge" style="background:rgba(46,158,91,0.13);color:#2e9e5b">相場・高騰</span>
@@ -1110,7 +1117,7 @@ footer {
         </div>
       </a>
       <a class="card" href="https://snkrdunk.com/articles/32473/" target="_blank" rel="noopener" data-cat="相場・高騰">
-        <img class="thumb" src="https://cdn.snkrdunk.com/uploads/media/ad5c37ea-d291-488c-a7c7-be2c68547e06.jpeg" alt="" loading="lazy" onerror="this.remove()">
+        <img class="thumb" src="https://cdn.snkrdunk.com/uploads/media/ad5c37ea-d291-488c-a7c7-be2c68547e06.jpeg" alt="" loading="lazy" onerror="this.outerHTML='<div class=&quot;thumb thumb-fallback&quot;>📈</div>'">
         <div class="card-body">
           <div class="card-meta">
             <span class="badge" style="background:rgba(46,158,91,0.13);color:#2e9e5b">相場・高騰</span>
@@ -1123,7 +1130,7 @@ footer {
         </div>
       </a>
       <a class="card" href="https://www.inside-games.jp/article/2026/06/23/183446.html" target="_blank" rel="noopener" data-cat="新弾・予約">
-        <img class="thumb" src="https://www.inside-games.jp/imgs/ogp_f/1746223.jpg" alt="" loading="lazy" onerror="this.remove()">
+        <img class="thumb" src="https://www.inside-games.jp/imgs/ogp_f/1746223.jpg" alt="" loading="lazy" onerror="this.outerHTML='<div class=&quot;thumb thumb-fallback&quot;>🎁</div>'">
         <div class="card-body">
           <div class="card-meta">
             <span class="badge" style="background:rgba(42,127,201,0.13);color:#2a7fc9">新弾・予約</span>
@@ -1136,7 +1143,7 @@ footer {
         </div>
       </a>
       <a class="card" href="https://www.hbst.net/?p=410187" target="_blank" rel="noopener" data-cat="新弾・予約">
-        
+        <div class="thumb thumb-fallback">🎁</div>
         <div class="card-body">
           <div class="card-meta">
             <span class="badge" style="background:rgba(42,127,201,0.13);color:#2a7fc9">新弾・予約</span>
@@ -1149,7 +1156,7 @@ footer {
         </div>
       </a>
       <a class="card" href="https://www.lawson.co.jp/lab/entertainment/art/20260623_giftpokemon.html" target="_blank" rel="noopener" data-cat="新弾・予約">
-        <img class="thumb" src="https://www.lawson.co.jp/lab/entertainment/art/__icsFiles/afieldfile/2026/06/22/20260623_gift_pokemon_g_2.jpg" alt="" loading="lazy" onerror="this.remove()">
+        <img class="thumb" src="https://www.lawson.co.jp/lab/entertainment/art/__icsFiles/afieldfile/2026/06/22/20260623_gift_pokemon_g_2.jpg" alt="" loading="lazy" onerror="this.outerHTML='<div class=&quot;thumb thumb-fallback&quot;>🎁</div>'">
         <div class="card-body">
           <div class="card-meta">
             <span class="badge" style="background:rgba(42,127,201,0.13);color:#2a7fc9">新弾・予約</span>
@@ -1162,7 +1169,7 @@ footer {
         </div>
       </a>
       <a class="card" href="https://hobby.watch.impress.co.jp/docs/news/2119328.html" target="_blank" rel="noopener" data-cat="新弾・予約">
-        <img class="thumb" src="https://hobby.watch.impress.co.jp/img/hbw/list/2119/328/01.jpg" alt="" loading="lazy" onerror="this.remove()">
+        <img class="thumb" src="https://hobby.watch.impress.co.jp/img/hbw/list/2119/328/01.jpg" alt="" loading="lazy" onerror="this.outerHTML='<div class=&quot;thumb thumb-fallback&quot;>🎁</div>'">
         <div class="card-body">
           <div class="card-meta">
             <span class="badge" style="background:rgba(42,127,201,0.13);color:#2a7fc9">新弾・予約</span>
@@ -1175,7 +1182,7 @@ footer {
         </div>
       </a>
       <a class="card" href="https://snkrdunk.com/articles/32215/" target="_blank" rel="noopener" data-cat="相場・高騰">
-        <img class="thumb" src="https://cdn.snkrdunk.com/uploads/media/2b8e3a68-8a0a-4398-b262-5f9bb8872275.jpeg" alt="" loading="lazy" onerror="this.remove()">
+        <img class="thumb" src="https://cdn.snkrdunk.com/uploads/media/2b8e3a68-8a0a-4398-b262-5f9bb8872275.jpeg" alt="" loading="lazy" onerror="this.outerHTML='<div class=&quot;thumb thumb-fallback&quot;>📈</div>'">
         <div class="card-body">
           <div class="card-meta">
             <span class="badge" style="background:rgba(46,158,91,0.13);color:#2e9e5b">相場・高騰</span>
@@ -1188,7 +1195,7 @@ footer {
         </div>
       </a>
       <a class="card" href="https://dengekionline.com/article/202606/79131" target="_blank" rel="noopener" data-cat="新弾・予約">
-        <img class="thumb" src="https://cimg.kgl-systems.io/camion/files/79131/ogp_koHY.jpg?x=1280" alt="" loading="lazy" onerror="this.remove()">
+        <img class="thumb" src="https://cimg.kgl-systems.io/camion/files/79131/ogp_koHY.jpg?x=1280" alt="" loading="lazy" onerror="this.outerHTML='<div class=&quot;thumb thumb-fallback&quot;>🎁</div>'">
         <div class="card-body">
           <div class="card-meta">
             <span class="badge" style="background:rgba(42,127,201,0.13);color:#2a7fc9">新弾・予約</span>
@@ -1201,7 +1208,7 @@ footer {
         </div>
       </a>
       <a class="card" href="https://news.yahoo.co.jp/expert/articles/00d1f9ee1cc6194dd37b66630ce67198bff99fa8" target="_blank" rel="noopener" data-cat="鑑定・PSA">
-        <img class="thumb" src="https://newsatcl-pctr.c.yimg.jp/t/iwiz-yn/rpr/tanekiyoshi/02648123/title-1781858523512.jpeg?exp=10800" alt="" loading="lazy" onerror="this.remove()">
+        <img class="thumb" src="https://newsatcl-pctr.c.yimg.jp/t/iwiz-yn/rpr/tanekiyoshi/02648123/title-1781858523512.jpeg?exp=10800" alt="" loading="lazy" onerror="this.outerHTML='<div class=&quot;thumb thumb-fallback&quot;>🔍</div>'">
         <div class="card-body">
           <div class="card-meta">
             <span class="badge" style="background:rgba(124,92,191,0.13);color:#7c5cbf">鑑定・PSA</span>
@@ -1214,7 +1221,7 @@ footer {
         </div>
       </a>
       <a class="card" href="https://www.pokebeach.com/2026/06/naic-on-fraud-watch-looking-at-the-surprises-from-naic" target="_blank" rel="noopener" data-cat="海外ニュース">
-        
+        <div class="thumb thumb-fallback">🌏</div>
         <div class="card-body">
           <div class="card-meta">
             <span class="badge" style="background:rgba(208,100,42,0.13);color:#d0642a">海外ニュース</span>
@@ -1227,7 +1234,7 @@ footer {
         </div>
       </a>
       <a class="card" href="https://www.bloomberg.com/jp/news/videos/2026-06-19/TGVE10KIUPTE00" target="_blank" rel="noopener" data-cat="相場・高騰">
-        
+        <div class="thumb thumb-fallback">📈</div>
         <div class="card-body">
           <div class="card-meta">
             <span class="badge" style="background:rgba(46,158,91,0.13);color:#2e9e5b">相場・高騰</span>
@@ -1240,7 +1247,7 @@ footer {
         </div>
       </a>
       <a class="card" href="https://www.inside-games.jp/article/2026/06/19/183226.html" target="_blank" rel="noopener" data-cat="新弾・予約">
-        <img class="thumb" src="https://www.inside-games.jp/imgs/ogp_f/1744766.jpg" alt="" loading="lazy" onerror="this.remove()">
+        <img class="thumb" src="https://www.inside-games.jp/imgs/ogp_f/1744766.jpg" alt="" loading="lazy" onerror="this.outerHTML='<div class=&quot;thumb thumb-fallback&quot;>🎁</div>'">
         <div class="card-body">
           <div class="card-meta">
             <span class="badge" style="background:rgba(42,127,201,0.13);color:#2a7fc9">新弾・予約</span>
@@ -1253,7 +1260,7 @@ footer {
         </div>
       </a>
       <a class="card" href="https://www.pokebeach.com/2026/06/are-you-perhaps-with-team-rocket-trademark-filed-for-the-pokemon-tcg" target="_blank" rel="noopener" data-cat="海外ニュース">
-        
+        <div class="thumb thumb-fallback">🌏</div>
         <div class="card-body">
           <div class="card-meta">
             <span class="badge" style="background:rgba(208,100,42,0.13);color:#d0642a">海外ニュース</span>
@@ -1266,7 +1273,7 @@ footer {
         </div>
       </a>
       <a class="card" href="https://snkrdunk.com/articles/32581/" target="_blank" rel="noopener" data-cat="新弾・予約">
-        <img class="thumb" src="https://cdn.snkrdunk.com/uploads/media/2989b9e7-e8f4-4557-bee3-ff9f7db28e77.jpeg" alt="" loading="lazy" onerror="this.remove()">
+        <img class="thumb" src="https://cdn.snkrdunk.com/uploads/media/2989b9e7-e8f4-4557-bee3-ff9f7db28e77.jpeg" alt="" loading="lazy" onerror="this.outerHTML='<div class=&quot;thumb thumb-fallback&quot;>🎁</div>'">
         <div class="card-body">
           <div class="card-meta">
             <span class="badge" style="background:rgba(42,127,201,0.13);color:#2a7fc9">新弾・予約</span>
@@ -1279,7 +1286,7 @@ footer {
         </div>
       </a>
       <a class="card" href="https://pokeca-pocket.dbfw-days.com/abisu-kaitori-ranking/" target="_blank" rel="noopener" data-cat="相場・高騰">
-        <img class="thumb" src="https://pokeca-pocket.dbfw-days.com/wp-content/uploads/2026/05/IMG_2815.jpeg" alt="" loading="lazy" onerror="this.remove()">
+        <img class="thumb" src="https://pokeca-pocket.dbfw-days.com/wp-content/uploads/2026/05/IMG_2815.jpeg" alt="" loading="lazy" onerror="this.outerHTML='<div class=&quot;thumb thumb-fallback&quot;>📈</div>'">
         <div class="card-body">
           <div class="card-meta">
             <span class="badge" style="background:rgba(46,158,91,0.13);color:#2e9e5b">相場・高騰</span>
@@ -1292,7 +1299,7 @@ footer {
         </div>
       </a>
       <a class="card" href="https://www.pokebeach.com/2026/06/ascended-heroes-tins-revealed-for-august" target="_blank" rel="noopener" data-cat="海外ニュース">
-        <img class="thumb" src="https://www.pokebeach.com/news/2026/06/Pokemon-TCG-Mega-Evolution—Ascended-Heroes-Tin-Mega-Feraligatr_EN-1206x1500-3d8f6f2-1.jpg" alt="" loading="lazy" onerror="this.remove()">
+        <img class="thumb" src="https://www.pokebeach.com/news/2026/06/Pokemon-TCG-Mega-Evolution—Ascended-Heroes-Tin-Mega-Feraligatr_EN-1206x1500-3d8f6f2-1.jpg" alt="" loading="lazy" onerror="this.outerHTML='<div class=&quot;thumb thumb-fallback&quot;>🌏</div>'">
         <div class="card-body">
           <div class="card-meta">
             <span class="badge" style="background:rgba(208,100,42,0.13);color:#d0642a">海外ニュース</span>
@@ -1305,7 +1312,7 @@ footer {
         </div>
       </a>
       <a class="card" href="https://www.pokebeach.com/2026/06/storm-emeralda-and-delta-reign-tcg-sets-officially-teased-along-with-pockets-ruler-of-the-skies" target="_blank" rel="noopener" data-cat="海外ニュース">
-        <img class="thumb" src="https://www.pokebeach.com/news/2026/06/pokebeach-20260618-08200530-129360269360266.jpg" alt="" loading="lazy" onerror="this.remove()">
+        <img class="thumb" src="https://www.pokebeach.com/news/2026/06/pokebeach-20260618-08200530-129360269360266.jpg" alt="" loading="lazy" onerror="this.outerHTML='<div class=&quot;thumb thumb-fallback&quot;>🌏</div>'">
         <div class="card-body">
           <div class="card-meta">
             <span class="badge" style="background:rgba(208,100,42,0.13);color:#d0642a">海外ニュース</span>
@@ -1318,7 +1325,7 @@ footer {
         </div>
       </a>
       <a class="card" href="https://finance.biggo.jp/news/e91d574640cf355c" target="_blank" rel="noopener" data-cat="鑑定・PSA">
-        <img class="thumb" src="https://img.biggo.com/sQQ0tnvqU_D7bYzh245sxwQCOWF1ZPHfX44oODhGT28/fit/1720/0/sm/0/aHR0cHM6Ly9pbWcuYmdvLm9uZS9uZXdzLWltYWdlL2FpX2dlbmVyYXRlZC8yMDI2LTA2L2U5MWQ1NzQ2NDBjZjM1NWNfMTc4MTcwMzg2NV9jb3Zlci5qcGc.webp" alt="" loading="lazy" onerror="this.remove()">
+        <img class="thumb" src="https://img.biggo.com/sQQ0tnvqU_D7bYzh245sxwQCOWF1ZPHfX44oODhGT28/fit/1720/0/sm/0/aHR0cHM6Ly9pbWcuYmdvLm9uZS9uZXdzLWltYWdlL2FpX2dlbmVyYXRlZC8yMDI2LTA2L2U5MWQ1NzQ2NDBjZjM1NWNfMTc4MTcwMzg2NV9jb3Zlci5qcGc.webp" alt="" loading="lazy" onerror="this.outerHTML='<div class=&quot;thumb thumb-fallback&quot;>🔍</div>'">
         <div class="card-body">
           <div class="card-meta">
             <span class="badge" style="background:rgba(124,92,191,0.13);color:#7c5cbf">鑑定・PSA</span>
@@ -1331,7 +1338,7 @@ footer {
         </div>
       </a>
       <a class="card" href="https://www.famitsu.com/article/202606/78553" target="_blank" rel="noopener" data-cat="新弾・予約">
-        <img class="thumb" src="https://cimg.kgl-systems.io/camion/files/78553/thumbnail_qyXv.jpg?x=1280" alt="" loading="lazy" onerror="this.remove()">
+        <img class="thumb" src="https://cimg.kgl-systems.io/camion/files/78553/thumbnail_qyXv.jpg?x=1280" alt="" loading="lazy" onerror="this.outerHTML='<div class=&quot;thumb thumb-fallback&quot;>🎁</div>'">
         <div class="card-body">
           <div class="card-meta">
             <span class="badge" style="background:rgba(42,127,201,0.13);color:#2a7fc9">新弾・予約</span>
@@ -1344,7 +1351,7 @@ footer {
         </div>
       </a>
       <a class="card" href="https://pokeca-pocket.dbfw-days.com/pokeka-megapromo4-cardlist/" target="_blank" rel="noopener" data-cat="相場・高騰">
-        <img class="thumb" src="https://pokeca-pocket.dbfw-days.com/wp-content/uploads/2026/04/IMG_1020.jpeg" alt="" loading="lazy" onerror="this.remove()">
+        <img class="thumb" src="https://pokeca-pocket.dbfw-days.com/wp-content/uploads/2026/04/IMG_1020.jpeg" alt="" loading="lazy" onerror="this.outerHTML='<div class=&quot;thumb thumb-fallback&quot;>📈</div>'">
         <div class="card-body">
           <div class="card-meta">
             <span class="badge" style="background:rgba(46,158,91,0.13);color:#2e9e5b">相場・高騰</span>
@@ -1357,7 +1364,7 @@ footer {
         </div>
       </a>
       <a class="card" href="https://snkrdunk.com/articles/32514/" target="_blank" rel="noopener" data-cat="鑑定・PSA">
-        <img class="thumb" src="https://cdn.snkrdunk.com/uploads/media/bdb8b955-05c2-46f0-b6a1-f3bbeb9a374d.png" alt="" loading="lazy" onerror="this.remove()">
+        <img class="thumb" src="https://cdn.snkrdunk.com/uploads/media/bdb8b955-05c2-46f0-b6a1-f3bbeb9a374d.png" alt="" loading="lazy" onerror="this.outerHTML='<div class=&quot;thumb thumb-fallback&quot;>🔍</div>'">
         <div class="card-body">
           <div class="card-meta">
             <span class="badge" style="background:rgba(124,92,191,0.13);color:#7c5cbf">鑑定・PSA</span>
@@ -1370,7 +1377,7 @@ footer {
         </div>
       </a>
       <a class="card" href="https://www.famitsu.com/article/202606/78040" target="_blank" rel="noopener" data-cat="新弾・予約">
-        <img class="thumb" src="https://cimg.kgl-systems.io/camion/files/78040/thumbnail_hXsX.jpg?x=1280" alt="" loading="lazy" onerror="this.remove()">
+        <img class="thumb" src="https://cimg.kgl-systems.io/camion/files/78040/thumbnail_hXsX.jpg?x=1280" alt="" loading="lazy" onerror="this.outerHTML='<div class=&quot;thumb thumb-fallback&quot;>🎁</div>'">
         <div class="card-body">
           <div class="card-meta">
             <span class="badge" style="background:rgba(42,127,201,0.13);color:#2a7fc9">新弾・予約</span>
@@ -1383,7 +1390,7 @@ footer {
         </div>
       </a>
       <a class="card" href="https://news.yahoo.co.jp/articles/a88b730d1ac4c0af7f28e9c37311911e0b239282?page=2" target="_blank" rel="noopener" data-cat="相場・高騰">
-        <img class="thumb" src="https://s.yimg.jp/images/news-web/versions/20260716-8d0fa2f/all/images/ogp_default.png" alt="" loading="lazy" onerror="this.remove()">
+        <img class="thumb" src="https://s.yimg.jp/images/news-web/versions/20260716-8d0fa2f/all/images/ogp_default.png" alt="" loading="lazy" onerror="this.outerHTML='<div class=&quot;thumb thumb-fallback&quot;>📈</div>'">
         <div class="card-body">
           <div class="card-meta">
             <span class="badge" style="background:rgba(46,158,91,0.13);color:#2e9e5b">相場・高騰</span>
@@ -1396,7 +1403,7 @@ footer {
         </div>
       </a>
       <a class="card" href="https://pinzuba.news/articles/-/16288?page=1" target="_blank" rel="noopener" data-cat="相場・高騰">
-        <img class="thumb" src="https://pinzuba.ismcdn.jp/mwimgs/e/8/1200wm/img_e83dfb1bfa47af63878f9b20bfa5049b4289753.png" alt="" loading="lazy" onerror="this.remove()">
+        <img class="thumb" src="https://pinzuba.ismcdn.jp/mwimgs/e/8/1200wm/img_e83dfb1bfa47af63878f9b20bfa5049b4289753.png" alt="" loading="lazy" onerror="this.outerHTML='<div class=&quot;thumb thumb-fallback&quot;>📈</div>'">
         <div class="card-body">
           <div class="card-meta">
             <span class="badge" style="background:rgba(46,158,91,0.13);color:#2e9e5b">相場・高騰</span>
@@ -1409,7 +1416,7 @@ footer {
         </div>
       </a>
       <a class="card" href="https://www.famitsu.com/article/202606/77986" target="_blank" rel="noopener" data-cat="新弾・予約">
-        <img class="thumb" src="https://cimg.kgl-systems.io/camion/files/77986/thumbnail_aKfx.jpg?x=1280" alt="" loading="lazy" onerror="this.remove()">
+        <img class="thumb" src="https://cimg.kgl-systems.io/camion/files/77986/thumbnail_aKfx.jpg?x=1280" alt="" loading="lazy" onerror="this.outerHTML='<div class=&quot;thumb thumb-fallback&quot;>🎁</div>'">
         <div class="card-body">
           <div class="card-meta">
             <span class="badge" style="background:rgba(42,127,201,0.13);color:#2a7fc9">新弾・予約</span>
@@ -1422,7 +1429,7 @@ footer {
         </div>
       </a>
       <a class="card" href="https://www.toy-people.com/jp/?p=109579" target="_blank" rel="noopener" data-cat="相場・高騰">
-        <img class="thumb" src="https://img.toy-people.com/member/177721219767.jpg" alt="" loading="lazy" onerror="this.remove()">
+        <img class="thumb" src="https://img.toy-people.com/member/177721219767.jpg" alt="" loading="lazy" onerror="this.outerHTML='<div class=&quot;thumb thumb-fallback&quot;>📈</div>'">
         <div class="card-body">
           <div class="card-meta">
             <span class="badge" style="background:rgba(46,158,91,0.13);color:#2e9e5b">相場・高騰</span>
@@ -1435,7 +1442,7 @@ footer {
         </div>
       </a>
       <a class="card" href="https://snkrdunk.com/articles/32468/" target="_blank" rel="noopener" data-cat="相場・高騰">
-        <img class="thumb" src="https://cdn.snkrdunk.com/uploads/media/fc00351e-3b4e-4880-b1f9-52bddecdfec2.jpeg" alt="" loading="lazy" onerror="this.remove()">
+        <img class="thumb" src="https://cdn.snkrdunk.com/uploads/media/fc00351e-3b4e-4880-b1f9-52bddecdfec2.jpeg" alt="" loading="lazy" onerror="this.outerHTML='<div class=&quot;thumb thumb-fallback&quot;>📈</div>'">
         <div class="card-body">
           <div class="card-meta">
             <span class="badge" style="background:rgba(46,158,91,0.13);color:#2e9e5b">相場・高騰</span>
@@ -1448,7 +1455,7 @@ footer {
         </div>
       </a>
       <a class="card" href="https://snkrdunk.com/articles/19401/" target="_blank" rel="noopener" data-cat="相場・高騰">
-        <img class="thumb" src="https://cdn.snkrdunk.com/uploads/media/20231129100103-0.jpeg" alt="" loading="lazy" onerror="this.remove()">
+        <img class="thumb" src="https://cdn.snkrdunk.com/uploads/media/20231129100103-0.jpeg" alt="" loading="lazy" onerror="this.outerHTML='<div class=&quot;thumb thumb-fallback&quot;>📈</div>'">
         <div class="card-body">
           <div class="card-meta">
             <span class="badge" style="background:rgba(46,158,91,0.13);color:#2e9e5b">相場・高騰</span>
@@ -1461,7 +1468,7 @@ footer {
         </div>
       </a>
       <a class="card" href="https://www.pokebeach.com/2026/06/30th-celebration-japan-championships" target="_blank" rel="noopener" data-cat="海外ニュース">
-        <img class="thumb" src="https://www.pokebeach.com/news/2026/06/mf_044_6r7dmqt2.jpg" alt="" loading="lazy" onerror="this.remove()">
+        <img class="thumb" src="https://www.pokebeach.com/news/2026/06/mf_044_6r7dmqt2.jpg" alt="" loading="lazy" onerror="this.outerHTML='<div class=&quot;thumb thumb-fallback&quot;>🌏</div>'">
         <div class="card-body">
           <div class="card-meta">
             <span class="badge" style="background:rgba(208,100,42,0.13);color:#d0642a">海外ニュース</span>
@@ -1474,7 +1481,7 @@ footer {
         </div>
       </a>
       <a class="card" href="https://vs.collectest.com/magazine/vss1000218/" target="_blank" rel="noopener" data-cat="相場・高騰">
-        
+        <div class="thumb thumb-fallback">📈</div>
         <div class="card-body">
           <div class="card-meta">
             <span class="badge" style="background:rgba(46,158,91,0.13);color:#2e9e5b">相場・高騰</span>
@@ -1496,7 +1503,7 @@ footer {
       <a href="https://pockettcg.app/?utm_source=pokeka_news" target="_blank" rel="noopener">Pocket!</a>
     </nav>
     <div class="footer-meta">
-      <span>最終更新: 2026-07-17 18:54 JST</span>
+      <span>最終更新: 2026-07-17 18:58 JST</span>
       <span>掲載 97 件（直近45日）</span>
       <a href="https://github.com/amon-jpn/pokemon_aggregator" target="_blank" rel="noopener">ソースコード</a>
     </div>
