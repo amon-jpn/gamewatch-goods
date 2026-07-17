@@ -5,16 +5,14 @@ archive.json の記事をカード型UIで一覧表示する静的ページを�
 外部CSS/JSに依存しない自己完結型のHTMLを出力し、Pages（mainブランチの
 ルート配信）にそのまま載せる。デザイン調整はこのファイル内のCSSを編集する。
 
-- 日英切り替え: 各テキストを <span class="ja"> / <span class="en"> の対で
-  埋め込み、bodyのlang-enクラスをJSでトグルして表示を切り替える。
-  記事の英訳は pokemon_aggregator.add_translations がLLMで付与する
-  title_en / summary_en を使い、未翻訳の記事は原文にフォールバックする。
+- 表示は日本語のみ。海外記事は pokemon_aggregator.add_translations が
+  LLMで付与する title_ja（日本語訳タイトル）を優先し、未翻訳なら原文を出す。
 - テーマ切り替え: html要素の data-theme 属性（light/dark）で上書き。
   初期値はOS設定に従い、選択はlocalStorageに保存する。
 - ページ送り: 全記事をHTMLに埋め込み、JSでページ分割して表示する
   （PER_PAGE件ずつ。カテゴリタブと連動し、切り替え時は1ページ目に戻る）。
 - ダイジェスト欄: weekly_digest.py が保存する digests/*.highlights.json
-  （日英の箇条書き）を優先表示し、なければ「今週のまとめ」段落を出す。
+  （箇条書き）を優先表示し、なければ「今週のまとめ」段落を出す。
 - ホーム画面アイコン: apple-touch-icon.png / manifest.json（icon-192/512）を
   参照する。元画像は pikabou.jpg。
 """
@@ -34,20 +32,16 @@ PROMO_URL = "https://pockettcg.app/?utm_source=pokeka_news"
 PER_PAGE = 24  # 1ページあたりのカード数
 
 JST = timezone(timedelta(hours=9))
-
 WEEKDAYS_JA = "月火水木金土日"
-WEEKDAYS_EN = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
-MONTHS_EN = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
-             "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
 
-# カテゴリごとのバッジ色・英語名・サムネイルなし記事のプレースホルダ絵文字
+# カテゴリごとのバッジ色とサムネイルなし記事のプレースホルダ絵文字
 CATEGORY_STYLE = {
-    "鑑定・PSA": {"color": "#7c5cbf", "emoji": "🔍", "en": "Grading & PSA"},
-    "相場・高騰": {"color": "#2e9e5b", "emoji": "📈", "en": "Market & Prices"},
-    "新弾・予約": {"color": "#2a7fc9", "emoji": "🎁", "en": "New Sets & Preorders"},
-    "海外ニュース": {"color": "#d0642a", "emoji": "🌏", "en": "International"},
+    "鑑定・PSA": {"color": "#7c5cbf", "emoji": "🔍"},
+    "相場・高騰": {"color": "#2e9e5b", "emoji": "📈"},
+    "新弾・予約": {"color": "#2a7fc9", "emoji": "🎁"},
+    "海外ニュース": {"color": "#d0642a", "emoji": "🌏"},
 }
-DEFAULT_STYLE = {"color": "#8a8a8a", "emoji": "📰", "en": "News"}
+DEFAULT_STYLE = {"color": "#8a8a8a", "emoji": "📰"}
 
 # ライト/ダークのテーマ変数。メディアクエリ（OS設定）と
 # data-theme属性（手動切り替え）の両方から参照するため変数化している
@@ -90,20 +84,13 @@ def hex_rgba(hex_color, alpha):
     return f"rgba({r},{g},{b},{alpha})"
 
 
-def bilingual(ja, en):
-    """日英対のspanを返す。表示側はbodyのlang-enクラスで切り替える"""
-    return f'<span class="ja">{ja}</span><span class="en">{en}</span>'
-
-
-def format_dates(iso_str):
+def format_date(iso_str):
     dt = datetime.fromisoformat(iso_str).astimezone(JST)
-    ja = f"{dt.month}月{dt.day}日({WEEKDAYS_JA[dt.weekday()]})"
-    en = f"{MONTHS_EN[dt.month - 1]} {dt.day} ({WEEKDAYS_EN[dt.weekday()]})"
-    return ja, en
+    return f"{dt.month}月{dt.day}日({WEEKDAYS_JA[dt.weekday()]})"
 
 
 def latest_digest():
-    """最新の週刊ダイジェストの日付・「今週のまとめ」・日英ハイライトを返す"""
+    """最新の週刊ダイジェストの日付・「今週のまとめ」・ハイライトを返す"""
     files = sorted(glob.glob(os.path.join(DIGEST_DIR, "*.md")))
     if not files:
         return None, None, None
@@ -119,7 +106,9 @@ def latest_digest():
     if os.path.exists(hl_path):
         try:
             with open(hl_path, encoding="utf-8") as f:
-                highlights = json.load(f)
+                raw = json.load(f)
+            # 旧形式（{"ja":…, "en":…} の配列）にも対応する
+            highlights = [h["ja"] if isinstance(h, dict) else h for h in raw]
         except Exception:
             pass
     return date_str, summary, highlights
@@ -128,14 +117,11 @@ def latest_digest():
 def render_card(item):
     style = CATEGORY_STYLE.get(item["category"], DEFAULT_STYLE)
     url = html.escape(item.get("real_url") or item["link"], quote=True)
-    title_ja = html.escape(item.get("title_ja") or item["title"])
-    title_en = html.escape(item.get("title_en") or item["title"])
+    title = html.escape(item.get("title_ja") or item["title"])
     category = html.escape(item["category"])
-    category_en = html.escape(style["en"])
     source = html.escape(item.get("source") or "")
-    summary_ja = html.escape(item.get("summary") or "")
-    summary_en = html.escape(item.get("summary_en") or item.get("summary") or "")
-    date_ja, date_en = format_dates(item["published"])
+    summary = html.escape(item.get("summary") or "")
+    date_ja = format_date(item["published"])
 
     is_new = datetime.fromisoformat(item["published"]) > datetime.now(timezone.utc) - timedelta(hours=24)
     new_chip = '<span class="new-chip">NEW</span>' if is_new else ""
@@ -145,10 +131,7 @@ def render_card(item):
     else:
         thumb = f'<div class="thumb thumb-fallback">{style["emoji"]}</div>'
 
-    summary_html = (
-        f'<p class="summary">{bilingual(summary_ja, summary_en)}</p>'
-        if summary_ja or summary_en else ""
-    )
+    summary_html = f'<p class="summary">{summary}</p>' if summary else ""
     source_html = f'<span class="source">{source}</span>' if source else ""
     badge_style = f"background:{hex_rgba(style['color'], 0.13)};color:{style['color']}"
 
@@ -156,11 +139,11 @@ def render_card(item):
         {thumb}
         <div class="card-body">
           <div class="card-meta">
-            <span class="badge" style="{badge_style}">{bilingual(category, category_en)}</span>
+            <span class="badge" style="{badge_style}">{category}</span>
             {new_chip}
-            <span class="date">{bilingual(date_ja, date_en)}</span>
+            <span class="date">{date_ja}</span>
           </div>
-          <h2 class="card-title">{bilingual(title_ja, title_en)}</h2>
+          <h2 class="card-title">{title}</h2>
           {summary_html}
           <div class="card-footer">{source_html}</div>
         </div>
@@ -169,17 +152,12 @@ def render_card(item):
 
 def render_promo():
     """Pocket!（作者のカード資産価値トラッカー）への誘導バナー"""
-    copy = bilingual(
-        "あなたのカードは今日、いくら？ ポケカのコレクション価値をまとめてトラッキング。",
-        "What are your cards worth today? Track your Pok&#233;mon card collection&#8217;s value.",
-    )
-    cta = bilingual("アプリを見る →", "Check it out →")
     return f"""    <a class="promo" href="{PROMO_URL}" target="_blank" rel="noopener">
       <div class="promo-text">
         <div class="promo-name">Pocket!</div>
-        <p class="promo-copy">{copy}</p>
+        <p class="promo-copy">あなたのカードは今日、いくら？ ポケカのコレクション価値をまとめてトラッキング。</p>
       </div>
-      <span class="promo-cta">{cta}</span>
+      <span class="promo-cta">アプリを見る →</span>
     </a>"""
 
 
@@ -188,14 +166,9 @@ def render_digest_box():
     if not date_str:
         return ""
     link = f"{REPO_URL}/blob/main/{DIGEST_DIR}/{date_str}.md"
-    label = bilingual("週刊ダイジェスト", "Weekly Digest")
-    read = bilingual("全文を読む →", "Read the full digest (Japanese) →")
 
     if highlights:
-        items = "\n".join(
-            f"      <li>{bilingual(html.escape(h['ja']), html.escape(h['en']))}</li>"
-            for h in highlights
-        )
+        items = "\n".join(f"      <li>{html.escape(h)}</li>" for h in highlights)
         body = f'    <ul class="digest-points">\n{items}\n    </ul>'
     elif summary:
         body = f"    <p>{html.escape(summary)}</p>"
@@ -203,9 +176,9 @@ def render_digest_box():
         body = ""
 
     return f"""    <section class="digest-box">
-      <div class="digest-label">📮 {label}<span class="digest-date">{html.escape(date_str)}</span></div>
+      <div class="digest-label">📮 週刊ダイジェスト<span class="digest-date">{html.escape(date_str)}</span></div>
 {body}
-      <a href="{link}" target="_blank" rel="noopener">{read}</a>
+      <a href="{link}" target="_blank" rel="noopener">全文を読む →</a>
     </section>"""
 
 
@@ -215,9 +188,8 @@ def build_site(entries):
         if e["category"] not in categories:
             categories.append(e["category"])
 
-    tabs = [f'<button class="tab active" data-cat="all">{bilingual("すべて", "All")}</button>'] + [
-        f'<button class="tab" data-cat="{html.escape(c)}">'
-        f'{bilingual(html.escape(c), html.escape(CATEGORY_STYLE.get(c, DEFAULT_STYLE)["en"]))}</button>'
+    tabs = ['<button class="tab active" data-cat="all">すべて</button>'] + [
+        f'<button class="tab" data-cat="{html.escape(c)}">{html.escape(c)}</button>'
         for c in categories
     ]
     cards = "\n".join(render_card(e) for e in entries)
@@ -228,7 +200,7 @@ def build_site(entries):
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>ポケカ コレクターニュース | Pokémon TCG Collector News</title>
+<title>ポケカ コレクターニュース</title>
 <meta name="description" content="PSA鑑定・相場・新弾情報など、ポケモンカードのコレクター向けニュースを自動収集して毎日更新">
 <meta name="theme-color" content="#ffcb05">
 <link rel="icon" href="icon-192.png" type="image/png">
@@ -250,24 +222,11 @@ body {{
   line-height: 1.65;
   transition: background .25s ease, color .25s ease;
 }}
-/* 日英切り替え: lang-enクラスの有無で対になったspan/要素の表示を切り替える */
-body:not(.lang-en) .en {{ display: none !important; }}
-body.lang-en .ja {{ display: none !important; }}
 .wrap {{ max-width: 1080px; margin: 0 auto; padding: 0 20px 64px; }}
 .topbar {{
   display: flex; justify-content: flex-end; align-items: center; gap: 10px;
   padding: 14px 0 0;
 }}
-.lang-switch {{
-  display: flex; padding: 3px; border-radius: 999px;
-  background: var(--surface); border: 1px solid var(--border); box-shadow: var(--shadow);
-}}
-.lang-btn {{
-  font: inherit; font-size: .74rem; font-weight: 600; cursor: pointer;
-  border: none; background: none; color: var(--text-sub);
-  padding: 4px 12px; border-radius: 999px; transition: all .2s ease;
-}}
-.lang-btn.active {{ background: var(--accent); color: #1c1b18; font-weight: 700; }}
 .theme-btn {{
   display: flex; align-items: center; justify-content: center;
   width: 34px; height: 34px; cursor: pointer; color: var(--text-sub);
@@ -404,10 +363,6 @@ footer {{
 <body>
 <div class="wrap">
   <div class="topbar">
-    <div class="lang-switch">
-      <button class="lang-btn" data-lang="ja">日本語</button>
-      <button class="lang-btn" data-lang="en">EN</button>
-    </div>
     <button class="theme-btn" id="theme-btn" aria-label="テーマ切り替え">
       {SUN_SVG}
       {MOON_SVG}
@@ -416,8 +371,8 @@ footer {{
   <header>
     <img src="pikabou.jpg" alt="">
     <div>
-      <h1>{bilingual("ポケカ コレクターニュース", "Pokémon TCG Collector News")}</h1>
-      <div class="tagline">{bilingual("PSA鑑定・相場・新弾情報を自動収集して毎日更新", "PSA grading, market prices &amp; new set news — auto-curated daily")}</div>
+      <h1>ポケカ コレクターニュース</h1>
+      <div class="tagline">PSA鑑定・相場・新弾情報を自動収集して毎日更新</div>
     </div>
   </header>
 {render_promo()}
@@ -432,31 +387,18 @@ footer {{
   <footer>
     <nav class="feed-links">
       <a href="pokemon_news.xml">📡 RSS</a>
-      <a href="digest.xml">📮 {bilingual("週刊ダイジェストRSS", "Weekly Digest RSS")}</a>
+      <a href="digest.xml">📮 週刊ダイジェストRSS</a>
       <a href="{REPO_URL}" target="_blank" rel="noopener">GitHub</a>
       <a href="{PROMO_URL}" target="_blank" rel="noopener">Pocket!</a>
     </nav>
     <div class="footer-meta">
-      <span>{bilingual("最終更新", "Last updated")}: {updated} JST</span>
-      <span>{bilingual(f"掲載 {len(entries)} 件（直近45日）", f"{len(entries)} articles (last 45 days)")}</span>
-      <a href="{REPO_URL}" target="_blank" rel="noopener">{bilingual("ソースコード", "Source code")}</a>
+      <span>最終更新: {updated} JST</span>
+      <span>掲載 {len(entries)} 件（直近45日）</span>
+      <a href="{REPO_URL}" target="_blank" rel="noopener">ソースコード</a>
     </div>
   </footer>
 </div>
 <script>
-// ---- 言語切り替え ----
-function setLang(lang) {{
-  document.body.classList.toggle('lang-en', lang === 'en');
-  document.documentElement.lang = lang;
-  localStorage.setItem('lang', lang);
-  document.querySelectorAll('.lang-btn').forEach(b =>
-    b.classList.toggle('active', b.dataset.lang === lang));
-}}
-document.querySelectorAll('.lang-btn').forEach(b =>
-  b.addEventListener('click', () => setLang(b.dataset.lang)));
-setLang(localStorage.getItem('lang') ||
-  ((navigator.language || '').startsWith('ja') ? 'ja' : 'en'));
-
 // ---- テーマ切り替え ----
 const themeBtn = document.getElementById('theme-btn');
 function setTheme(theme) {{

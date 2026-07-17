@@ -379,9 +379,10 @@ def add_summaries(archive):
 
 
 def add_translations(archive):
-    """翻訳がまだない記事に日英のタイトル・解説を付ける（サイト・フィード表示用）"""
+    """日本語タイトルがまだない海外記事にLLMで日本語訳を付ける"""
     targets = [
-        e for e in archive if "title_en" not in e or "title_ja" not in e
+        e for e in archive
+        if e["category"] == "海外ニュース" and "title_ja" not in e
     ][:TRANSLATE_MAX_PER_RUN]
     if not targets:
         return
@@ -389,11 +390,8 @@ def add_translations(archive):
     if not translations:
         return
     for i, entry in enumerate(targets):
-        t = translations.get(i, {})
-        entry["title_en"] = t.get("title_en", "")
-        entry["summary_en"] = t.get("summary_en", "")
-        entry["title_ja"] = t.get("title_ja", "")
-    print(f"🌐 翻訳を{len(translations)}件付与しました")
+        entry["title_ja"] = translations.get(i, "")
+    print(f"🌐 日本語訳を{len(translations)}件付与しました")
 
 
 def main():

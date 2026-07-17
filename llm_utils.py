@@ -111,21 +111,16 @@ def summarize_entries(entries):
 
 
 def translate_entries(entries):
-    """記事リストに日英双方向の翻訳を付ける（サイト・フィードの表示用）。
+    """海外記事に日本語タイトルを付ける（フィード・サイトの表示用）。
 
-    日本語記事には英語タイトル・解説を、英語記事には日本語タイトルを付ける。
-    戻り値は {リスト内index: {"title_en": ..., "summary_en": ..., "title_ja": ...}}。
+    戻り値は {リスト内index: 日本語タイトル}。
     キー未設定・失敗時は {} を返し、呼び出し側は翻訳なしで続行する。
     """
     if not api_available() or not entries:
         return {}
     import anthropic
 
-    listing = "\n".join(
-        f"{i}: {e['title']}"
-        + (f"｜解説: {e['summary']}" if e.get("summary") else "")
-        for i, e in enumerate(entries)
-    )
+    listing = "\n".join(f"{i}: {e['title']}" for i, e in enumerate(entries))
     schema = {
         "type": "object",
         "properties": {
@@ -135,11 +130,9 @@ def translate_entries(entries):
                     "type": "object",
                     "properties": {
                         "index": {"type": "integer"},
-                        "title_en": {"type": "string"},
-                        "summary_en": {"type": "string"},
                         "title_ja": {"type": "string"},
                     },
-                    "required": ["index", "title_en", "summary_en", "title_ja"],
+                    "required": ["index", "title_ja"],
                     "additionalProperties": False,
                 },
             }
@@ -148,13 +141,9 @@ def translate_entries(entries):
         "additionalProperties": False,
     }
     prompt = (
-        "以下はポケモンカード関連ニュースのタイトル一覧（と一部は日本語の解説）です。"
-        "日英両言語で表示できるように、各記事へ次の3つを付けてください。\n"
-        "- title_en: タイトルの自然な英訳。元から英語のタイトルはそのまま返す。\n"
-        "- summary_en: 読むべきか判断できる英語の一言解説（20語以内）。"
-        "解説があればそれを踏まえ、なければタイトルから確実に読み取れる内容だけで書く。\n"
-        "- title_ja: タイトルの自然な日本語訳。元から日本語のタイトルはそのまま返す。"
-        "カード名・商品名は日本で使われる呼称にする（不明ならカタカナ表記）。\n"
+        "以下は海外のポケモンカード関連ニュースの英語タイトル一覧です。"
+        "日本のコレクター向けに、各タイトルの自然な日本語訳（title_ja）を付けてください。"
+        "カード名・商品名は日本で使われる呼称にする（不明ならカタカナ表記）。"
         "価格や日付など元にない情報を創作しないこと。\n\n"
         f"{listing}"
     )
@@ -173,22 +162,19 @@ def translate_entries(entries):
         text = next(b.text for b in response.content if b.type == "text")
         data = json.loads(text)
         return {
-            item["index"]: {
-                "title_en": item["title_en"].strip(),
-                "summary_en": item["summary_en"].strip(),
-                "title_ja": item["title_ja"].strip(),
-            }
+            item["index"]: item["title_ja"].strip()
             for item in data["translations"]
+            if item["title_ja"].strip()
         }
     except Exception as e:
-        print(f"⚠️ LLM英訳をスキップしました: {e}")
+        print(f"⚠️ LLM翻訳をスキップしました: {e}")
         return {}
 
 
 def generate_digest_highlights(entries, week_label):
-    """1週間の要点を日英の箇条書き（4〜6項目）にまとめる（サイト表示用）。
+    """1週間の要点を日本語の箇条書き（4〜6項目）にまとめる（サイト表示用）。
 
-    戻り値は [{"ja": ..., "en": ...}, ...]。失敗時・キー未設定時は None。
+    戻り値は文字列のリスト。失敗時・キー未設定時は None。
     """
     if not api_available() or not entries:
         return None
@@ -204,15 +190,7 @@ def generate_digest_highlights(entries, week_label):
         "properties": {
             "highlights": {
                 "type": "array",
-                "items": {
-                    "type": "object",
-                    "properties": {
-                        "ja": {"type": "string"},
-                        "en": {"type": "string"},
-                    },
-                    "required": ["ja", "en"],
-                    "additionalProperties": False,
-                },
+                "items": {"type": "string"},
             }
         },
         "required": ["highlights"],
@@ -220,9 +198,8 @@ def generate_digest_highlights(entries, week_label):
     }
     prompt = (
         f"以下は{week_label}に収集したポケモンカード関連ニュースの一覧です。"
-        "コレクターにとって最重要なトピックだけを4〜6項目の箇条書きに凝縮してください。\n"
-        "- ja: 日本語で45字以内。「〜が発表」「〜が開始」のような簡潔な体言止め・短文\n"
-        "- en: 同じ内容の英語で15語以内\n"
+        "コレクターにとって最重要なトピックだけを4〜6項目の箇条書きに凝縮してください。"
+        "各項目は日本語で45字以内。「〜が発表」「〜が開始」のような簡潔な体言止め・短文にすること。\n"
         "類似記事はまとめて1項目にすること。記事一覧から確実に読み取れる内容だけを使い、"
         "価格などタイトルにない数値を創作しないこと。\n\n"
         f"{listing}"
@@ -241,11 +218,7 @@ def generate_digest_highlights(entries, week_label):
         )
         text = next(b.text for b in response.content if b.type == "text")
         highlights = json.loads(text)["highlights"]
-        return [
-            {"ja": h["ja"].strip(), "en": h["en"].strip()}
-            for h in highlights
-            if h["ja"].strip() and h["en"].strip()
-        ] or None
+        return [h.strip() for h in highlights if h.strip()] or None
     except Exception as e:
         print(f"⚠️ LLMハイライト生成をスキップしました: {e}")
         return None
