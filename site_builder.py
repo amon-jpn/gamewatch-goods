@@ -128,7 +128,7 @@ def latest_digest():
 def render_card(item):
     style = CATEGORY_STYLE.get(item["category"], DEFAULT_STYLE)
     url = html.escape(item.get("real_url") or item["link"], quote=True)
-    title_ja = html.escape(item["title"])
+    title_ja = html.escape(item.get("title_ja") or item["title"])
     title_en = html.escape(item.get("title_en") or item["title"])
     category = html.escape(item["category"])
     category_en = html.escape(style["en"])

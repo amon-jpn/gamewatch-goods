@@ -111,9 +111,10 @@ def summarize_entries(entries):
 
 
 def translate_entries(entries):
-    """記事リストに英語タイトルと英語の一言解説を付ける（サイトの英語表示用）。
+    """記事リストに日英双方向の翻訳を付ける（サイト・フィードの表示用）。
 
-    戻り値は {リスト内index: {"title_en": ..., "summary_en": ...}}。
+    日本語記事には英語タイトル・解説を、英語記事には日本語タイトルを付ける。
+    戻り値は {リスト内index: {"title_en": ..., "summary_en": ..., "title_ja": ...}}。
     キー未設定・失敗時は {} を返し、呼び出し側は翻訳なしで続行する。
     """
     if not api_available() or not entries:
@@ -136,8 +137,9 @@ def translate_entries(entries):
                         "index": {"type": "integer"},
                         "title_en": {"type": "string"},
                         "summary_en": {"type": "string"},
+                        "title_ja": {"type": "string"},
                     },
-                    "required": ["index", "title_en", "summary_en"],
+                    "required": ["index", "title_en", "summary_en", "title_ja"],
                     "additionalProperties": False,
                 },
             }
@@ -147,10 +149,12 @@ def translate_entries(entries):
     }
     prompt = (
         "以下はポケモンカード関連ニュースのタイトル一覧（と一部は日本語の解説）です。"
-        "英語圏のコレクター向けサイト表示用に、各記事へ次の2つを付けてください。\n"
+        "日英両言語で表示できるように、各記事へ次の3つを付けてください。\n"
         "- title_en: タイトルの自然な英訳。元から英語のタイトルはそのまま返す。\n"
         "- summary_en: 読むべきか判断できる英語の一言解説（20語以内）。"
-        "解説があればそれを踏まえ、なければタイトルから確実に読み取れる内容だけで書く。"
+        "解説があればそれを踏まえ、なければタイトルから確実に読み取れる内容だけで書く。\n"
+        "- title_ja: タイトルの自然な日本語訳。元から日本語のタイトルはそのまま返す。"
+        "カード名・商品名は日本で使われる呼称にする（不明ならカタカナ表記）。\n"
         "価格や日付など元にない情報を創作しないこと。\n\n"
         f"{listing}"
     )
@@ -172,6 +176,7 @@ def translate_entries(entries):
             item["index"]: {
                 "title_en": item["title_en"].strip(),
                 "summary_en": item["summary_en"].strip(),
+                "title_ja": item["title_ja"].strip(),
             }
             for item in data["translations"]
         }

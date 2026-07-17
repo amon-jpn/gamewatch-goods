@@ -279,7 +279,8 @@ def build_feed(entries):
 
     for item in entries[:FEED_MAX_ITEMS]:
         fe = fg.add_entry()
-        fe.title(f"【{item['category']}】{item['title']}")
+        # 日本語フィードなので、海外記事はLLMの日本語訳タイトルを優先する
+        fe.title(f"【{item['category']}】{item.get('title_ja') or item['title']}")
         # リンクは元記事URL優先。IDはGoogle NewsのURLで固定し、
         # 後からreal_urlが付いてもRSSリーダー上で重複しないようにする
         fe.link(href=item.get("real_url") or item["link"])
@@ -378,8 +379,10 @@ def add_summaries(archive):
 
 
 def add_translations(archive):
-    """英訳がまだない記事に英語タイトル・解説を付ける（サイトの英語表示用）"""
-    targets = [e for e in archive if "title_en" not in e][:TRANSLATE_MAX_PER_RUN]
+    """翻訳がまだない記事に日英のタイトル・解説を付ける（サイト・フィード表示用）"""
+    targets = [
+        e for e in archive if "title_en" not in e or "title_ja" not in e
+    ][:TRANSLATE_MAX_PER_RUN]
     if not targets:
         return
     translations = llm_utils.translate_entries(targets)
@@ -389,7 +392,8 @@ def add_translations(archive):
         t = translations.get(i, {})
         entry["title_en"] = t.get("title_en", "")
         entry["summary_en"] = t.get("summary_en", "")
-    print(f"🌐 英語訳を{len(translations)}件付与しました")
+        entry["title_ja"] = t.get("title_ja", "")
+    print(f"🌐 翻訳を{len(translations)}件付与しました")
 
 
 def main():

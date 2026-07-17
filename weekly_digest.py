@@ -51,7 +51,8 @@ def fallback_body(entries):
         for e in items:
             source = f"（{e['source']}）" if e.get("source") else ""
             url = e.get("real_url") or e["link"]
-            lines.append(f"- [{e['title']}]({url}){source}")
+            title = e.get("title_ja") or e["title"]
+            lines.append(f"- [{title}]({url}){source}")
         lines.append("")
     return "\n".join(lines).strip()
 
