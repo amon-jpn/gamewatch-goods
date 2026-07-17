@@ -25,6 +25,7 @@ from feedgen.feed import FeedGenerator
 from googlenewsdecoder import gnewsdecoder
 
 import llm_utils
+import site_builder
 
 REPO_URL = "https://github.com/amon-jpn/pokemon_aggregator"
 PAGES_URL = "https://amon-jpn.github.io/pokemon_aggregator"
@@ -337,6 +338,7 @@ def main():
     add_summaries(archive)
     save_archive(archive)
     build_feed(archive)
+    site_builder.build_site(archive)
     print(f"✅ 完了: 新着{added}件 / アーカイブ{len(archive)}件 / フィード掲載{min(len(archive), FEED_MAX_ITEMS)}件")
 
 

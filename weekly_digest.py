@@ -19,6 +19,7 @@ import markdown as md
 from feedgen.feed import FeedGenerator
 
 import llm_utils
+import site_builder
 
 ARCHIVE_FILE = "archive.json"
 DIGEST_DIR = "digests"
@@ -105,6 +106,11 @@ def main():
         f.write(digest_md)
 
     build_digest_feed([f for f in os.listdir(DIGEST_DIR) if f.endswith(".md")])
+
+    # トップページのダイジェスト欄を最新化する
+    with open(ARCHIVE_FILE, encoding="utf-8") as f:
+        site_builder.build_site(json.load(f).get("entries", []))
+
     print(f"✅ 完了: {path}（対象記事{len(entries)}件）と {DIGEST_FEED_FILE} を更新しました")
 
 
