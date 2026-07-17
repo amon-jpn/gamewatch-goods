@@ -143,12 +143,10 @@ def render_promo():
         "あなたのカードは今日、いくら？ ポケカのコレクション価値をまとめてトラッキング。",
         "What are your cards worth today? Track your Pok&#233;mon card collection&#8217;s value.",
     )
-    maker = bilingual("このサイトの作者が開発", "Built by the maker of this site")
     cta = bilingual("アプリを見る →", "Check it out →")
     return f"""    <a class="promo" href="{PROMO_URL}" target="_blank" rel="noopener">
-      <div class="promo-icon">💎</div>
       <div class="promo-text">
-        <div class="promo-name">Pocket! <span class="promo-maker">{maker}</span></div>
+        <div class="promo-name">Pocket!</div>
         <p class="promo-copy">{copy}</p>
       </div>
       <span class="promo-cta">{cta}</span>
@@ -238,24 +236,16 @@ header .tagline {{ font-size: .8rem; color: var(--text-sub); }}
   box-shadow: var(--shadow); transition: transform .15s ease, box-shadow .15s ease;
 }}
 .promo:hover {{ transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,0,0,.15); }}
-.promo-icon {{ font-size: 2rem; }}
 .promo-text {{ flex: 1; min-width: 0; }}
 .promo-name {{ font-weight: 800; font-size: 1.05rem; }}
-.promo-maker {{
-  font-size: .68rem; font-weight: 600; color: rgba(28,27,24,.65);
-  border: 1px solid rgba(28,27,24,.25); border-radius: 999px; padding: 2px 8px;
-  margin-left: 6px; vertical-align: middle;
-}}
 .promo-copy {{ font-size: .85rem; color: rgba(28,27,24,.8); }}
 .promo-cta {{
   white-space: nowrap; font-weight: 700; font-size: .9rem;
   background: #1c1b18; color: #ffcb05; border-radius: 999px; padding: 9px 18px;
 }}
-/* モバイル: アイコンを消して縦積みにし、作者ラベルは改行して収める */
+/* モバイル: 縦積みにしてCTAを全幅にする */
 @media (max-width: 640px) {{
   .promo {{ flex-direction: column; align-items: flex-start; gap: 8px; padding: 14px 16px; }}
-  .promo-icon {{ display: none; }}
-  .promo-maker {{ display: block; width: fit-content; margin: 6px 0 0; }}
   .promo-cta {{ align-self: stretch; text-align: center; }}
 }}
 .digest-box {{
@@ -359,7 +349,7 @@ footer {{
       <a href="pokemon_news.xml">📡 RSS</a>
       <a href="digest.xml">📮 {bilingual("週刊ダイジェストRSS", "Weekly Digest RSS")}</a>
       <a href="{REPO_URL}" target="_blank" rel="noopener">GitHub</a>
-      <a href="{PROMO_URL}" target="_blank" rel="noopener">💎 Pocket!</a>
+      <a href="{PROMO_URL}" target="_blank" rel="noopener">Pocket!</a>
     </nav>
     <div class="footer-meta">
       <span>{bilingual("最終更新", "Last updated")}: {updated} JST</span>
