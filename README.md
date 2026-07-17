@@ -83,11 +83,3 @@ python pokemon_aggregator.py
 
 - **このリポジトリは公開されています。** APIキーや個人情報は絶対にコミットしないでください。秘匿値が必要な機能を追加する場合は GitHub Actions Secrets を使ってください。
 - Google News の記事リンクは `googlenewsdecoder` で元記事URLに変換しています。変換に失敗した記事は `news.google.com` 経由のリダイレクトURLのまま配信されます。
-
-## 今後の改善アイデア
-
-- [x] LLM（Claude Haiku）による記事への一言解説の付与
-- [x] 週刊高騰ダイジェストの自動生成（`digest.xml` / `digests/`）
-- [ ] カテゴリ別の複数フィード出し分け
-- [ ] GitHub Pages でのHTMLマガジン化（カード型UI）
-- [ ] 海外ソース（PokeBeach / PokéGuardian 等）の追加 ※Cloudflare対策が必要
