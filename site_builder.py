@@ -126,10 +126,11 @@ def render_card(item):
     is_new = datetime.fromisoformat(item["published"]) > datetime.now(timezone.utc) - timedelta(hours=24)
     new_chip = '<span class="new-chip">NEW</span>' if is_new else ""
 
+    # 画像がない記事はサムネイル枠自体を出さない（読み込み失敗時も同様に消す）
     if item.get("image"):
-        thumb = f'<img class="thumb" src="{html.escape(item["image"], quote=True)}" alt="" loading="lazy" onerror="this.outerHTML=\'<div class=&quot;thumb thumb-fallback&quot;>{style["emoji"]}</div>\'">'
+        thumb = f'<img class="thumb" src="{html.escape(item["image"], quote=True)}" alt="" loading="lazy" onerror="this.remove()">'
     else:
-        thumb = f'<div class="thumb thumb-fallback">{style["emoji"]}</div>'
+        thumb = ""
 
     summary_html = f'<p class="summary">{summary}</p>' if summary else ""
     source_html = f'<span class="source">{source}</span>' if source else ""
@@ -304,6 +305,7 @@ header .tagline {{ font-size: .8rem; color: var(--text-sub); }}
 .grid {{
   display: grid; gap: 18px;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  align-items: start;  /* 画像なしカードを縦に引き伸ばさず自然な高さにする */
 }}
 .card {{
   display: flex; flex-direction: column; overflow: hidden;
@@ -313,14 +315,6 @@ header .tagline {{ font-size: .8rem; color: var(--text-sub); }}
 }}
 .card:hover {{ transform: translateY(-3px); box-shadow: var(--shadow-hover); }}
 .thumb {{ width: 100%; aspect-ratio: 16/9; object-fit: cover; display: block; }}
-.thumb-fallback {{
-  display: flex; align-items: center; justify-content: center; font-size: 2.6rem;
-  background: linear-gradient(135deg, var(--border), var(--bg));
-}}
-/* モバイル: 画像がない記事はプレースホルダを出さずコンパクトに */
-@media (max-width: 640px) {{
-  .thumb-fallback {{ display: none; }}
-}}
 .card-body {{ display: flex; flex-direction: column; gap: 8px; padding: 15px 17px 17px; flex: 1; }}
 .card-meta {{ display: flex; align-items: center; gap: 8px; }}
 .badge {{
