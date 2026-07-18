@@ -278,7 +278,10 @@ body {{
 /* ---- タブ列 ---- */
 .tabs {{
   display: flex; overflow-x: auto;
-  border-bottom: 2px solid var(--line);
+  background: var(--paper);
+  border: 2px solid var(--line); border-radius: 10px;
+  box-shadow: 4px 4px 0 var(--line);
+  margin-bottom: 20px;
   scrollbar-width: none;
 }}
 .tabs::-webkit-scrollbar {{ display: none; }}
@@ -289,6 +292,7 @@ body {{
   border: none; border-right: 2px solid var(--line);
   padding: 11px 18px;
 }}
+.tab:last-child {{ border-right: none; }}
 .tab:hover {{ background: {hex_rgba('#ffcb05', 0.25)}; }}
 .tab.active {{ background: var(--accent); color: #1a1a1a; }}
 /* ---- コンテンツ領域 ---- */
@@ -436,12 +440,12 @@ footer {{
         </button>
       </div>
     </div>
-    <nav class="tabs">
-      {' '.join(tabs)}
-    </nav>
     <div class="content">
 {render_promo()}
 {render_digest_box()}
+      <nav class="tabs">
+        {' '.join(tabs)}
+      </nav>
       <main class="grid" id="grid">
 {cards}
       </main>

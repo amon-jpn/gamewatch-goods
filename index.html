@@ -98,7 +98,10 @@ body {
 /* ---- タブ列 ---- */
 .tabs {
   display: flex; overflow-x: auto;
-  border-bottom: 2px solid var(--line);
+  background: var(--paper);
+  border: 2px solid var(--line); border-radius: 10px;
+  box-shadow: 4px 4px 0 var(--line);
+  margin-bottom: 20px;
   scrollbar-width: none;
 }
 .tabs::-webkit-scrollbar { display: none; }
@@ -109,6 +112,7 @@ body {
   border: none; border-right: 2px solid var(--line);
   padding: 11px 18px;
 }
+.tab:last-child { border-right: none; }
 .tab:hover { background: rgba(255,203,5,0.25); }
 .tab.active { background: var(--accent); color: #1a1a1a; }
 /* ---- コンテンツ領域 ---- */
@@ -256,9 +260,6 @@ footer {
         </button>
       </div>
     </div>
-    <nav class="tabs">
-      <button class="tab active" data-cat="all">⚡ すべて</button> <button class="tab" data-cat="海外ニュース">🌏 海外ニュース</button> <button class="tab" data-cat="相場・高騰">📈 相場・高騰</button> <button class="tab" data-cat="新弾・予約">🎁 新弾・予約</button> <button class="tab" data-cat="鑑定・PSA">🔍 鑑定・PSA</button>
-    </nav>
     <div class="content">
     <a class="promo" href="https://pockettcg.app/?utm_source=pokeka_news" target="_blank" rel="noopener">
       <div class="promo-text">
@@ -279,6 +280,9 @@ footer {
     </ul>
       <a href="https://github.com/amon-jpn/pokemon_aggregator/blob/main/digests/2026-07-17.md" target="_blank" rel="noopener">全文を読む →</a>
     </section>
+      <nav class="tabs">
+        <button class="tab active" data-cat="all">⚡ すべて</button> <button class="tab" data-cat="海外ニュース">🌏 海外ニュース</button> <button class="tab" data-cat="相場・高騰">📈 相場・高騰</button> <button class="tab" data-cat="新弾・予約">🎁 新弾・予約</button> <button class="tab" data-cat="鑑定・PSA">🔍 鑑定・PSA</button>
+      </nav>
       <main class="grid" id="grid">
       <a class="card" href="https://www.pokebeach.com/2026/07/gem-pack-vol-6-to-release-in-china-featuring-apple-pokemon" target="_blank" rel="noopener" data-cat="海外ニュース">
         <img class="thumb" src="https://www.pokebeach.com/news/2026/07/image-b.png" alt="" loading="lazy" onerror="this.outerHTML='<div class=&quot;thumb thumb-fallback&quot;>🌏</div>'">
@@ -1655,7 +1659,7 @@ footer {
           <a href="https://pockettcg.app/?utm_source=pokeka_news" target="_blank" rel="noopener">Pocket!</a>
         </nav>
         <div class="footer-meta">
-          <span>最終更新: 2026-07-18 14:12 JST</span>
+          <span>最終更新: 2026-07-18 14:19 JST</span>
           <span>掲載 105 件（直近45日）</span>
           <a href="https://github.com/amon-jpn/pokemon_aggregator" target="_blank" rel="noopener">ソースコード</a>
         </div>
