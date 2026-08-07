@@ -1,0 +1,16 @@
+# Dependabot: 依存パッケージの脆弱性と更新を毎週チェックし、
+# 更新があればPRを自動作成する（マージは手動で判断する）
+version: 2
+updates:
+  - package-ecosystem: "pip"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      timezone: "Asia/Tokyo"
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      timezone: "Asia/Tokyo"

@@ -11,6 +11,7 @@ ANTHROPIC_API_KEY が未設定の場合は、LLMなしで記事リストだけ�
 シンプルなダイジェストにフォールバックする。
 """
 
+import html
 import json
 import os
 from datetime import datetime, timedelta, timezone
@@ -40,6 +41,15 @@ def load_week_entries():
     return [e for e in entries if e["published"] >= cutoff]
 
 
+def md_link_safe(text):
+    """外部由来のテキストをMarkdownリンク内に安全に埋め込める形にする
+
+    HTMLタグはエスケープし（md.markdown が生HTMLを素通しするため）、
+    角括弧はリンク構文を壊さない全角に置き換える。
+    """
+    return html.escape(text).replace("[", "［").replace("]", "］")
+
+
 def fallback_body(entries):
     """LLMが使えないときの、記事リストだけのダイジェスト"""
     lines = ["## 今週の記事一覧", ""]
@@ -49,9 +59,10 @@ def fallback_body(entries):
     for category, items in by_category.items():
         lines.append(f"### {category}")
         for e in items:
-            source = f"（{e['source']}）" if e.get("source") else ""
-            url = e.get("real_url") or e["link"]
-            title = e.get("title_ja") or e["title"]
+            source = f"（{md_link_safe(e['source'])}）" if e.get("source") else ""
+            # URL中の丸括弧・山括弧はリンク構文を壊すためパーセント符号化する
+            url = (e.get("real_url") or e["link"]).replace("(", "%28").replace(")", "%29").replace("<", "%3C").replace(">", "%3E")
+            title = md_link_safe(e.get("title_ja") or e["title"])
             lines.append(f"- [{title}]({url}){source}")
         lines.append("")
     return "\n".join(lines).strip()

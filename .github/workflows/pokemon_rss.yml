@@ -13,6 +13,7 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
+    timeout-minutes: 15  # ハング時に無料枠を浪費しないよう上限を設定（通常実行は1〜4分）
     permissions:
       contents: write
 

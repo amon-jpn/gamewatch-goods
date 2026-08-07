@@ -11,11 +11,12 @@ archive.json に蓄積したうえで pokemon_news.xml (RSS) を生成する。
 - 掲載件数・保持期間      → FEED_MAX_ITEMS / ARCHIVE_DAYS
 """
 
+import calendar
 import difflib
+import html
 import json
 import os
 import re
-import time
 import urllib.parse
 from datetime import datetime, timedelta, timezone
 
@@ -40,6 +41,7 @@ SCORE_THRESHOLD = 3        # 合計スコアがこの値以上の記事だけ採
 SUMMARIZE_MAX_PER_RUN = 50  # 1回の実行でLLM要約を付ける最大記事数
 TRANSLATE_MAX_PER_RUN = 50  # 1回の実行でLLM英訳を付ける最大記事数
 ENRICH_MAX_PER_RUN = 30    # 1回の実行で元記事URL・画像を取得する最大記事数
+MAX_ATTEMPTS = 3           # URL解決・要約・翻訳の失敗時に再挑戦する回数（実行ごとに1回）
 
 
 def google_news_url(query: str) -> str:
@@ -187,7 +189,9 @@ def clean_title(entry):
 
 def entry_date(entry):
     if getattr(entry, "published_parsed", None):
-        return datetime.fromtimestamp(time.mktime(entry.published_parsed), tz=timezone.utc)
+        # published_parsed はUTC。time.mktime はローカル時刻として解釈してしまうため
+        # calendar.timegm を使う（CI外のJST環境でも日時がズレない）
+        return datetime.fromtimestamp(calendar.timegm(entry.published_parsed), tz=timezone.utc)
     return datetime.now(timezone.utc)
 
 
@@ -215,7 +219,18 @@ def collect():
     candidates = []
     for source in SOURCES:
         print(f"📡 取得中 [{source['category']}]")
-        feed = feedparser.parse(source["url"])
+        # feedparserに直接URLを渡すとタイムアウトなしで待ち続けるため、
+        # requestsで30秒制限を付けて取得する。1ソースの失敗で全体は止めない
+        try:
+            resp = requests.get(
+                source["url"], timeout=30,
+                headers={"User-Agent": "Mozilla/5.0 (pokemon_aggregator)"},
+            )
+            resp.raise_for_status()
+        except requests.RequestException as e:
+            print(f"⚠️ 取得失敗のためスキップ [{source['category']}]: {e}")
+            continue
+        feed = feedparser.parse(resp.content)
         for entry in feed.entries:
             title, source_name = clean_title(entry)
             if not title or not entry.get("link"):
@@ -290,9 +305,11 @@ def build_feed(entries):
             text = f"{item['summary']}（{source_note}）" if source_note else item["summary"]
         else:
             text = source_note or item["title"]
-        description = f"<p>{text}</p>"
+        # 出典名・要約・画像URLは外部由来のため、HTMLに埋め込む前にエスケープする
+        description = f"<p>{html.escape(text)}</p>"
         if item.get("image"):
-            description = f'<img src="{item["image"]}" style="max-width:100%"/>{description}'
+            img_url = html.escape(item["image"], quote=True)
+            description = f'<img src="{img_url}" style="max-width:100%"/>{description}'
             fe.enclosure(item["image"], 0, "image/jpeg")
         fe.description(description)
         fe.pubDate(datetime.fromisoformat(item["published"]))
@@ -332,6 +349,8 @@ def fetch_og_image(url):
         resp = requests.get(
             url, timeout=10, headers={"User-Agent": "Mozilla/5.0 (pokemon_aggregator)"}
         )
+        if not resp.ok:  # エラーページのog:image（無関係な画像）を拾わない
+            return ""
         match = OG_IMAGE_PATTERN.search(resp.text[:300000])
         if match:
             return (match.group(1) or match.group(2)).strip()
@@ -343,7 +362,8 @@ def fetch_og_image(url):
 def enrich_entries(archive):
     """Google Newsのリダイレクトを元記事URLに変換し、サムネイル画像を取得する
 
-    失敗した記事にも空文字を記録し、毎回リトライし続けないようにする。
+    失敗時は次回実行（6時間後）に再挑戦し、MAX_ATTEMPTS回失敗したら
+    空文字を記録して打ち切る（毎回リトライし続けないようにする）。
     """
     targets = [e for e in archive if "real_url" not in e][:ENRICH_MAX_PER_RUN]
     resolved = 0
@@ -355,10 +375,19 @@ def enrich_entries(archive):
                 real_url = result["decoded_url"]
         except Exception:
             pass
-        entry["real_url"] = real_url
-        entry["image"] = fetch_og_image(real_url) if real_url else ""
         if real_url:
+            entry["real_url"] = real_url
+            entry["image"] = fetch_og_image(real_url)
+            entry.pop("enrich_fails", None)
             resolved += 1
+        else:
+            fails = entry.get("enrich_fails", 0) + 1
+            if fails >= MAX_ATTEMPTS:
+                entry["real_url"] = ""
+                entry["image"] = ""
+                entry.pop("enrich_fails", None)
+            else:
+                entry["enrich_fails"] = fails
     if targets:
         print(f"🖼️ 元記事URL解決 {resolved}/{len(targets)}件")
 
@@ -373,8 +402,17 @@ def add_summaries(archive):
         # キー未設定や失敗時は何も記録せず、次回（キー設定後）に再挑戦できるようにする
         return
     for i, entry in enumerate(targets):
-        # 呼び出し成功時は空でも記録し、同じ記事を毎回投げ直さないようにする
-        entry["summary"] = summaries.get(i, "")
+        if i in summaries:
+            entry["summary"] = summaries[i]
+            entry.pop("summary_fails", None)
+        else:
+            # LLMが返し損ねた記事は次回に再挑戦し、MAX_ATTEMPTS回で打ち切る
+            fails = entry.get("summary_fails", 0) + 1
+            if fails >= MAX_ATTEMPTS:
+                entry["summary"] = ""
+                entry.pop("summary_fails", None)
+            else:
+                entry["summary_fails"] = fails
     print(f"📝 LLM要約を{len(summaries)}件付与しました")
 
 
@@ -390,7 +428,16 @@ def add_translations(archive):
     if not translations:
         return
     for i, entry in enumerate(targets):
-        entry["title_ja"] = translations.get(i, "")
+        if i in translations:
+            entry["title_ja"] = translations[i]
+            entry.pop("translate_fails", None)
+        else:
+            fails = entry.get("translate_fails", 0) + 1
+            if fails >= MAX_ATTEMPTS:
+                entry["title_ja"] = ""
+                entry.pop("translate_fails", None)
+            else:
+                entry["translate_fails"] = fails
     print(f"🌐 日本語訳を{len(translations)}件付与しました")
 
 
