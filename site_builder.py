@@ -32,6 +32,7 @@ import re
 from datetime import datetime, timedelta, timezone
 
 SITE_FILE = "index.html"
+SITEMAP_FILE = "sitemap.xml"
 DIGEST_DIR = "digests"
 PAGES_URL = "https://amon-jpn.github.io/pokemon_aggregator"
 REPO_URL = "https://github.com/amon-jpn/pokemon_aggregator"
@@ -213,6 +214,7 @@ def build_site(entries):
 <link rel="icon" href="icon-192.png" type="image/png">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <link rel="manifest" href="manifest.json">
+<link rel="canonical" href="{PAGES_URL}/">
 <link rel="alternate" type="application/rss+xml" title="ポケカ コレクターニュース" href="pokemon_news.xml">
 <style>
 :root {{{LIGHT_VARS}}}
@@ -527,3 +529,23 @@ apply(false);
     with open(SITE_FILE, "w", encoding="utf-8") as f:
         f.write(page)
     print(f"🌐 {SITE_FILE} を生成しました（{len(entries)}件）")
+    build_sitemap()
+
+
+def build_sitemap():
+    """Google Search Console に送信するsitemap.xmlを生成する
+
+    検索対象にしたいのはトップページのみ（RSSやダイジェストは
+    検索結果に単独で出す意味がないため載せない）。
+    """
+    lastmod = datetime.now(timezone.utc).strftime("%Y-%m-%d")
+    sitemap = f"""<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>{PAGES_URL}/</loc>
+    <lastmod>{lastmod}</lastmod>
+  </url>
+</urlset>
+"""
+    with open(SITEMAP_FILE, "w", encoding="utf-8") as f:
+        f.write(sitemap)
